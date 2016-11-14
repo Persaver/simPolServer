@@ -1,6 +1,7 @@
 package fr.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BackupConstruction extends AbstractEntity<Integer> {
 	private int x;
