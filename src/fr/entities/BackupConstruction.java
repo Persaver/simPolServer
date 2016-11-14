@@ -5,7 +5,13 @@ import java.io.Serializable;
 public class BackupConstruction extends AbstractEntity<Integer> {
 	private int x;
 	private int y;
-	
+	private int nbSalarie;
+	private int nbCadre;
+	private int risque; // pour 1000
+	private int budget;
+	private int attractivite; // 
+	private int postePourvu;
+	private List<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
 		
