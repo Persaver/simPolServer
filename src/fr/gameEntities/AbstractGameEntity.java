@@ -25,5 +25,4 @@ public abstract class AbstractGameEntity<T> implements IGameEntity{
 	public void setModify() {
 		this.isModify = true;
 	}
-	
 }

@@ -12,7 +12,7 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 	private int budget;
 	private int attractivite; // 
 	private int postePourvu;
-	private List<String,Integer> specificite;
+	//private List<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
 		

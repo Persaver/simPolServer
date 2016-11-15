@@ -22,6 +22,7 @@ public final class LoginTools {
 				password = HttpReq.getParameter("password");
 				user = new UserDAO().checklogin(login, password);
 				session.setAttribute("user", user);
+				HttpReq.setAttribute("user", user);
 			}
 			//hack debub
 			else{
