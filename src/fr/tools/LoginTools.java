@@ -23,14 +23,19 @@ public final class LoginTools {
 				user = new UserDAO().checklogin(login, password);
 				session.setAttribute("user", user);
 				HttpReq.setAttribute("user", user);
+				System.out.println(user);
+
 			}
+
 			//hack debub
 			else{
-				return  new User("saver","AAAA");
+				user = new User("saver","AAAA");
 			}
 		}else{
 			user = (User) session.getAttribute("user");
 		}
+		System.out.println(user);
+
 		return user;
 	}
 }

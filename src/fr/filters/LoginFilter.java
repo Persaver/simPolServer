@@ -11,9 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.Session;
 
 import fr.entities.User;
 import fr.tools.LoginTools;
@@ -43,9 +41,9 @@ public class LoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		User user = LoginTools.checkLogin((HttpServletRequest) request);
 		if (user != null){
+			request.setAttribute("user", user);
 			chain.doFilter((ServletRequest)request, response);
 
 		}

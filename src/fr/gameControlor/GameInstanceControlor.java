@@ -28,7 +28,7 @@ public class GameInstanceControlor {
 		}
 
 	}
-	public static IGameInstance getGameEntity(User key) throws GameInstanceException{
+	public static IGameInstance getGameInstance(User key) throws GameInstanceException{
 		IGameInstance entity = null;
 
 		try{
@@ -36,11 +36,10 @@ public class GameInstanceControlor {
 		}catch(NullPointerException e){
 			throw new GameInstanceException("Pas d'entité trouvé");
 		}
-
 		return entity;
 	}
 
-	public static boolean hasGameEntity(User key){
+	public static boolean hasGameInstance(User key){
 		IGameInstance entity = null;
 
 		try{
@@ -55,7 +54,7 @@ public class GameInstanceControlor {
 		IGameInstance gameInstance = null;
 		// on test si il existe deja une partie
 		
-		if(GameInstanceControlor.hasGameEntity(user)){
+		if(GameInstanceControlor.hasGameInstance(user)){
 			gameInstance = new GameInstance(user);
 			GameInstanceControlor.addGameInstance(user, gameInstance);
 		}

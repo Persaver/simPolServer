@@ -10,38 +10,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.entities.User;
+import fr.gameControlor.GameInstance;
+import fr.gameControlor.GameInstanceControlor;
+import fr.interfaces.IGameInstance;
+import fr.splExceptions.SplException;
 import fr.tools.RestTools;
 
-/**
- * Servlet implementation class ConnexionSrv
- */
+
 @WebServlet(urlPatterns={"/connexions","/connexions/*"})
 public class ConnexionSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public ConnexionSrv() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = null;
 		RestTools.getId(request);
+		IGameInstance gameInstance = null;
 
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		if(request.getAttribute("id") != null){
 			out.append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath());
+			// si les filtres retourn un user
 			if(request.getAttribute("user") != null){
 				user = (User) request.getAttribute("user");
-				//out.append("user"+ )
+				// on teste si deja une instance en court
+				if(GameInstanceControlor.hasGameInstance(user)){
+					try{
+					GameInstanceControlor.removeGameInstance(user);
+					out.append(" a une'instance");
+					}catch(SplException e){
+						// on fait quoi?
+					}
+				}
+				
+				// on cree est on enregistre l'instance
+				gameInstance = GameInstanceControlor.createGameInstance(user);
+				out.append(" instance crée");
+
+				
+				out.append(" user "+ user.getPseudo() );
 			}
+			out.close();
 
 		}else{
 			//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
@@ -50,11 +64,8 @@ public class ConnexionSrv extends HttpServlet {
 		}
 
 	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
