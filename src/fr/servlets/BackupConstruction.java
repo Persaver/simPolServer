@@ -1,6 +1,7 @@
 package fr.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,10 +35,11 @@ public class BackupConstruction extends HttpServlet {
 		fr.entities.BackupConstruction bc = null;
 		// test si id	 ou all
 		RestTools.getId(request);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		if(request.getAttribute("id") != null){
-			response.setContentType("application/json;charset=UTF-8");
 			
-			response.getWriter().append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath()).close();
+			out.append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath());
 			
 
 		}else{
@@ -45,7 +47,7 @@ public class BackupConstruction extends HttpServlet {
 			response.getWriter().append("id"  +"Served at: ").append(request.getContextPath()).close();
 
 		}
-		
+		out.close();
 		
 	}
 
