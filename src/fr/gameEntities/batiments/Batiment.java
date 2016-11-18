@@ -8,43 +8,48 @@ import fr.gameEntities.indicateurs.Population;
 import fr.interfaces.IBatiment;
 import fr.interfaces.IEntity;
 
-public abstract class Batiment<T> extends AbstractGameEntity<T> implements IBatiment{
-
+public abstract class Batiment extends AbstractGameEntity<BackupConstruction> implements IBatiment{
+	// on cree une varible construction 
+	// => this.entity = BackupConstruction
+	//    this.construction = Construction
+	private Construction construction;
+	
 	public Batiment (){
+		// on recupere la construction de l'entity backupConstruction
+		this.construction = this.entity.getConstruction();
 	}
 	public Batiment(int baseS, int baseC, int baseR, int att){
 		this();
-		this.getEntity()
-		((Construction) this.entity).setBaseSalarie(baseS);
-		((Construction) this.entity).setBaseCadre(baseC);
-		((Construction) this.entity).setModRisque(baseR);
-		((Construction) this.entity).setBaseAttractivite(att);
+		this.construction.setBaseSalarie(baseS);
+		this.construction.setBaseCadre(baseC);
+		this.construction.setModRisque(baseR);
+		this.construction.setBaseAttractivite(att);
 		this.prisePostes();
 	}
 	
 	public void ameliore(){
-		((T) this.entity).setNbSalarie(6);
+		 this.entity.setNbSalarie(6);
 	}
 	
 	public int getPostePourvu(){
-		return this.postePourvu;
+		return this.entity.getPostePourvu();
 	}
 	public void prisePostes(){
 		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
 		if (pEmbauche <= 0)
-			this.postePourvu = 0;
+			this.entity.setPostePourvu(0);
 		else{
-			if (pEmbauche > (this.entity.getNbSalarie()+this.nbCadre)/10)
-				this.postePourvu = (this.nbSalarie+this.nbCadre)/10;
+			if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+				this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
 			else
-				this.postePourvu = pEmbauche;
+				this.entity.setPostePourvu(pEmbauche);
 		}
 	}
 	public void ajoutPoste(){
 		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
-		if (pEmbauche > (this.nbSalarie+this.nbCadre)/10)
-			this.postePourvu = (this.nbSalarie+this.nbCadre)/10;
+		if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
 		else
-			this.postePourvu += pEmbauche;
+			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche); 
 	}
 }
