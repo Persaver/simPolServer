@@ -7,15 +7,15 @@ USE simpol;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  pseudo VARCHAR(30) NOT NULL,
+  login VARCHAR(30) NOT NULL,
   password VARCHAR(50) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS backup;
 CREATE TABLE backup (
   id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  date_creation DATETIME NOT NULL,
-  date_last DATETIME NOT NULL,
+  date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+  date_last DATETIME DEFAULT CURRENT_TIMESTAMP,
   user INT(3) NOT NULL
 )ENGINE=InnoDB;
 
@@ -41,6 +41,12 @@ CREATE TABLE backup_construction(
   construction INT(3) NOT NULL,
   x INT(5) NOT NULL,
   y INT(5) NOT NULL,
+  nbSalarie INT(5),
+  nbCadres INT(5),
+  risque INT(5),
+  budget INT(5),
+  attractive INT(5),
+  postePourvu INT(5),
   PRIMARY KEY (backup, construction)
 )ENGINE=InnoDB;
 
