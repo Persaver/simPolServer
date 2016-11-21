@@ -41,7 +41,6 @@ public class BackupConstruction extends HttpServlet {
 			
 			out.append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath());
 			
-
 		}else{
 			//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
 			response.getWriter().append("id"  +"Served at: ").append(request.getContextPath()).close();

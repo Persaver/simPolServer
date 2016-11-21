@@ -35,7 +35,7 @@ public class ConnexionSrv extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		if(request.getAttribute("id") != null){
 			out.append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath());
-			// si les filtres retourn un user
+			// si les filtres retourne un user
 			if(request.getAttribute("user") != null){
 				user = (User) request.getAttribute("user");
 				// on teste si deja une instance en court

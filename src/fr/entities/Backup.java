@@ -1,24 +1,25 @@
 package fr.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Backup implements Serializable{
 	private int id;
-	private String date_creation;
-	private String date_last;
+	private Date date_creation;
+	private Date date_last;
 	
 	private User user;
 
 	public Backup() {
 	}
 
-	public Backup(String date_creation, String date_last, User user) {
+	public Backup(Date date_creation, Date date_last, User user) {
 		this.date_creation = date_creation;
 		this.date_last = date_last;
 		this.user = user;
 	}
 
-	public Backup(int id, String date_creation, String date_last, User user) {
+	public Backup(int id, Date date_creation, Date date_last, User user) {
 		this.id = id;
 		this.date_creation = date_creation;
 		this.date_last = date_last;
@@ -33,19 +34,19 @@ public class Backup implements Serializable{
 		this.id = id;
 	}
 
-	public String getDate_creation() {
+	public Date getDate_creation() {
 		return date_creation;
 	}
 
-	public void setDate_creation(String date_creation) {
+	public void setDate_creation(Date date_creation) {
 		this.date_creation = date_creation;
 	}
 
-	public String getDate_last() {
+	public Date getDate_last() {
 		return date_last;
 	}
 
-	public void setDate_last(String date_last) {
+	public void setDate_last(Date date_last) {
 		this.date_last = date_last;
 	}
 

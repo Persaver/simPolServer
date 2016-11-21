@@ -7,36 +7,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.tools.RestTools;
-
-
-@WebServlet("/backups")
-public class Backup extends HttpServlet {
+/**
+ * Servlet implementation class SrvBackup
+ */
+@WebServlet(urlPatterns={"/backup,/backup/*"})
+public class SrvBackup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public Backup() {
+    public SrvBackup() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RestTools.getId(request);
-		if()
+		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-
-
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
-
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 }

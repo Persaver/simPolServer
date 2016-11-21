@@ -3,6 +3,7 @@ package fr.gameControlor;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.entities.Backup;
 import fr.entities.User;
 import fr.interfaces.IGameInstance;
 import fr.splExceptions.EntityException;
@@ -50,12 +51,12 @@ public class GameInstanceControlor {
 
 		return entity == null ? false : true;
 	}
-	public static IGameInstance createGameInstance(User user){
+	public static IGameInstance createGameInstance(User user,Backup backup){
 		IGameInstance gameInstance = null;
 		// on test si il existe deja une partie
 		
 		if(GameInstanceControlor.hasGameInstance(user)){
-			gameInstance = new GameInstance(user);
+			gameInstance = new GameInstance(user,backup);
 			GameInstanceControlor.addGameInstance(user, gameInstance);
 		}
 		

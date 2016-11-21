@@ -12,20 +12,19 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public User get(Integer id) {
 		ResultSet result;
+		User user = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("SELECT * FROM user WHERE id =?");
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				User user = new User(result.getInt("id"), result.getString("pseudo"), result.getString("password"));
+				user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
-
-		// TODO Auto-generated method stub
-		return null;
+		return user;
 	}
 
 	public User checklogin(String login, String password){
@@ -38,8 +37,7 @@ public class UserDAO extends DAO<User,Integer>{
 
 			results = prepare.executeQuery();
 			if(results.next()){
-
-				User user = new User(results.getInt("id"), results.getString("pseudo"), results.getString("password"));
+				User user = new User(results.getInt("id"), results.getString("login"), results.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
