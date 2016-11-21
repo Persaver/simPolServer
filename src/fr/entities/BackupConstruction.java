@@ -10,12 +10,12 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 	private int nbCadre;
 	private int risque; // pour 1000
 	private int budget;
-	private int attractivite; // 
+	private int attractivite; //
 	private int postePourvu;
 	//private List<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
-		
+
 	public BackupConstruction(Integer id,int x, int y, Construction construction, Backup backup) {
 		super(id);
 		this.x = x;
@@ -23,35 +23,35 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 		this.construction = construction;
 		this.backup = backup;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
-	
+
 	public void setX(int x) {
 		this.x = x;
 	}
-	
+
 	public int getY() {
 		return y;
 	}
-	
+
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public Construction getConstruction() {
 		return construction;
 	}
-	
+
 	public void setConstruction(Construction construction) {
 		this.construction = construction;
 	}
-	
+
 	public Backup getBackup() {
 		return backup;
 	}
-	
+
 	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
@@ -70,6 +70,6 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
+
 }
