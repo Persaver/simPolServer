@@ -1,7 +1,7 @@
 package fr.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 public class BackupConstruction extends AbstractEntity<Integer> {
 	private int x;
@@ -12,9 +12,17 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 	private int budget;
 	private int attractivite; //
 	private int postePourvu;
-	//private List<String,Integer> specificite;
+	private Map<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
+
+	public Map<String, Integer> getSpecificite() {
+		return this.specificite;
+	}
+
+	public void setSpecificite(Map<String, Integer> specificite) {
+		this.specificite = specificite;
+	}
 
 	public BackupConstruction(Integer id,int x, int y, Construction construction, Backup backup) {
 		super(id);
@@ -54,7 +62,55 @@ public class BackupConstruction extends AbstractEntity<Integer> {
 
 	public void setBackup(Backup backup) {
 		this.backup = backup;
+	}public int getNbSalarie() {
+		return nbSalarie;
 	}
+
+	public void setNbSalarie(int nbSalarie) {
+		this.nbSalarie = nbSalarie;
+	}
+
+	public int getNbCadre() {
+		return nbCadre;
+	}
+
+	public void setNbCadre(int nbCadre) {
+		this.nbCadre = nbCadre;
+	}
+
+	public int getRisque() {
+		return risque;
+	}
+
+	public void setRisque(int risque) {
+		this.risque = risque;
+	}
+
+	public int getBudget() {
+		return budget;
+	}
+
+	public void setBudget(int budget) {
+		this.budget = budget;
+	}
+
+	public int getAttractivite() {
+		return attractivite;
+	}
+
+	public void setAttractivite(int attractivite) {
+		this.attractivite = attractivite;
+	}
+
+	public int getPostePourvu() {
+		return postePourvu;
+	}
+
+	public void setPostePourvu(int postePourvu) {
+		this.postePourvu = postePourvu;
+	}
+
+
 
 	@Override
 	public String toString() {

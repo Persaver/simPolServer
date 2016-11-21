@@ -1,45 +1,55 @@
 package fr.gameEntities.batiments;
 
 import fr.entities.BackupConstruction;
+import fr.entities.Construction;
 import fr.gameEntities.AbstractGameEntity;
 import fr.gameEntities.indicateurs.Budget;
+import fr.gameEntities.indicateurs.Population;
 import fr.interfaces.IBatiment;
 import fr.interfaces.IEntity;
 
-public abstract class Batiment<T> extends AbstractGameEntity<T> implements IBatiment{
-	
-	// class de l'entities
-
-	protected int nbCadre;				// Pour leur permettre d'evoluer, les nombres de poste seront multiplies par 10
-	protected int nbSalarie;
-//	protected int prixBatiment;
-//	private int nbHautDiplome;
-//	private int nbSpecialiste;
-	
+public abstract class Batiment extends AbstractGameEntity<BackupConstruction> implements IBatiment{
+	// on cree une varible construction 
+	// => this.entity = BackupConstruction
+	//    this.construction = Construction
+	private Construction construction;
 	
 	public Batiment (){
+		// on recupere la construction de l'entity backupConstruction
+		this.construction = this.entity.getConstruction();
+	}
+	public Batiment(int baseS, int baseC, int baseR, int att){
+		this();
+		this.construction.setBaseSalarie(baseS);
+		this.construction.setBaseCadre(baseC);
+		this.construction.setModRisque(baseR);
+		this.construction.setBaseAttractivite(att);
+		this.prisePostes();
 	}
 	
-	public Batiment (int niv){
+	public void ameliore(){
+		 this.entity.setNbSalarie(6);
 	}
 	
-	public int coutPers(){
-		int p = this.nbCadre*Budget.getSalaireCadre()+
-				this.nbSalarie*Budget.getSalaireStandard()/*+
-				this.nbHautDiplome*Budget.getSalaireHautDiplome()+
-				this.nbSpecialiste*Budget.getSalaireSpecialiste()*/;
-		return p;
+	public int getPostePourvu(){
+		return this.entity.getPostePourvu();
 	}
-	
-	public void detruire(){
+	public void prisePostes(){
+		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
+		if (pEmbauche <= 0)
+			this.entity.setPostePourvu(0);
+		else{
+			if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+				this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
+			else
+				this.entity.setPostePourvu(pEmbauche);
+		}
 	}
-	public void ameliorer(){
+	public void ajoutPoste(){
+		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
+		if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
+		else
+			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche); 
 	}
-	public int getNbCadre() {
-		return nbCadre/10;
-	}
-	public int getNbSalarie() {
-		return nbSalarie/10;
-	}
-
 }
