@@ -68,6 +68,59 @@ CREATE TABLE sprite (
   h INT(5) NOT NULL
 )ENGINE=InnoDB;
 
+
+/******ADD BY GEOFFREY*******/
+
+
+DROP TABLE IF EXISTS commissariat;
+CREATE TABLE commissariat (
+  pInfluence INT NOT NULL,
+  tolerance INT,
+  recette INT,
+  indicecom INT,
+  /**Voir array list****/
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS ecole;
+/*****pas d attribut*****/
+
+
+DROP TABLE IF EXISTS batiment;
+/*****pas d attribut*****/
+
+DROP TABLE IF EXISTS budget;
+CREATE TABLE budget (
+ ageTravail INT,
+ ageRetraite INT,
+ chargeSalariale INT,
+ chargeCadre INT,
+ salaireStandard INT,
+ salaireCadre INT,
+ nbSalaries INT,
+ nbCadres INT
+  
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS criminalite;
+CREATE TABLE criminalite (
+indicMineur INT,
+crimeMineur INT,
+indicMoyen INT,
+crimeMoyen INT,
+indicGrave INT,
+crimeGrave INT,
+indicTerrorisme INT,
+crimeTerroriste INT
+  
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS population;
+fertilite INT,
+attractivite INT,
+/**** manque un attribut tableau***/
+
+
+
 ALTER TABLE backup
 ADD FOREIGN KEY(user) REFERENCES user (id);
 ALTER TABLE construction
