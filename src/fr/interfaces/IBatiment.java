@@ -9,7 +9,6 @@ import fr.indicateur.Population;
 public interface IBatiment  extends IGameEntity{
 	
 	public void ameliore();
-	public 
 	
 	public int getPostePourvu();
 	
