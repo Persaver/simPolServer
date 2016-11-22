@@ -37,6 +37,7 @@ CREATE TABLE construction (
 
 DROP TABLE IF EXISTS backup_construction;
 CREATE TABLE backup_construction(
+id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   backup INT(4) NOT NULL,
   construction INT(3) NOT NULL,
   x INT(5) NOT NULL,
@@ -47,8 +48,9 @@ CREATE TABLE backup_construction(
   budget INT(5),
   attractive INT(5),
   postePourvu INT(5),
-  PRIMARY KEY (backup, construction)
-)ENGINE=InnoDB;
+  /*** string representant les spe en format json */
+  specificites VARCHAR(200)
+  )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS backup_categorie;
 CREATE TABLE backup_categorie(
@@ -71,25 +73,9 @@ CREATE TABLE sprite (
 
 /******ADD BY GEOFFREY*******/
 
-
-DROP TABLE IF EXISTS commissariat;
-CREATE TABLE commissariat (
-  pInfluence INT NOT NULL,
-  tolerance INT,
-  recette INT,
-  indicecom INT,
-  /**Voir array list****/
-)ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS ecole;
-/*****pas d attribut*****/
-
-
-DROP TABLE IF EXISTS batiment;
-/*****pas d attribut*****/
-
 DROP TABLE IF EXISTS budget;
 CREATE TABLE budget (
+id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
  ageTravail INT,
  ageRetraite INT,
  chargeSalariale INT,
@@ -103,6 +89,7 @@ CREATE TABLE budget (
 
 DROP TABLE IF EXISTS criminalite;
 CREATE TABLE criminalite (
+id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 indicMineur INT,
 crimeMineur INT,
 indicMoyen INT,
@@ -115,8 +102,12 @@ crimeTerroriste INT
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS population;
+CREATE TABLE population(
+id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 fertilite INT,
-attractivite INT,
+attractivite INT
+
+)ENGINE=InnoDB;
 /**** manque un attribut tableau***/
 
 
