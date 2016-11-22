@@ -1,6 +1,5 @@
 DROP DATABASE IF EXISTS simpol;
-CREATE DATABASE simpol
-DEFAULT CHARACTER SET utf8;
+CREATE DATABASE simpol DEFAULT CHARACTER SET utf8;
 
 USE simpol;
 
@@ -49,78 +48,55 @@ id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   attractive INT(5),
   postePourvu INT(5),
   /*** string representant les spe en format json */
-  specificites VARCHAR(200)
+  specificites TEXT
   )ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS backup_categorie;
-CREATE TABLE backup_categorie(
-  backup INT(4) NOT NULL,
-  categorie INT(3) NOT NULL,
-  PRIMARY KEY (backup, categorie)
-)ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS sprite;
-CREATE TABLE sprite (
-  id INT(4) NOT NULL,
-  url VARCHAR(50) NOT NULL,
-  name VARCHAR(30) NOT NULL,
-  x INT(5) NOT NULL,
-  y INT(5) NOT NULL,
-  w INT(5) NOT NULL,
-  h INT(5) NOT NULL
-)ENGINE=InnoDB;
-
 
 /******ADD BY GEOFFREY*******/
 
 DROP TABLE IF EXISTS budget;
 CREATE TABLE budget (
-id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
- ageTravail INT,
- ageRetraite INT,
- chargeSalariale INT,
- chargeCadre INT,
- salaireStandard INT,
- salaireCadre INT,
- nbSalaries INT,
- nbCadres INT
-  
+  id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  ageTravail INT,
+  ageRetraite INT,
+  chargeSalariale INT,
+  chargeCadre INT,
+  salaireStandard INT,
+  salaireCadre INT,
+  nbSalaries INT,
+  nbCadres INT,
+  backup INT(4),
+  date DATETIME
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS criminalite;
 CREATE TABLE criminalite (
-id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-indicMineur INT,
-crimeMineur INT,
-indicMoyen INT,
-crimeMoyen INT,
-indicGrave INT,
-crimeGrave INT,
-indicTerrorisme INT,
-crimeTerroriste INT
-  
+  id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  indicMineur INT,
+  crimeMineur INT,
+  indicMoyen INT,
+  crimeMoyen INT,
+  indicGrave INT,
+  crimeGrave INT,
+  indicTerrorisme INT,
+  crimeTerroriste INT,
+  backup INT(4),
+  date DATETIME
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS population;
 CREATE TABLE population(
 id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 fertilite INT,
-attractivite INT
-
+attractivite INT,
+backup INT(4),
+date DATETIME
 )ENGINE=InnoDB;
 /**** manque un attribut tableau***/
 
-
-
-ALTER TABLE backup
-ADD FOREIGN KEY(user) REFERENCES user (id);
-ALTER TABLE construction
-ADD FOREIGN KEY(categorie) REFERENCES categorie (id);
-ALTER TABLE backup_construction
-ADD FOREIGN KEY(backup) REFERENCES backup (id);
-ALTER TABLE backup_construction
-ADD FOREIGN KEY(construction) REFERENCES construction (id);
-ALTER TABLE backup_categorie
-ADD FOREIGN KEY(categorie) REFERENCES categorie (id);
-ALTER TABLE backup_categorie
-ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE budget ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE criminalite ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE population ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE backup ADD FOREIGN KEY(user) REFERENCES user (id);
+ALTER TABLE construction ADD FOREIGN KEY(categorie) REFERENCES categorie (id);
+ALTER TABLE backup_construction ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE backup_construction ADD FOREIGN KEY(construction) REFERENCES construction (id);
