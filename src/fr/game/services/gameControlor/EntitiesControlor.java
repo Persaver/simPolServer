@@ -6,6 +6,7 @@ import java.util.Map;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
+import fr.interfaces.IEntity;
 import fr.interfaces.IGameEntity;
 import fr.splExceptions.EntityException;
 
@@ -19,10 +20,14 @@ public class EntitiesControlor {
 
 	private BackupDAO backupDAO =null;
 	private BackupConstructionDAO backupConstructionDAO= null;
+	private Integer idBackup = null;
 
-	public EntitiesControlor(BackupDAO backupDAO){
+	public EntitiesControlor(BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO, Integer idBackup){
 		super();
 		this.backupDAO = backupDAO;
+		this.backupConstructionDAO = backupConstructionDAO;
+		this.idBackup = idBackup;
+
 	}
 
 	public Integer addGameEntity(String key,IGameEntity entity){
@@ -72,6 +77,12 @@ public class EntitiesControlor {
 
 	// lance la sauvergarde de toutes les entitées
 	public void getGameEntitiesFromDao(){
+		Map<String,IGameEntity> entities = new HashMap<String,IGameEntity>();
+
+		List<IEntity> fromDao = this.backupConstructionDAO.getAllByBackUp(this.idBackup);
+
+
+
 
 	}
 
