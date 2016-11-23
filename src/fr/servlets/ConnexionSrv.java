@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.entities.User;
-import fr.gameControlor.GameInstance;
-import fr.gameControlor.GameInstanceControlor;
+import fr.game.services.gameControlor.GameInstance;
+import fr.game.services.gameControlor.GameInstanceControlor;
 import fr.interfaces.IGameInstance;
 import fr.splExceptions.SplException;
 import fr.tools.RestTools;
