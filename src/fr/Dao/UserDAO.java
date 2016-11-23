@@ -55,6 +55,12 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public void save(User element) {
 		// TODO Auto-generated method stub
+		ResultSet result;
+		PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO User (id,ageTravail,ageRetraite) VALUES (?,?,?)");
+		prepare.setInt(1, element.getId());
+		prepare.setString(2, element.getLogin());
+		prepare.setString(3, element.getPassword());
+		result = prepare.executeQuery();
 
 	}
 
