@@ -3,7 +3,7 @@ package fr.entities;
 import java.io.Serializable;
 
 public class User extends AbstractEntity<User> implements Serializable{
-	private int id;
+	private Integer id;
 	private String login;
 	private String password;
 
@@ -18,7 +18,7 @@ public class User extends AbstractEntity<User> implements Serializable{
 	}
 
 
-	public User(int id, String login, String password) {
+	public User(Integer id, String login, String password) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -26,7 +26,7 @@ public class User extends AbstractEntity<User> implements Serializable{
 	}
 
 	@Override
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 	public void setId(int id) {
