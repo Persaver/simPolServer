@@ -1,18 +1,21 @@
-package fr.game.services.indicateurs;;
+package fr.game.services.indicateurs;
 
-public class Criminalite {
-	private static int indicMineur;
-	private static int crimeMineur;
-	private static int indicMoyen;
-	private static int crimeMoyen;
-	private static int indicGrave;
-	private static int crimeGrave;
-	private static int indicTerrorisme;
-	private static int crimeTerroriste;
+import fr.Dao.CriminaliteDAO;
+import fr.entities.Crime;
+import fr.game.services.gameControlor.AbstractGameEntity;
+
+public class Criminalite extends AbstractGameEntity<Crime ,CriminaliteDAO> {
+	private Crime entity;
+	
+	public Criminalite(Crime crime, CriminaliteDAO criminaliteDAO){
+		super(crime,criminaliteDAO);
+		this.entity = (Crime) this.getEntity();
+	}
 	
 	// Une fonction pour calculer la valeur quotidienne du crime mineur
-	public static void actuIndicMin(Population p){
-		indicMineur = (int)((9*Budget.pauvrete(p)/*+insatisfaction(p)*/)*15*Math.sqrt((double)p.nbIndiv(0, 129))/3000);
+	public void actuIndicMin(Population p){
+		
+		this.entity.setIndicMineur((int)((9*Budget.pauvrete(p)/*+insatisfaction(p)*/)*15*Math.sqrt(p.nbIndiv(0, 129))/3000);
 	}	
 	public static void cumulMineur(int modif){
 		crimeMineur += modif;
@@ -22,7 +25,7 @@ public class Criminalite {
 	
 	// Une fonction pour calculer la valeur quotidienne du crime moyen
 	public static void actuIndicMo(Population p){
-		indicMineur = (int)((6.5*Budget.pauvrete(p)/*+3.5*insatisfaction(p)*/)*10*Math.sqrt((double)p.nbIndiv(0, 129))/3000);
+		indicMineur = (int)((6.5*Budget.pauvrete(p)/*+3.5*insatisfaction(p)*/)*10*Math.sqrt(p.nbIndiv(0, 129))/3000);
 	}	
 	public static void cumulMoyen(int modif){
 		crimeMoyen += modif;
@@ -32,7 +35,7 @@ public class Criminalite {
 	
 	// Une fonction pour calculer la valeur quotidienne du crime grave
 	public static void actuIndicG(Population p){
-		indicGrave = (int)((3.5*Budget.pauvrete(p)/*+6.5*insatisfaction(p)*/)*5*Math.sqrt((double)p.nbIndiv(0, 129))/3000);
+		indicGrave = (int)((3.5*Budget.pauvrete(p)/*+6.5*insatisfaction(p)*/)*5*Math.sqrt(p.nbIndiv(0, 129))/3000);
 	}	
 	public static void cumulGrave(int modif){
 		crimeGrave += modif;
@@ -42,7 +45,7 @@ public class Criminalite {
 	
 	// Une fonction pour calculer la valeur quotidienne du terrorisme
 	public static void actuIndicT(Population p){
-		indicTerrorisme = (int)((Budget.pauvrete(p)/*+9*insatisfaction(p)*/)*Math.sqrt((double)p.nbIndiv(0, 129))/3000);
+		indicTerrorisme = (int)((Budget.pauvrete(p)/*+9*insatisfaction(p)*/)*Math.sqrt(p.nbIndiv(0, 129))/3000);
 	}	
 	public static void cumulTerreur(int modif){
 		crimeTerroriste += modif;

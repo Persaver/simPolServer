@@ -12,6 +12,11 @@ public abstract class AbstractGameEntity<T,D extends DAO> implements IGameEntity
 	protected D entityDao = null;
 	protected boolean isModify = false;
 
+	public AbstractGameEntity(T entity,D entityDao){
+		this.entity = entity;
+		this.entityDao = entityDao;
+	}
+	
 	@Override
 	public void setEntity(IEntity entity) {
 		this.entity = (T) entity;
