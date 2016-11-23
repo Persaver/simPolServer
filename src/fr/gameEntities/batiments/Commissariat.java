@@ -3,12 +3,13 @@ package fr.gameEntities.batiments;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.batiment.Commissariat;
+
+import fr.gameEntities.batiments.Commissariat;
 import fr.entities.BackupConstruction;
 import fr.gameEntities.indicateurs.Budget;
-import fr.indicateur.Criminalite;
-import fr.indicateur.Education;
-import fr.indicateur.Population;
+import fr.gameEntities.indicateurs.Criminalite;
+//import fr.gameEntities.indicateurs.Education;
+import fr.gameEntities.indicateurs.Population;
 import fr.interfaces.IBatiment;
 import fr.interfaces.IEntity;
 

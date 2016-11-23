@@ -59,6 +59,20 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+		
+		ResultSet result;
+		PreparedStatement prepare;
+		
+		try {
+			prepare = this.connect.prepareStatement("DELETE FROM User where id= ? ");
+			prepare.setInt(1, id);
+			result = prepare.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 
 	}
 

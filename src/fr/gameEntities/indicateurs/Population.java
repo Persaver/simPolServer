@@ -1,4 +1,4 @@
-package fr.indicateur;
+package fr.gameEntities.indicateurs;
 
 public class Population extends Thread {
 	private static int[][] popTab = new int[130][12];

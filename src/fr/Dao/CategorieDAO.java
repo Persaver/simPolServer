@@ -37,6 +37,7 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+		
 
 	}
 
