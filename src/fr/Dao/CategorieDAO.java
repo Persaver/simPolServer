@@ -12,13 +12,14 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 
 	@Override
 	public Categorie get(Integer id) {
+		Categorie categorie= null;
 		ResultSet result;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * From categorie where id = ?");
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result != null){
-				Categorie categorie = new Categorie(result.getInt("id"), result.getString("libelle"));
+				categorie = new Categorie(result.getInt("id"), result.getString("libelle"));
 				return categorie;
 			}
 		} catch (SQLException e) {
@@ -56,11 +57,12 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 				Categorie categorie = new Categorie(result.getInt("categorie.id"), result.getString("libelle"));
 				categories.add(categorie);
 			}
+			return categories;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return categories ;
+		return null ;
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 	}

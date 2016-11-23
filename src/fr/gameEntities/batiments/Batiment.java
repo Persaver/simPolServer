@@ -6,14 +6,13 @@ import fr.gameEntities.AbstractGameEntity;
 import fr.gameEntities.indicateurs.Budget;
 import fr.gameEntities.indicateurs.Population;
 import fr.interfaces.IBatiment;
-import fr.interfaces.IEntity;
 
 public abstract class Batiment extends AbstractGameEntity<BackupConstruction> implements IBatiment{
-	// on cree une varible construction 
+	// on cree une varible construction
 	// => this.entity = BackupConstruction
 	//    this.construction = Construction
 	private Construction construction;
-	
+
 	public Batiment (){
 		// on recupere la construction de l'entity backupConstruction
 		this.construction = this.entity.getConstruction();
@@ -26,30 +25,38 @@ public abstract class Batiment extends AbstractGameEntity<BackupConstruction> im
 		this.construction.setBaseAttractivite(att);
 		this.prisePostes();
 	}
-	
+
+	@Override
 	public void ameliore(){
-		 this.entity.setNbSalarie(6);
+		this.entity.setNbSalarie(6);
 	}
-	
+
+	@Override
 	public int getPostePourvu(){
 		return this.entity.getPostePourvu();
 	}
+
+	@Override
 	public void prisePostes(){
 		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
-		if (pEmbauche <= 0)
+		if (pEmbauche <= 0) {
 			this.entity.setPostePourvu(0);
-		else{
-			if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+		} else{
+			if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10) {
 				this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
-			else
+			} else {
 				this.entity.setPostePourvu(pEmbauche);
+			}
 		}
 	}
+
+	@Override
 	public void ajoutPoste(){
 		int pEmbauche = Population.nbIndiv(Budget.getAgeTravail(), Budget.getAgeRetraite())-getPostesPourvus();
-		if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10)
+		if (pEmbauche > (this.entity.getNbSalarie()+this.entity.getNbCadre())/10) {
 			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
-		else
-			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche); 
+		} else {
+			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche);
+		}
 	}
 }

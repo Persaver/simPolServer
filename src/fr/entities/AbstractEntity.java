@@ -7,25 +7,29 @@ import com.google.gson.Gson;
 import fr.interfaces.IEntity;
 import fr.interfaces.IJsonEntity;
 
-public class AbstractEntity<T> implements Serializable,IJsonEntity,IEntity{
-	protected T id;
-	
-	public AbstractEntity(){
-		this.id = null;
+public abstract class AbstractEntity<T> implements Serializable,IJsonEntity,IEntity{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	protected Integer id;
+
+	protected AbstractEntity(){
+		this(null);
 	}
-	
-	public AbstractEntity(T id){
-		super();
+
+	public AbstractEntity(Integer id){
 		this.id = id;
 	}
-	
-	public T getId(){
-		return id;
+
+	public Integer getId(){
+		return this.id;
 	};
+	@Override
 	public String toJson(){
 		Gson gs = new Gson();
 		return gs.toJson(this);
-		
+
 	}
-	
+
 }

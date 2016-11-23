@@ -2,29 +2,33 @@ package fr.entities;
 
 import java.io.Serializable;
 
-public class Categorie implements Serializable{
+public class Categorie extends AbstractEntity<Categorie> implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String libelle;
-	
+
 	public Categorie() {
 	}
 
-	public Categorie(int id, String libelle) {
+	public Categorie(Integer id) {
+		super(id);
+	}
+	public Categorie(Integer id, String libelle) {
 		this.id = id;
 		this.libelle = libelle;
 	}
 
-	public int getId() {
-		return id;
+	@Override
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	public String getLibelle() {
-		return libelle;
+		return this.libelle;
 	}
 
 	public void setLibelle(String libelle) {
@@ -35,11 +39,11 @@ public class Categorie implements Serializable{
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Categorie [id=");
-		builder.append(id);
+		builder.append(this.id);
 		builder.append(", libelle=");
-		builder.append(libelle);
+		builder.append(this.libelle);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

@@ -1,9 +1,6 @@
 package fr.entities;
 
-import java.io.Serializable;
-import java.util.Map;
-
-public class Construction extends AbstractEntity<Integer>{
+public class Construction extends AbstractEntity<Construction>{
 
 	private static final long serialVersionUID = 1L;
 	private String designation;
@@ -12,18 +9,21 @@ public class Construction extends AbstractEntity<Integer>{
 	private int w;
 	private int baseSalarie;
 	private int baseCadre;
-	private int baseRisque = 0;
+	private int baseRisque;
 	private int baseAttractivite;
 	private int modSalarie;
 	private int modCadre;
 	private int modRisque;
 	private int modAttractivite;
-	private Map<String, Integer> specificite;
+	private String specificites;
 	private Categorie categorie;
 
 	public Construction() {
 		super();
+	}
 
+	public Construction(Integer id) {
+		super(id);
 	}
 
 	public Construction(String designation, int h, int w, String url, Categorie categorie) {
@@ -34,7 +34,7 @@ public class Construction extends AbstractEntity<Integer>{
 		this.url = url;
 		this.categorie = categorie;
 	}
-	
+
 	public Construction(Integer id, String designation, int h, int w, String url, Categorie categorie) {
 		super(id);
 		this.designation = designation;
@@ -60,6 +60,45 @@ public class Construction extends AbstractEntity<Integer>{
 		this.url = url;
 	}
 
+	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
+			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificites) {
+		super(id);
+		this.designation = designation;
+		this.url = url;
+		this.h = h;
+		this.w = w;
+		this.baseSalarie = baseSalarie;
+		this.baseCadre = baseCadre;
+		this.baseRisque = baseRisque;
+		this.baseAttractivite = baseAttractivite;
+		this.modSalarie = modSalarie;
+		this.modCadre = modCadre;
+		this.modRisque = modRisque;
+		this.modAttractivite = modAttractivite;
+		this.specificites = specificites;
+	}
+
+	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
+			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificites,
+			Categorie categorie) {
+		super(id);
+		this.designation = designation;
+		this.url = url;
+		this.h = h;
+		this.w = w;
+		this.baseSalarie = baseSalarie;
+		this.baseCadre = baseCadre;
+		this.baseRisque = baseRisque;
+		this.baseAttractivite = baseAttractivite;
+		this.modSalarie = modSalarie;
+		this.modCadre = modCadre;
+		this.modRisque = modRisque;
+		this.modAttractivite = modAttractivite;
+		this.specificites = specificites;
+		this.categorie = categorie;
+	}
+
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
@@ -69,7 +108,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public String getDesignation() {
-		return designation;
+		return this.designation;
 	}
 
 	public void setDesignation(String designation) {
@@ -77,7 +116,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getH() {
-		return h;
+		return this.h;
 	}
 
 	public void setH(int h) {
@@ -85,7 +124,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getW() {
-		return w;
+		return this.w;
 	}
 
 	public void setW(int w) {
@@ -93,7 +132,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public Categorie getCategorie() {
-		return categorie;
+		return this.categorie;
 	}
 
 	public void setCategorie(Categorie categorie) {
@@ -101,7 +140,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	public void setUrl(String url) {
@@ -109,7 +148,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getBaseSalarie() {
-		return baseSalarie;
+		return this.baseSalarie;
 	}
 
 	public void setBaseSalarie(int baseSalarie) {
@@ -117,7 +156,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getBaseCadre() {
-		return baseCadre;
+		return this.baseCadre;
 	}
 
 	public void setBaseCadre(int baseCadre) {
@@ -125,7 +164,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getBaseRisque() {
-		return baseRisque;
+		return this.baseRisque;
 	}
 
 	public void setBaseRisque(int baseRisque) {
@@ -133,7 +172,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getBaseAttractivite() {
-		return baseAttractivite;
+		return this.baseAttractivite;
 	}
 
 	public void setBaseAttractivite(int baseAttractivite) {
@@ -141,7 +180,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getModSalarie() {
-		return modSalarie;
+		return this.modSalarie;
 	}
 
 	public void setModSalarie(int modSalarie) {
@@ -149,7 +188,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getModCadre() {
-		return modCadre;
+		return this.modCadre;
 	}
 
 	public void setModCadre(int modCadre) {
@@ -157,7 +196,7 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getModRisque() {
-		return modRisque;
+		return this.modRisque;
 	}
 
 	public void setModRisque(int modRisque) {
@@ -165,40 +204,40 @@ public class Construction extends AbstractEntity<Integer>{
 	}
 
 	public int getModAttractivite() {
-		return modAttractivite;
+		return this.modAttractivite;
 	}
 
 	public void setModAttractivite(int modAttractivite) {
 		this.modAttractivite = modAttractivite;
 	}
 
-	public Map<String, Integer> getSpecificite() {
-		return specificite;
+	public String getSpecificite() {
+		return this.specificites;
 	}
 
-	public void setSpecificite(Map<String, Integer> specificite) {
-		this.specificite = specificite;
+	public void setSpecificite(String specificites) {
+		this.specificites = specificites;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Construction [id=");
-		builder.append(id);
+		builder.append(this.id);
 		builder.append(", designation=");
-		builder.append(designation);
+		builder.append(this.designation);
 		builder.append(", h=");
-		builder.append(h);
+		builder.append(this.h);
 		builder.append(", w=");
-		builder.append(w);
+		builder.append(this.w);
 		builder.append(", url=");
-		builder.append(url);
+		builder.append(this.url);
 		builder.append(", categorie=");
-		builder.append(categorie);
+		builder.append(this.categorie);
 		builder.append("]");
 		return builder.toString();
 	}
