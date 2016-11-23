@@ -1,6 +1,5 @@
 package fr.Dao;
 
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,14 +14,32 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	@Override
 	public Construction get(Integer id) {
 		ResultSet result;
-		try 
+		Construction construction = null;
+		Categorie categorie = null;
+		try
 		{
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from construction where id = ?");
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result != null){
 				result.first();
-				Construction construction = new Construction(result.getInt("id"), result.getString("designation"), result.getInt("h"), result.getInt("w"), result.getString("url"));
+				construction = new Construction(
+						result.getInt("id"),
+						result.getString("designation"),
+						result.getString("url"),
+						result.getInt("h"),
+						result.getInt("w"),
+						result.getInt("baseSalarie"),
+						result.getInt("baseCadre"),
+						result.getInt("baseRisque"),
+						result.getInt("baseAttractivite"),
+						result.getInt("modSalarie"),
+						result.getInt("modCadre"),
+						result.getInt("modRisque"),
+						result.getInt("modAttractivite"),
+						result.getString("specificites"));
+				categorie = new Categorie(result.getInt("id"));
+				construction.setCategorie(categorie);
 				return construction;
 			}
 		} catch (SQLException e) {
@@ -35,38 +52,53 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	@Override
 	public void save(Construction element) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Construction element) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
+	@Override
 	public List<Construction> getAll() {
 		ResultSet result;
 		List<Construction> constructions = new ArrayList<Construction>();
 		try {
-			result = this.connect.createStatement().executeQuery("Select * from construction inner join categorie on construction.categorie = categorie.id");
+			result = this.connect.createStatement().executeQuery("Select * from construction");
 			while(result.next()){
-				Categorie categorie = new Categorie(result.getInt("categorie.id"), result.getString("libelle"));
-				Construction construction = new Construction(result.getInt("id"), result.getString("designation"), result.getInt("h"), result.getInt("w"), result.getString("url"), categorie);
+				Construction construction = new Construction(
+						result.getInt("id"),
+						result.getString("designation"),
+						result.getString("url"),
+						result.getInt("h"),
+						result.getInt("w"),
+						result.getInt("baseSalarie"),
+						result.getInt("baseCadre"),
+						result.getInt("baseRisque"),
+						result.getInt("baseAttractivite"),
+						result.getInt("modSalarie"),
+						result.getInt("modCadre"),
+						result.getInt("modRisque"),
+						result.getInt("modAttractivite"),
+						result.getString("specificites"));
+				Categorie categorie = new Categorie(result.getInt("id"));
+				construction.setCategorie(categorie);
 				constructions.add(construction);
 			}
+			return constructions;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return constructions ;
-		// TODO Auto-generated method stub
-		
+		return constructions;
 	}
-	
+
 }

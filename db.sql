@@ -15,6 +15,7 @@ CREATE TABLE backup (
   id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
   date_last DATETIME DEFAULT CURRENT_TIMESTAMP,
+  nbj INT(5) NOT NULL DEFAULT 0;
   user INT(3) NOT NULL
 )ENGINE=InnoDB;
 
@@ -31,12 +32,21 @@ CREATE TABLE construction (
   w INT(3) NOT NULL,
   h INT(3) NOT NULL,
   price DECIMAL(7,2) NOT NULL,
+  baseSalarie INT(5) NOT NULL,
+  baseCadre INT(5) NOT NULL,
+  baseRisque INT(5) DEFAULT 0,
+  baseAttractivite INT(5) NOT NULL,
+  modSalarie INT(5) NOT NULL,
+  modCadre INT(5) NOT NULL,
+  modRisque INT(5) NOT NULL,
+  modAttractivite INT(5) NOT NULL,
+  specificites TEXT,
   categorie INT(3) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS backup_construction;
 CREATE TABLE backup_construction(
-id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   backup INT(4) NOT NULL,
   construction INT(3) NOT NULL,
   x INT(5) NOT NULL,
@@ -64,8 +74,7 @@ CREATE TABLE budget (
   salaireCadre INT,
   nbSalaries INT,
   nbCadres INT,
-  backup INT(4),
-  date DATETIME
+  backup INT(4)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS criminalite;
@@ -79,8 +88,7 @@ CREATE TABLE criminalite (
   crimeGrave INT,
   indicTerrorisme INT,
   crimeTerroriste INT,
-  backup INT(4),
-  date DATETIME
+  backup INT(4)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS population;
@@ -88,8 +96,7 @@ CREATE TABLE population(
 id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 fertilite INT,
 attractivite INT,
-backup INT(4),
-date DATETIME
+backup INT(4)
 )ENGINE=InnoDB;
 /**** manque un attribut tableau***/
 
