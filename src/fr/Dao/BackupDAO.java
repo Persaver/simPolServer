@@ -23,11 +23,11 @@ public class BackupDAO extends DAO<Backup,Integer>{
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				backup = new Backup(
-						result.getInt("id"),
-						result.getDate("date_creation"),
-						result.getDate("date_last"),
-						result.getInt("nbj"));
+				backup = new Backup();
+				backup.setId(result.getInt("id"));
+				backup.setDate_creation(result.getDate("date_creation"));
+				backup.setDate_last(result.getDate("date_last"));
+				backup.setNbj(result.getInt("nbj"));
 				user = new User(result.getInt("user"));
 				backup.setUser(user);
 			}
@@ -47,11 +47,11 @@ public class BackupDAO extends DAO<Backup,Integer>{
 			prepare.setInt(1, userId);
 			result = prepare.executeQuery();
 			if(result!= null){
-				backup = new Backup(
-						result.getInt("id"),
-						result.getDate("date_creation"),
-						result.getDate("date_last"),
-						result.getInt("nbj"));
+				backup = new Backup();
+				backup.setId(result.getInt("id"));
+				backup.setDate_creation(result.getDate("date_creation"));
+				backup.setDate_last(result.getDate("date_last"));
+				backup.setNbj(result.getInt("nbj"));
 				user = new User(userId);
 				backup.setUser(user);
 			}
@@ -68,8 +68,8 @@ public class BackupDAO extends DAO<Backup,Integer>{
 			String sql = "INSERT INTO backup (date_creation, nbj, user) VALUES (?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setDate(1, element.getDate_creation());
-			statement.setInt(2, element.getUser().getId());
-			statement.setInt(3, element.getNbj());
+			statement.setInt(2, element.getNbj());
+			statement.setInt(3, element.getUser().getId());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
@@ -105,11 +105,11 @@ public class BackupDAO extends DAO<Backup,Integer>{
 		try {
 			result = this.connect.createStatement().executeQuery("Select * from backup");
 			while(result.next()){
-				Backup backup = new Backup(
-						result.getInt("id"),
-						result.getDate("date_creation"),
-						result.getDate("date_last"),
-						result.getInt("nbj"));
+				Backup backup = new Backup();
+				backup.setId(result.getInt("id"));
+				backup.setDate_creation(result.getDate("date_creation"));
+				backup.setDate_last(result.getDate("date_last"));
+				backup.setNbj(result.getInt("nbj"));
 				User user = new User(result.getInt("user"));
 				backup.setUser(user);
 				backups.add(backup);
@@ -127,5 +127,3 @@ public class BackupDAO extends DAO<Backup,Integer>{
 
 	}
 }
-
-

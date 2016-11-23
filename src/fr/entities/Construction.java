@@ -5,16 +5,16 @@ public class Construction extends AbstractEntity<Construction>{
 	private static final long serialVersionUID = 1L;
 	private String designation;
 	private String url;
-	private int h;
-	private int w;
-	private int baseSalarie;
-	private int baseCadre;
-	private int baseRisque;
-	private int baseAttractivite;
-	private int modSalarie;
-	private int modCadre;
-	private int modRisque;
-	private int modAttractivite;
+	private Integer h;
+	private Integer w;
+	private Integer baseSalarie;
+	private Integer baseCadre;
+	private Integer baseRisque;
+	private Integer baseAttractivite;
+	private Integer modSalarie;
+	private Integer modCadre;
+	private Integer modRisque;
+	private Integer modAttractivite;
 	private String specificite;
 	private Categorie categorie;
 
@@ -23,63 +23,11 @@ public class Construction extends AbstractEntity<Construction>{
 	}
 
 	public Construction(Integer id) {
-		super(id);
+		this(id, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
-	public Construction(String designation, int h, int w, String url, Categorie categorie) {
-		this();
-		this.designation = designation;
-		this.h = h;
-		this.w = w;
-		this.url = url;
-		this.categorie = categorie;
-	}
-
-	public Construction(Integer id, String designation, int h, int w, String url, Categorie categorie) {
-		super(id);
-		this.designation = designation;
-		this.h = h;
-		this.w = w;
-		this.url = url;
-		this.categorie = categorie;
-	}
-
-	public Construction(String designation, int h, int w, String url) {
-		this();
-		this.designation = designation;
-		this.h = h;
-		this.w = w;
-		this.url = url;
-	}
-
-	public Construction(int id, String designation, int h, int w, String url) {
-		super(id);
-		this.designation = designation;
-		this.h = h;
-		this.w = w;
-		this.url = url;
-	}
-
-	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
-			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificite) {
-		super(id);
-		this.designation = designation;
-		this.url = url;
-		this.h = h;
-		this.w = w;
-		this.baseSalarie = baseSalarie;
-		this.baseCadre = baseCadre;
-		this.baseRisque = baseRisque;
-		this.baseAttractivite = baseAttractivite;
-		this.modSalarie = modSalarie;
-		this.modCadre = modCadre;
-		this.modRisque = modRisque;
-		this.modAttractivite = modAttractivite;
-		this.specificite = specificite;
-	}
-
-	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
-			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificite,
+	public Construction(Integer id, String designation, String url, Integer h, Integer w, Integer baseSalarie, Integer baseCadre, Integer baseRisque,
+			Integer baseAttractivite, Integer modSalarie, Integer modCadre, Integer modRisque, Integer modAttractivite, String specificite,
 			Categorie categorie) {
 		super(id);
 		this.designation = designation;

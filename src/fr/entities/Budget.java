@@ -16,16 +16,44 @@ public class Budget extends AbstractEntity<Budget> {
 	private Integer salaireCadre;
 	private Integer nbSalaries;
 	private Integer nbCadres;
-	private Integer backup;
+	private Backup backup;
 
 
 	public Budget(){
-
 	}
 
+	public Budget(Integer id){
+		super(id);
+	}
+
+	public Budget(Integer age, Integer ageRetraite, Integer chargeSalariale, Integer chargeCadre, Integer salaireStandard,
+			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Backup backup) {
+		this.age = age;
+		this.ageRetraite = ageRetraite;
+		this.chargeSalariale = chargeSalariale;
+		this.chargeCadre = chargeCadre;
+		this.salaireStandard = salaireStandard;
+		this.salaireCadre = salaireCadre;
+		this.nbSalaries = nbSalaries;
+		this.nbCadres = nbCadres;
+		this.backup = backup;
+	}
 
 	public Budget(Integer id, Integer age, Integer ageRetraite, Integer chargeSalariale, Integer chargeCadre, Integer salaireStandard,
-			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Integer backup) {
+			Integer salaireCadre, Integer nbSalaries, Integer nbCadres) {
+		super(id);
+		this.age = age;
+		this.ageRetraite = ageRetraite;
+		this.chargeSalariale = chargeSalariale;
+		this.chargeCadre = chargeCadre;
+		this.salaireStandard = salaireStandard;
+		this.salaireCadre = salaireCadre;
+		this.nbSalaries = nbSalaries;
+		this.nbCadres = nbCadres;
+	}
+
+	public Budget(Integer id, Integer age, Integer ageRetraite, Integer chargeSalariale, Integer chargeCadre, Integer salaireStandard,
+			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Backup backup) {
 		super(id);
 		this.age = age;
 		this.ageRetraite = ageRetraite;
@@ -38,14 +66,6 @@ public class Budget extends AbstractEntity<Budget> {
 		this.backup = backup;
 	}
 
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public Integer getAge() {
 		return this.age;
 	}
@@ -103,10 +123,10 @@ public class Budget extends AbstractEntity<Budget> {
 	public void setNbCadres(Integer nbCadres) {
 		this.nbCadres = nbCadres;
 	}
-	public Integer getBackup() {
+	public Backup getBackup() {
 		return this.backup;
 	}
-	public void setBackup(Integer backup) {
+	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
 
