@@ -2,60 +2,61 @@ package fr.entities;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User extends AbstractEntity<User> implements Serializable{
 	private int id;
-	private String pseudo;
+	private String login;
 	private String password;
-		
-	public User(String pseudo, String password) {
+
+	public User(){
 		super();
-		this.pseudo = pseudo;
-		this.password = password;
 	}
 
-	public User(int id, String pseudo, String password) {
+
+
+	public User(Integer id){
+		super(id);
+	}
+
+
+	public User(int id, String login, String password) {
 		super();
 		this.id = id;
-		this.pseudo = pseudo;
+		this.login = login;
 		this.password = password;
 	}
 
+	@Override
 	public int getId() {
-		return id;
+		return this.id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getPseudo() {
-		return pseudo;
+	public String getLogin() {
+		return this.login;
 	}
-
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
+	public void setLogin(String login) {
+		this.login = login;
 	}
-
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", pseudo=");
-		builder.append(pseudo);
+		builder.append(this.id);
+		builder.append(", login=");
+		builder.append(this.login);
 		builder.append(", password=");
-		builder.append(password);
+		builder.append(this.password);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
 }

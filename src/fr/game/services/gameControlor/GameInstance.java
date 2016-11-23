@@ -1,5 +1,6 @@
 package fr.game.services.gameControlor;
 
+import fr.Dao.BackupDAO;
 import fr.entities.Backup;
 import fr.entities.User;
 import fr.interfaces.IGameInstance;
@@ -10,13 +11,14 @@ public class GameInstance implements IGameInstance{
 	private User user = null;
 	private EntitiesControlor entityControl = null;
 	private Backup backup = null;
+	private BackupDAO backupDAO = null;
 
-	public GameInstance(User user, Backup backup){
+	public GameInstance(User user, BackupDAO backupDAO){
 		if(user != null){
 			this.user = user;
 		}
 		this.entityControl = new EntitiesControlor();
-		this.backup = backup;
+		this.backup = this.backup;
 	}
 
 	public String getKey() {

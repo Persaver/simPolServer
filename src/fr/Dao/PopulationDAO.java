@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.gameEntities.indicateurs.Population;
+import fr.game.services.indicateurs.Population;
 
 public class PopulationDAO extends DAO<Population, Integer> {
 
