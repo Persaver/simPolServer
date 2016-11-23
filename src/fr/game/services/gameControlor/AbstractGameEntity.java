@@ -6,7 +6,7 @@ import fr.interfaces.IGameEntity;
 
 //recois le type de l'entites a stocker
 
-public abstract class AbstractGameEntity<T,D extends DAO> implements IGameEntity{
+public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Integer> > implements IGameEntity{
 
 	protected T entity = null;
 	protected D entityDao = null;
@@ -19,7 +19,7 @@ public abstract class AbstractGameEntity<T,D extends DAO> implements IGameEntity
 	
 	@Override
 	public void setEntity(IEntity entity) {
-		this.entity = (T) entity;
+		this.entity =  (T) entity;
 	}
 
 	@Override

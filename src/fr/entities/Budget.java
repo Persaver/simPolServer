@@ -1,6 +1,6 @@
 package fr.entities;
 
-public class Budget extends AbstractEntity<Budget> {
+public class Budget extends AbstractEntity<Budget,Integer> {
 
 	/**
 	 *

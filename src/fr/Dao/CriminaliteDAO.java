@@ -69,4 +69,10 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 		return historique;
 	}
 
+	@Override
+	public List<Criminalite> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
