@@ -1,6 +1,10 @@
 package fr.entities;
 
-public class Crime {
+public class Criminalite extends AbstractEntity<Criminalite>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int indicMineur;
 	private int crimeMineur;
 	private int indicMoyen;

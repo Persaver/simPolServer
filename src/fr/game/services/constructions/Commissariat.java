@@ -1,10 +1,11 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.batiment.Commissariat;
 import fr.entities.BackupConstruction;
+import fr.game.services.batiments.Batiment;
 import fr.game.services.indicateurs.Budget;
 import fr.indicateur.Criminalite;
 import fr.indicateur.Education;
@@ -12,7 +13,7 @@ import fr.indicateur.Population;
 import fr.interfaces.IBatiment;
 import fr.interfaces.IEntity;
 
-public class Commissariat extends Batiment<BackupConstruction>{
+public class Commissariat extends AbstractConstructionService{
 	private int pInfluence;
 	private static int tolerance = 0;			// en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population
 	private int recette;

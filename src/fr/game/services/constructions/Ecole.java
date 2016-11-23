@@ -1,8 +1,9 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
+import fr.game.services.batiments.Batiment;
 import fr.game.services.indicateurs.Budget;
 
-public class Ecole extends Batiment {
+public class Ecole extends AbstractConstructionService {
 	
 	public Ecole (){
 		this.nbSalarie = 40;

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.game.services.indicateurs.Population;
+import fr.entities.Population;
 
 public class PopulationDAO extends DAO<Population, Integer> {
 
@@ -79,6 +79,12 @@ public class PopulationDAO extends DAO<Population, Integer> {
 			e.printStackTrace();
 		}
 		return historique;
+	}
+
+	@Override
+	public List<Population> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
