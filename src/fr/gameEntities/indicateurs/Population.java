@@ -1,4 +1,4 @@
-package fr.indicateur;
+package fr.gameEntities.indicateurs;
 
 public class Population extends Thread {
 	private static int[][] popTab = new int[130][12];
@@ -195,5 +195,23 @@ public class Population extends Thread {
 	}
 	public static void modAttraction(int mod){
 		attractivite += mod;
+	}
+	public static int[][] getPopTab() {
+		return popTab;
+	}
+	public static void setPopTab(int[][] popTab) {
+		Population.popTab = popTab;
+	}
+	public static int getFertilite() {
+		return fertilite;
+	}
+	public static void setFertilite(int fertilite) {
+		Population.fertilite = fertilite;
+	}
+	public static int getAttractivite() {
+		return attractivite;
+	}
+	public static void setAttractivite(int attractivite) {
+		Population.attractivite = attractivite;
 	}
 }
