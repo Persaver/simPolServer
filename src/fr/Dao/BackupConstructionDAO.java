@@ -55,6 +55,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	@Override
 	public void save(BackupConstruction element) {
+
 		// TODO Auto-generated method stub
 
 	}

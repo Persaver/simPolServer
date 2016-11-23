@@ -12,19 +12,20 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public User get(Integer id) {
 		ResultSet result;
-		User user = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("SELECT * FROM user WHERE id =?");
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
+				User user = new User(result.getInt("id"), result.getString("pseudo"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
-		return user;
+
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public User checklogin(String login, String password){
@@ -37,7 +38,8 @@ public class UserDAO extends DAO<User,Integer>{
 
 			results = prepare.executeQuery();
 			if(results.next()){
-				User user = new User(results.getInt("id"), results.getString("login"), results.getString("password"));
+
+				User user = new User(results.getInt("id"), results.getString("pseudo"), results.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
@@ -57,6 +59,20 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+
+		ResultSet result;
+		PreparedStatement prepare;
+
+		try {
+			prepare = this.connect.prepareStatement("DELETE FROM User where id= ? ");
+			prepare.setInt(1, id);
+			result = prepare.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 
 	}
 
