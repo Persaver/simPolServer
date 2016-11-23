@@ -8,7 +8,7 @@ import fr.game.services.indicateurs.Budget;
 import fr.game.services.indicateurs.Population;
 import fr.interfaces.IBatiment;
 
-public abstract class Batiment extends AbstractGameEntity<BackupConstruction> implements IBatiment{
+public abstract class Batiment extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IBatiment{
 	// on cree une varible construction
 	// => this.entity = BackupConstruction
 	//    this.construction = Construction
