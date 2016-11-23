@@ -3,6 +3,7 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.Budget;
@@ -106,7 +107,57 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	@Override
 	public List<Budget> getAll() {
 		// TODO Auto-generated method stub
+		//creation de liste de buget
+		List<Budget> list = new ArrayList<Budget>();
+		ResultSet result;
+		PreparedStatement prepare;
+		//prepare = this.connect.prepareStatement("select * from budget ;");
+		//prepare.setInt(1, backup);
+		 
+		 
+		//select * from budget where idbackup=?,
+		
 		return null;
+	
+	}
+	
+	
+	
+	public List<Budget> getAllByBackup(Integer backup) {
+		// TODO Auto-generated method stub
+		//creation de liste de buget
+		List<Budget> list = new ArrayList<Budget>();
+		ResultSet result;
+		PreparedStatement prepare;
+		try {
+			prepare = this.connect.prepareStatement("select * from budget where backup= ? ");
+			prepare.setInt(1, backup);
+			result = prepare.executeQuery();
+			Budget myBudget=new Budget();
+			
+			while(result.next()){
+				
+				myBudget.setId(result.getInt("id"));
+				myBudget.setAge(result.getInt("age"));
+				myBudget.setAgeRetraite(result.getInt("ageRetraite"));
+				myBudget.setChargeSalariale(result.getInt("chargeSalariale"));
+				myBudget.setChargeCadre(result.getInt("chargeCadre"));
+				myBudget.setSalaireStandard(result.getInt("SalaireStandard"));
+				myBudget.setSalaireCadre(result.getInt("SalaireCadre"));
+				myBudget.setNbSalaries(result.getInt("nbSalaries"));
+				myBudget.setNbCadres(result.getInt("nb"));
+				myBudget.setBackup(result.getInt("Backup"));
+				myBudget.setDate(result.getDate("date"));
+		}
+			list.add(myBudget);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	
 	}
 
 
