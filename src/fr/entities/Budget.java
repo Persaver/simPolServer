@@ -3,7 +3,9 @@ package fr.entities;
 
 import java.sql.Date;
 
-public class Budget {
+import fr.interfaces.IEntity;
+
+public class Budget implements IEntity {
 
 	private int id;
 	private int age;

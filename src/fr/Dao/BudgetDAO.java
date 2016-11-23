@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.Budget;
+import fr.interfaces.IEntity;
 
 
 
@@ -123,10 +124,10 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	
 	
 	
-	public List<Budget> getAllByBackup(Integer backup) {
+	public List<IEntity> getAllByBackup(Integer backup) {
 		// TODO Auto-generated method stub
 		//creation de liste de buget
-		List<Budget> list = new ArrayList<Budget>();
+		List<IEntity> list = new ArrayList<IEntity>();
 		ResultSet result;
 		PreparedStatement prepare;
 		try {
@@ -148,8 +149,9 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				myBudget.setNbCadres(result.getInt("nb"));
 				myBudget.setBackup(result.getInt("Backup"));
 				myBudget.setDate(result.getDate("date"));
+				list.add(myBudget);
 		}
-			list.add(myBudget);
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
