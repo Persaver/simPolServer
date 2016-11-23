@@ -1,12 +1,11 @@
 package fr.entities;
 
+public class Budget extends AbstractEntity<Budget> {
 
-import java.sql.Date;
-
-import fr.interfaces.IEntity;
-
-public class Budget implements IEntity {
-
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer age;
 	private Integer ageTravail;
@@ -18,17 +17,16 @@ public class Budget implements IEntity {
 	private Integer nbSalaries;
 	private Integer nbCadres;
 	private Integer backup;
-	private Date date;
 
 
 	public Budget(){
 
 	}
 
+
 	public Budget(Integer id, Integer age, Integer ageRetraite, Integer chargeSalariale, Integer chargeCadre, Integer salaireStandard,
-			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Integer backup, Date date) {
-		super();
-		this.id = id;
+			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Integer backup) {
+		super(id);
 		this.age = age;
 		this.ageRetraite = ageRetraite;
 		this.chargeSalariale = chargeSalariale;
@@ -38,12 +36,13 @@ public class Budget implements IEntity {
 		this.nbSalaries = nbSalaries;
 		this.nbCadres = nbCadres;
 		this.backup = backup;
-		this.date = date;
 	}
 
+	@Override
 	public Integer getId() {
 		return this.id;
 	}
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -109,12 +108,6 @@ public class Budget implements IEntity {
 	}
 	public void setBackup(Integer backup) {
 		this.backup = backup;
-	}
-	public Date getDate() {
-		return this.date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 }

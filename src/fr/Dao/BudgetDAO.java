@@ -35,7 +35,6 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbSalaries(result.getInt("nbSalaries"));
 				budget.setNbCadres(result.getInt("nb"));
 				budget.setBackup(result.getInt("Backup"));
-				budget.setDate(result.getDate("date"));
 				return budget;
 			}
 
@@ -67,7 +66,6 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			prepare.setInt(7, element.getNbSalaries());
 			prepare.setInt(8, element.getNbCadres());
 			prepare.setInt(9, element.getBackup());
-			prepare.setDate(10, element.getDate());
 			result = prepare.executeQuery();
 
 		} catch (SQLException e1) {
@@ -114,16 +112,16 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 		PreparedStatement prepare;
 		//prepare = this.connect.prepareStatement("select * from budget ;");
 		//prepare.setInt(1, backup);
-		 
-		 
+
+
 		//select * from budget where idbackup=?,
-		
+
 		return null;
-	
+
 	}
-	
-	
-	
+
+
+
 	public List<IEntity> getAllByBackup(Integer backup) {
 		// TODO Auto-generated method stub
 		//creation de liste de buget
@@ -135,9 +133,9 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			prepare.setInt(1, backup);
 			result = prepare.executeQuery();
 			Budget myBudget=new Budget();
-			
+
 			while(result.next()){
-				
+
 				myBudget.setId(result.getInt("id"));
 				myBudget.setAge(result.getInt("age"));
 				myBudget.setAgeRetraite(result.getInt("ageRetraite"));
@@ -148,18 +146,17 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				myBudget.setNbSalaries(result.getInt("nbSalaries"));
 				myBudget.setNbCadres(result.getInt("nb"));
 				myBudget.setBackup(result.getInt("Backup"));
-				myBudget.setDate(result.getDate("date"));
 				list.add(myBudget);
-		}
-			
+			}
+
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return list;
-	
+
 	}
 
 
