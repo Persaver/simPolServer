@@ -1,11 +1,10 @@
 package fr.game.services.indicateurs;
 
 import fr.Dao.PopulationDAO;
-import fr.entities.Demographie;
 import fr.game.services.gameControlor.AbstractGameEntity;
 
-public class Population extends AbstractGameEntity<Demographie, PopulationDAO> {
-	private Demographie entity;
+public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
+	private Population entity;
 	
 	public Population(Demographie demographie, PopulationDAO populationDAO){
 		super(demographie, populationDAO);

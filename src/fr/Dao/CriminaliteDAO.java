@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.game.services.indicateurs.Criminalite;
+import fr.entities.Backup;
+import fr.entities.Criminalite;
+
+
 
 public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 
@@ -33,7 +36,8 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 	}
 
 	@Override
-	public void save(Criminalite element) {
+	public Criminalite save(Criminalite element) {
+		return element;
 	}
 
 	@Override
@@ -43,14 +47,15 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 	@Override
 	public void update(Criminalite element) {
 	}
-	@Override
-	public List<Criminalite> getAll(Integer backup) {
+
+	
+	public List<Criminalite> getByBackup(Backup backup) {
 		List<Criminalite> historique = null;
 		Criminalite crim = null;
 		try{
 			String req = "SELECT * FROM criminalite WHERE backup=? ORDER BY date DESC";
 			PreparedStatement statement = connect.prepareStatement(req);
-			statement.setInt(1, backup);
+			statement.setInt(1, backup.getId());
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {
 				crim.setIndicMineur(results.getInt("indicMineur"));

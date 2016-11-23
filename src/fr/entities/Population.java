@@ -1,6 +1,10 @@
 package fr.entities;
 
-public class Demographie {
+public class Population extends AbstractEntity<Population>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[][] popTab = new int[130][12];
 	private int fertilite = 29;		// fertilite x 10 pour rester en int
 	private int attractivite = 0;

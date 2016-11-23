@@ -2,11 +2,7 @@ package fr.interfaces;
 
 import java.util.List;
 
-import fr.batiment.Batiment;
-import fr.indicateur.Budget;
-import fr.indicateur.Population;
-
-public interface IBatiment  extends IGameEntity{
+public interface IConstruction extends IGameEntity{
 	
 	public void ameliore();
 	
@@ -18,8 +14,6 @@ public interface IBatiment  extends IGameEntity{
 
 	public static void usures();
 	
-
-
 	public static int getNbActifs(){
 		return getNbSalaries()+getNbCadres();
 	}
@@ -62,5 +56,4 @@ public interface IBatiment  extends IGameEntity{
 	public static void setConstructions(List<Batiment> constructions) {
 		Batiment.constructions = constructions;
 	}
-
 }

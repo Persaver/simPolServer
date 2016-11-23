@@ -1,6 +1,6 @@
 package fr.game.services.indicateurs;
 
-public class Budget {
+public class BudgetService extends AbstractIndicateursService{
 	private static int ageTravail = 19;			// L'age � partir duquel les citoyens travaillent 
 	private static int ageRetraite = 62;			// Age de la retraite
 	private static int chargeSalariale = 20;		// En pourcentage
