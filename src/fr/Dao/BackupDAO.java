@@ -37,7 +37,7 @@ public class BackupDAO extends DAO<Backup,Integer>{
 		return backup;
 	}
 
-	public Backup getByUser( Integer userId){
+	public Backup getByUser(Integer userId){
 		ResultSet result;
 		Backup backup = null;
 		User user= null;
