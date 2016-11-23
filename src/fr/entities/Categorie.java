@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Categorie extends AbstractEntity<Categorie> implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private String libelle;
 
 	public Categorie() {
@@ -16,15 +15,6 @@ public class Categorie extends AbstractEntity<Categorie> implements Serializable
 	public Categorie(Integer id, String libelle) {
 		this.id = id;
 		this.libelle = libelle;
-	}
-
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getLibelle() {

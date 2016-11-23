@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.gameEntities.indicateurs.Criminalite;
+import fr.game.services.indicateurs.Criminalite;
 
 public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 

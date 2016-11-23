@@ -43,15 +43,6 @@ public class Backup extends AbstractEntity<Backup> implements Serializable{
 		this.user = user;
 	}
 
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public Date getDate_creation() {
 		return this.date_creation;
 	}

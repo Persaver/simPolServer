@@ -3,19 +3,21 @@ package fr.entities;
 
 import java.sql.Date;
 
-public class Budget {
+import fr.interfaces.IEntity;
 
-	private int id;
-	private int age;
-	private int ageTravail;
-	private int ageRetraite;
-	private int chargeSalariale;
-	private int chargeCadre;
-	private int salaireStandard;
-	private int salaireCadre;
-	private int nbSalaries;
-	private int nbCadres;
-	private int backup;
+public class Budget implements IEntity {
+
+	private Integer id;
+	private Integer age;
+	private Integer ageTravail;
+	private Integer ageRetraite;
+	private Integer chargeSalariale;
+	private Integer chargeCadre;
+	private Integer salaireStandard;
+	private Integer salaireCadre;
+	private Integer nbSalaries;
+	private Integer nbCadres;
+	private Integer backup;
 	private Date date;
 
 
@@ -23,8 +25,8 @@ public class Budget {
 
 	}
 
-	public Budget(int id, int age, int ageRetraite, int chargeSalariale, int chargeCadre, int salaireStandard,
-			int salaireCadre, int nbSalaries, int nbCadres, int backup, Date date) {
+	public Budget(Integer id, Integer age, Integer ageRetraite, Integer chargeSalariale, Integer chargeCadre, Integer salaireStandard,
+			Integer salaireCadre, Integer nbSalaries, Integer nbCadres, Integer backup, Date date) {
 		super();
 		this.id = id;
 		this.age = age;
@@ -39,73 +41,73 @@ public class Budget {
 		this.date = date;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return this.age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
-	public int getAgeTravail() {
+	public Integer getAgeTravail() {
 		return this.ageTravail;
 	}
 
-	public void setAgeTravail(int ageTravail) {
+	public void setAgeTravail(Integer ageTravail) {
 		this.ageTravail = ageTravail;
 	}
 
-	public int getAgeRetraite() {
+	public Integer getAgeRetraite() {
 		return this.ageRetraite;
 	}
-	public void setAgeRetraite(int ageRetraite) {
+	public void setAgeRetraite(Integer ageRetraite) {
 		this.ageRetraite = ageRetraite;
 	}
-	public int getChargeSalariale() {
+	public Integer getChargeSalariale() {
 		return this.chargeSalariale;
 	}
-	public void setChargeSalariale(int chargeSalariale) {
+	public void setChargeSalariale(Integer chargeSalariale) {
 		this.chargeSalariale = chargeSalariale;
 	}
-	public int getChargeCadre() {
+	public Integer getChargeCadre() {
 		return this.chargeCadre;
 	}
-	public void setChargeCadre(int chargeCadre) {
+	public void setChargeCadre(Integer chargeCadre) {
 		this.chargeCadre = chargeCadre;
 	}
-	public int getSalaireStandard() {
+	public Integer getSalaireStandard() {
 		return this.salaireStandard;
 	}
-	public void setSalaireStandard(int salaireStandard) {
+	public void setSalaireStandard(Integer salaireStandard) {
 		this.salaireStandard = salaireStandard;
 	}
-	public int getSalaireCadre() {
+	public Integer getSalaireCadre() {
 		return this.salaireCadre;
 	}
-	public void setSalaireCadre(int salaireCadre) {
+	public void setSalaireCadre(Integer salaireCadre) {
 		this.salaireCadre = salaireCadre;
 	}
-	public int getNbSalaries() {
+	public Integer getNbSalaries() {
 		return this.nbSalaries;
 	}
-	public void setNbSalaries(int nbSalaries) {
+	public void setNbSalaries(Integer nbSalaries) {
 		this.nbSalaries = nbSalaries;
 	}
-	public int getNbCadres() {
+	public Integer getNbCadres() {
 		return this.nbCadres;
 	}
-	public void setNbCadres(int nbCadres) {
+	public void setNbCadres(Integer nbCadres) {
 		this.nbCadres = nbCadres;
 	}
-	public int getBackup() {
+	public Integer getBackup() {
 		return this.backup;
 	}
-	public void setBackup(int backup) {
+	public void setBackup(Integer backup) {
 		this.backup = backup;
 	}
 	public Date getDate() {

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.gameEntities.indicateurs.Population;
+import fr.game.services.indicateurs.Population;
 
 public class PopulationDAO extends DAO<Population, Integer> {
 
@@ -19,8 +19,6 @@ public class PopulationDAO extends DAO<Population, Integer> {
 			statement.setInt(1, id);
 			ResultSet results = statement.executeQuery();
 			int tab[][] = new int[130][12];
-			JsonArray repartPop = Json.createArrayBuilder();
-			 
 			// fonction pour transformer "repartitionPop" en tab[][]
 			p.setPopTab(tab);
 			p.setFertilite(results.getInt("fertilite"));

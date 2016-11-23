@@ -15,7 +15,7 @@ public class Construction extends AbstractEntity<Construction>{
 	private int modCadre;
 	private int modRisque;
 	private int modAttractivite;
-	private String specificites;
+	private String specificite;
 	private Categorie categorie;
 
 	public Construction() {
@@ -61,7 +61,7 @@ public class Construction extends AbstractEntity<Construction>{
 	}
 
 	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
-			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificites) {
+			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificite) {
 		super(id);
 		this.designation = designation;
 		this.url = url;
@@ -75,11 +75,11 @@ public class Construction extends AbstractEntity<Construction>{
 		this.modCadre = modCadre;
 		this.modRisque = modRisque;
 		this.modAttractivite = modAttractivite;
-		this.specificites = specificites;
+		this.specificite = specificite;
 	}
 
 	public Construction(Integer id, String designation, String url, int h, int w, int baseSalarie, int baseCadre, int baseRisque,
-			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificites,
+			int baseAttractivite, int modSalarie, int modCadre, int modRisque, int modAttractivite, String specificite,
 			Categorie categorie) {
 		super(id);
 		this.designation = designation;
@@ -94,17 +94,8 @@ public class Construction extends AbstractEntity<Construction>{
 		this.modCadre = modCadre;
 		this.modRisque = modRisque;
 		this.modAttractivite = modAttractivite;
-		this.specificites = specificites;
+		this.specificite = specificite;
 		this.categorie = categorie;
-	}
-
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getDesignation() {
@@ -212,11 +203,11 @@ public class Construction extends AbstractEntity<Construction>{
 	}
 
 	public String getSpecificite() {
-		return this.specificites;
+		return this.specificite;
 	}
 
-	public void setSpecificite(String specificites) {
-		this.specificites = specificites;
+	public void setSpecificite(String specificite) {
+		this.specificite = specificite;
 	}
 
 	public static long getSerialversionuid() {
