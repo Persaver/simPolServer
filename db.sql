@@ -40,7 +40,7 @@ CREATE TABLE construction (
   modCadre INT(5) NOT NULL,
   modRisque INT(5) NOT NULL,
   modAttractivite INT(5) NOT NULL,
-  specificites TEXT,
+  specificite TEXT,
   categorie INT(3) NOT NULL
 )ENGINE=InnoDB;
 
@@ -58,7 +58,7 @@ CREATE TABLE backup_construction(
   attractive INT(5),
   postePourvu INT(5),
   /*** string representant les spe en format json */
-  specificites TEXT
+  specificite TEXT
   )ENGINE=InnoDB;
 
 /******ADD BY GEOFFREY*******/

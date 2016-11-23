@@ -3,6 +3,7 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,37 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	}
 
 	@Override
-	public void save(Construction element) {
-		// TODO Auto-generated method stub
-
+	public Construction save(Construction element) {
+		try {
+			String sql = "INSERT INTO backup_construction (h,w, url, basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
+			statement.setInt(1, element.getH());
+			statement.setInt(2, element.getW());
+			statement.setString(3, element.getUrl());
+			statement.setInt(4, element.getBaseSalarie());
+			statement.setInt(5, element.getBaseCadre());
+			statement.setInt(6, element.getBaseRisque());
+			statement.setInt(7, element.getBaseAttractivite());
+			statement.setInt(8, element.getModSalarie());
+			statement.setInt(9, element.getModCadre());
+			statement.setInt(10, element.getModRisque());
+			statement.setInt(11, element.getModAttractivite());
+			statement.setString(12, element.getSpecificite());
+			statement.setInt(13, element.getCategorie().getId());
+			statement.executeUpdate();
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			if (generatedKeys.first()) {
+				element.setId(generatedKeys.getInt(1));
+			} else {
+				throw new SQLException("Creating message failed, no ID obtained.");
+			}
+			statement.close();
+			generatedKeys.close();
+			return element;
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

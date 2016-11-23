@@ -22,14 +22,19 @@ public abstract class AbstractEntity<T> implements Serializable,IJsonEntity,IEnt
 		this.id = id;
 	}
 
-	public Integer getId(){
-		return this.id;
-	};
 	@Override
 	public String toJson(){
 		Gson gs = new Gson();
 		return gs.toJson(this);
 
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

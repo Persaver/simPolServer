@@ -62,7 +62,6 @@ public class UserDAO extends DAO<User,Integer>{
 
 		ResultSet result;
 		PreparedStatement prepare;
-
 		try {
 			prepare = this.connect.prepareStatement("DELETE FROM User where id= ? ");
 			prepare.setInt(1, id);

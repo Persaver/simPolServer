@@ -13,17 +13,9 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 	private Integer budget;
 	private Integer attractivite; //
 	private Integer postePourvu;
-	private String specificites;
+	private String specificite;
 	private Construction construction;
 	private Backup backup;
-
-	public String getSpecificite() {
-		return this.specificites;
-	}
-
-	public void setSpecificite(String specificites) {
-		this.specificites = specificites;
-	}
 
 	public BackupConstruction(Integer id,Integer x, Integer y, Construction construction, Backup backup) {
 		super(id);
@@ -35,7 +27,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 
 
 	public BackupConstruction(Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
-			Integer attractivite, Integer postePourvu, String specificites, Construction construction, Backup backup) {
+			Integer attractivite, Integer postePourvu, String specificite, Construction construction, Backup backup) {
 		this.x = x;
 		this.y = y;
 		this.nbSalarie = nbSalarie;
@@ -44,13 +36,13 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 		this.budget = budget;
 		this.attractivite = attractivite;
 		this.postePourvu = postePourvu;
-		this.specificites = specificites;
+		this.specificite = specificite;
 		this.construction = construction;
 		this.backup = backup;
 	}
 
 	public BackupConstruction(Integer id, Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
-			Integer attractivite, Integer postePourvu, String specificites) {
+			Integer attractivite, Integer postePourvu, String specificite) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -60,11 +52,11 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 		this.budget = budget;
 		this.attractivite = attractivite;
 		this.postePourvu = postePourvu;
-		this.specificites = specificites;
+		this.specificite = specificite;
 	}
 
 	public BackupConstruction(Integer id, Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
-			Integer attractivite, Integer postePourvu, String specificites, Construction construction, Backup backup) {
+			Integer attractivite, Integer postePourvu, String specificite, Construction construction, Backup backup) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -74,7 +66,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 		this.budget = budget;
 		this.attractivite = attractivite;
 		this.postePourvu = postePourvu;
-		this.specificites = specificites;
+		this.specificite = specificite;
 		this.construction = construction;
 		this.backup = backup;
 	}
@@ -157,6 +149,13 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 		this.postePourvu = postePourvu;
 	}
 
+	public String getSpecificite() {
+		return this.specificite;
+	}
+
+	public void setSpecificite(String specificite) {
+		this.specificite = specificite;
+	}
 
 
 	@Override
