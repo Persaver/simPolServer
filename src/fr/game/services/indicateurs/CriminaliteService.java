@@ -4,7 +4,7 @@ import fr.Dao.CriminaliteDAO;
 
 import fr.entities.Criminalite;
 import fr.entities.Population;
-import fr.game.services.gameControlor.AbstractGameEntity;
+import fr.game.service.gameController.AbstractGameEntity;
 
 public class CriminaliteService 
 	extends AbstractGameEntity<Criminalite ,CriminaliteDAO> {

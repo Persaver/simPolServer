@@ -1,7 +1,7 @@
 package fr.game.services.indicateurs;
 
 import fr.Dao.PopulationDAO;
-import fr.game.services.gameControlor.AbstractGameEntity;
+import fr.game.service.gameController.AbstractGameEntity;
 
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
 	private Population entity;

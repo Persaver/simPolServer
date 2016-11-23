@@ -3,8 +3,8 @@ package fr.game.services.constructions;
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
 import fr.entities.Construction;
+import fr.game.service.gameController.AbstractGameEntity;
 import fr.game.services.batiments.IBatiment;
-import fr.game.services.gameControlor.AbstractGameEntity;
 import fr.interfaces.IConstruction;
 
 public abstract class AbstractConstructionService extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IConstruction{
