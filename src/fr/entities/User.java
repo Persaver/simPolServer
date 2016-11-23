@@ -29,7 +29,7 @@ public class User extends AbstractEntity<User> implements Serializable{
 	public Integer getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getLogin() {
