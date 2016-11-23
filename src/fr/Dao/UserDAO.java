@@ -3,9 +3,11 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.User;
+import fr.interfaces.IEntity;
 
 public class UserDAO extends DAO<User,Integer>{
 
@@ -82,8 +84,22 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public List<User> getAll() {
-		// TODO Auto-generated method stub
+	public List<IEntity> getAllbyId() {
+
+		List<IEntity> userList = new ArrayList<IEntity>();
+		ResultSet result;
+		PreparedStatement prepare;
+		prepare = this.connect.prepareStatement("select * from user");
+		result = prepare.executeQuery();
+		User myUser=new User();
+		
+		while(result.next()){
+			myUser.setId(result.getInt("id"));
+			myUser.setLogin(result.getString("login"));
+			myUser.setPassword(result.getString("password"));
+			userList.add(myUser);
+		}
+		
 		return null;
 	}
 

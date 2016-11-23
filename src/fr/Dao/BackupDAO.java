@@ -3,6 +3,7 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +63,27 @@ public class BackupDAO extends DAO<Backup,Integer>{
 	}
 
 	@Override
-	public void save(Backup element) {
-		// TODO Auto-generated method stub
+	public Backup save(Backup element) {
+		try {
+			String sql = "INSERT INTO backup (date_creation, nbj, user) VALUES (?,?,?)";
+			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
+			statement.setDate(1, element.getDate_creation());
+			statement.setInt(2, element.getUser().getId());
+			statement.setInt(3, element.getNbj());
+			statement.executeUpdate();
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			if (generatedKeys.first()) {
+				element.setId(generatedKeys.getInt(1));
+			} else {
+				throw new SQLException("Creating message failed, no ID obtained.");
+			}
+			statement.close();
+			generatedKeys.close();
+			return element;
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
