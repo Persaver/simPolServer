@@ -2,15 +2,20 @@ package fr.entities;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User extends AbstractEntity<User> implements Serializable{
 	private int id;
 	private String login;
 	private String password;
 
 	public User(){
-
+		super();
 	}
 
+
+
+	public User(Integer id){
+		super(id);
+	}
 
 
 	public User(int id, String login, String password) {
@@ -20,6 +25,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	@Override
 	public int getId() {
 		return this.id;
 	}
