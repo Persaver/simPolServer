@@ -54,7 +54,6 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 
 
 		try {
-
 			PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO Budget (id,ageTravail,ageRetraite,chargeSalariale,chargeCadre,salaireStandard,salaireCadre,nbSalaries,nbCadres,backup,date) VALUES (?,?,?,?,?,?,?,?,?,?,?,)");
 			prepare.setInt(1, element.getId());
 			prepare.setInt(2, element.getAgeTravail());
@@ -72,8 +71,6 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-
 
 	}
 
