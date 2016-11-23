@@ -19,7 +19,7 @@ public class UserDAO extends DAO<User,Integer>{
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				User user = new User(result.getInt("id"), result.getString("pseudo"), result.getString("password"));
+				User user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
@@ -90,24 +90,23 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public List<IEntity> getAllbyId() {
-
-		List<IEntity> userList = new ArrayList<IEntity>();
+	public List<User> getAll() {
 		ResultSet result;
-		PreparedStatement prepare;
-		prepare = this.connect.prepareStatement("select * from user");
-		result = prepare.executeQuery();
-		User myUser=new User();
-		
-		while(result.next()){
-			myUser.setId(result.getInt("id"));
-			myUser.setLogin(result.getString("login"));
-			myUser.setPassword(result.getString("password"));
-			userList.add(myUser);
+		List<User> users = new ArrayList<User>();
+		try {
+			result = this.connect.createStatement().executeQuery("Select * from user");
+			while(result.next()){
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLogin(result.getString("login"));
+				user.setPassword(result.getString("password"));
+				users.add(user);
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return null;
+		return users ;
 	}
-
 
 }

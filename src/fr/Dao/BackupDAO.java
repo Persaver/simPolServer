@@ -114,11 +114,12 @@ public class BackupDAO extends DAO<Backup,Integer>{
 				backup.setUser(user);
 				backups.add(backup);
 			}
+			return backups;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return backups ;
+		return null;
 	}
 
 	public List<Backup> getByUser(int id){

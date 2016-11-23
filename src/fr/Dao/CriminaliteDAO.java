@@ -15,24 +15,29 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 
 	@Override
 	public Criminalite get(Integer id) {
-		Criminalite crim = null;
+		ResultSet results;
+		Criminalite criminalite = null;
 		try{
-			String req = "SELECT indicMineur, crimeMineur, indicMoyen, crimeMoyen, indicGrave, crimeGrave, indicTerrorisme, crimeTerroriste FROM criminalite WHERE id=?";
+			String req = "SELECT * FROM criminalite WHERE id=?";
 			PreparedStatement statement = connect.prepareStatement(req);
 			statement.setInt(1, id);
-			ResultSet results = statement.executeQuery();
-			crim.setIndicMineur(results.getInt("indicMineur"));
-			crim.setCrimeMineur(results.getInt("crimeMineur"));
-			crim.setIndicMoyen(results.getInt("indicMoyen"));
-			crim.setCrimeMoyen(results.getInt("crimeMoyen"));
-			crim.setIndicGrave(results.getInt("indicGrave"));
-			crim.setCrimeGrave(results.getInt("crimeGrave"));
-			crim.setIndicTerrorisme(results.getInt("indicTerrorisme"));
-			crim.setCrimeTerroriste(results.getInt("crimeTerroriste"));
+			results = statement.executeQuery();
+			if(results != null){
+				criminalite.setIndicMineur(results.getInt("indicMineur"));
+				criminalite.setCrimeMineur(results.getInt("crimeMineur"));
+				criminalite.setIndicMoyen(results.getInt("indicMoyen"));
+				criminalite.setCrimeMoyen(results.getInt("crimeMoyen"));
+				criminalite.setIndicGrave(results.getInt("indicGrave"));
+				criminalite.setCrimeGrave(results.getInt("crimeGrave"));
+				criminalite.setIndicTerrorisme(results.getInt("indicTerrorisme"));
+				criminalite.setCrimeTerroriste(results.getInt("crimeTerroriste"));
+				return criminalite;
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return crim;
+		return null;
 	}
 
 	@Override
@@ -48,7 +53,7 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 	public void update(Criminalite element) {
 	}
 
-	
+
 	public List<Criminalite> getByBackup(Backup backup) {
 		List<Criminalite> historique = null;
 		Criminalite crim = null;

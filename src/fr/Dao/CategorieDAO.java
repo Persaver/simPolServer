@@ -21,6 +21,7 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result != null){
+				result.first();
 				categorie = new Categorie();
 				categorie.setId(result.getInt("id"));
 				categorie.setLibelle(result.getString("libelle"));
