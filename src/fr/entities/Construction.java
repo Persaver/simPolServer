@@ -4,9 +4,9 @@ public class Construction extends AbstractEntity<Construction>{
 
 	private static final long serialVersionUID = 1L;
 	private String designation;
-	private String url;
 	private Integer h;
 	private Integer w;
+	private Double price;
 	private Integer baseSalarie;
 	private Integer baseCadre;
 	private Integer baseRisque;
@@ -19,21 +19,20 @@ public class Construction extends AbstractEntity<Construction>{
 	private Categorie categorie;
 
 	public Construction() {
-		super();
 	}
 
-	public Construction(Integer id) {
-		this(id, null, null, null, null, null, null, null, null, null, null, null, null, null);
+	public Construction(Integer id){
+		this(id, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
-	public Construction(Integer id, String designation, String url, Integer h, Integer w, Integer baseSalarie, Integer baseCadre, Integer baseRisque,
-			Integer baseAttractivite, Integer modSalarie, Integer modCadre, Integer modRisque, Integer modAttractivite, String specificite,
-			Categorie categorie) {
+	public Construction(Integer id, String designation, Integer h, Integer w, Double price, Integer baseSalarie, Integer baseCadre,
+			Integer baseRisque, Integer baseAttractivite, Integer modSalarie, Integer modCadre, Integer modRisque,
+			Integer modAttractivite, String specificite, Categorie categorie) {
 		super(id);
 		this.designation = designation;
-		this.url = url;
 		this.h = h;
 		this.w = w;
+		this.price = price;
 		this.baseSalarie = baseSalarie;
 		this.baseCadre = baseCadre;
 		this.baseRisque = baseRisque;
@@ -54,99 +53,91 @@ public class Construction extends AbstractEntity<Construction>{
 		this.designation = designation;
 	}
 
-	public int getH() {
+	public Integer getH() {
 		return this.h;
 	}
 
-	public void setH(int h) {
+	public void setH(Integer h) {
 		this.h = h;
 	}
 
-	public int getW() {
+	public Integer getW() {
 		return this.w;
 	}
 
-	public void setW(int w) {
+	public void setW(Integer w) {
 		this.w = w;
 	}
 
-	public Categorie getCategorie() {
-		return this.categorie;
+	public Double getPrice() {
+		return this.price;
 	}
 
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
-	public String getUrl() {
-		return this.url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public int getBaseSalarie() {
+	public Integer getBaseSalarie() {
 		return this.baseSalarie;
 	}
 
-	public void setBaseSalarie(int baseSalarie) {
+	public void setBaseSalarie(Integer baseSalarie) {
 		this.baseSalarie = baseSalarie;
 	}
 
-	public int getBaseCadre() {
+	public Integer getBaseCadre() {
 		return this.baseCadre;
 	}
 
-	public void setBaseCadre(int baseCadre) {
+	public void setBaseCadre(Integer baseCadre) {
 		this.baseCadre = baseCadre;
 	}
 
-	public int getBaseRisque() {
+	public Integer getBaseRisque() {
 		return this.baseRisque;
 	}
 
-	public void setBaseRisque(int baseRisque) {
+	public void setBaseRisque(Integer baseRisque) {
 		this.baseRisque = baseRisque;
 	}
 
-	public int getBaseAttractivite() {
+	public Integer getBaseAttractivite() {
 		return this.baseAttractivite;
 	}
 
-	public void setBaseAttractivite(int baseAttractivite) {
+	public void setBaseAttractivite(Integer baseAttractivite) {
 		this.baseAttractivite = baseAttractivite;
 	}
 
-	public int getModSalarie() {
+	public Integer getModSalarie() {
 		return this.modSalarie;
 	}
 
-	public void setModSalarie(int modSalarie) {
+	public void setModSalarie(Integer modSalarie) {
 		this.modSalarie = modSalarie;
 	}
 
-	public int getModCadre() {
+	public Integer getModCadre() {
 		return this.modCadre;
 	}
 
-	public void setModCadre(int modCadre) {
+	public void setModCadre(Integer modCadre) {
 		this.modCadre = modCadre;
 	}
 
-	public int getModRisque() {
+	public Integer getModRisque() {
 		return this.modRisque;
 	}
 
-	public void setModRisque(int modRisque) {
+	public void setModRisque(Integer modRisque) {
 		this.modRisque = modRisque;
 	}
 
-	public int getModAttractivite() {
+	public Integer getModAttractivite() {
 		return this.modAttractivite;
 	}
 
-	public void setModAttractivite(int modAttractivite) {
+	public void setModAttractivite(Integer modAttractivite) {
 		this.modAttractivite = modAttractivite;
 	}
 
@@ -158,25 +149,47 @@ public class Construction extends AbstractEntity<Construction>{
 		this.specificite = specificite;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Categorie getCategorie() {
+		return this.categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Construction [id=");
-		builder.append(this.id);
-		builder.append(", designation=");
+		builder.append("Construction [designation=");
 		builder.append(this.designation);
 		builder.append(", h=");
 		builder.append(this.h);
 		builder.append(", w=");
 		builder.append(this.w);
-		builder.append(", url=");
-		builder.append(this.url);
+		builder.append(", price=");
+		builder.append(this.price);
+		builder.append(", baseSalarie=");
+		builder.append(this.baseSalarie);
+		builder.append(", baseCadre=");
+		builder.append(this.baseCadre);
+		builder.append(", baseRisque=");
+		builder.append(this.baseRisque);
+		builder.append(", baseAttractivite=");
+		builder.append(this.baseAttractivite);
+		builder.append(", modSalarie=");
+		builder.append(this.modSalarie);
+		builder.append(", modCadre=");
+		builder.append(this.modCadre);
+		builder.append(", modRisque=");
+		builder.append(this.modRisque);
+		builder.append(", modAttractivite=");
+		builder.append(this.modAttractivite);
+		builder.append(", specificite=");
+		builder.append(this.specificite);
 		builder.append(", categorie=");
 		builder.append(this.categorie);
+		builder.append(", id=");
+		builder.append(this.id);
 		builder.append("]");
 		return builder.toString();
 	}

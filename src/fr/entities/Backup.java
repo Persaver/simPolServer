@@ -1,9 +1,10 @@
 package fr.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Backup extends AbstractEntity<Backup> implements Serializable{
+import fr.interfaces.IEntity;
+
+public class Backup extends AbstractEntity<Backup> implements IEntity{
 	/**
 	 *
 	 */
@@ -12,11 +13,9 @@ public class Backup extends AbstractEntity<Backup> implements Serializable{
 	private Date date_creation;
 	private Date date_last;
 	private Integer nbj;
-
 	private User user;
 
 	public Backup() {
-		this(null, null, null, null, null);
 	}
 
 	public Backup(Integer id) {

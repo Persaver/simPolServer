@@ -28,7 +28,7 @@ CREATE TABLE categorie (
 DROP TABLE IF EXISTS construction;
 CREATE TABLE construction (
   id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  nom VARCHAR(30) NOT NULL,
+  designation VARCHAR(30) NOT NULL,
   w INT(3) NOT NULL,
   h INT(3) NOT NULL,
   price DECIMAL(7,2) NOT NULL,

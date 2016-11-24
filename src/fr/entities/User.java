@@ -1,8 +1,12 @@
 package fr.entities;
 
-import java.io.Serializable;
+import fr.interfaces.IEntity;
 
-public class User extends AbstractEntity<User> implements IEntity, Serializable{
+public class User extends AbstractEntity<User> implements IEntity{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String login;
 	private String password;
@@ -12,7 +16,7 @@ public class User extends AbstractEntity<User> implements IEntity, Serializable{
 	}
 
 	public User(Integer id){
-		this(d, null, null);
+		this(id, null, null);
 	}
 
 	public User(Integer id, String login, String password) {
