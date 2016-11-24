@@ -16,19 +16,10 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	private Construction construction;
 	private BackupConstructionDAO constructionDAO;
 
-<<<<<<< HEAD:src/fr/game/services/batiments/Batiment.java
-	public Batiment(){
-		// on recupere la construction de l'entity backupConstruction
-		this.construction = this.entity.getConstruction();
-	}
-	public Batiment(int baseS, int baseC, int baseR, int att) {
-		this();
-=======
 
 	public AbstractConstructionService(BackupConstruction entity, BackupConstructionDAO entityDao,int baseS, int baseC, int baseR, int att) {
 		super(entity, entityDao);
 		this.setEntity(this.getEntity());
->>>>>>> d311f0ab0afbc0121305afd7b8ec2093513b54ce:src/fr/game/services/constructions/AbstractConstructionService.java
 		this.construction.setBaseSalarie(baseS);
 		this.construction.setBaseCadre(baseC);
 		this.construction.setModRisque(baseR);
