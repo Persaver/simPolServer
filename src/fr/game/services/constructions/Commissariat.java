@@ -1,20 +1,8 @@
 package fr.game.services.constructions;
 
+import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
-<<<<<<< HEAD:src/fr/game/services/batiments/Commissariat.java
-import fr.entities.Crime;
-import fr.game.services.indicateurs.Education;
-import fr.game.services.indicateurs.Population;
-//import fr.game.services.indicateurs.Education;
-=======
-import fr.game.services.batiments.Batiment;
-import fr.game.services.indicateurs.Budget;
-import fr.indicateur.Criminalite;
-import fr.indicateur.Education;
-import fr.indicateur.Population;
-import fr.interfaces.IBatiment;
-import fr.interfaces.IEntity;
->>>>>>> d311f0ab0afbc0121305afd7b8ec2093513b54ce:src/fr/game/services/constructions/Commissariat.java
+
 
 public class Commissariat extends AbstractConstructionService{
 	private int pInfluence;
@@ -22,16 +10,16 @@ public class Commissariat extends AbstractConstructionService{
 	private int recette;
 	
 		// Constructeurs
-	public Commissariat (){
-		super(60, 20, 2, 1);					// Appelle le constructeur de la classe mere pour stocker le batiment cree dans la liste et confier l'indice a l'instance, utile pour �tre dettruite
+	public Commissariat (BackupConstruction entity, BackupConstructionDAO entityDao){
+		super(entity, entityDao);					// Appelle le constructeur de la classe mere pour stocker le batiment cree dans la liste et confier l'indice a l'instance, utile pour �tre dettruite
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100; //le Potentiel d'influence est l'attribut qui permet aux commissariat de nettoyer la racaille et les criminels. Moins efficace contre le terrorisme
 	}
-	public Commissariat (int niv){	// Possibilite de onstruire un commissariat plus grand
-		this();
-		for (int i=1; i<niv; i++)
-			this.ameliore();
-	}
-	
+//	public Commissariat (int niv){	// Possibilite de onstruire un commissariat plus grand
+//		this();
+//		for (int i=1; i<niv; i++)
+//			this.ameliore();
+//	}
+//	
 		// Fonctions individuelles
 	public void ameliore (){		// Permet d'augmenter le potentiel dd'un commissariat
 		super.ameliore(0.4, 0.2, 2, 1);

@@ -7,5 +7,6 @@ public interface IGameEntity {
 	public IEntity getEntity();
 	public boolean isModify();
 	public void setModify();
+	public String getName();
 
 }

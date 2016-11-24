@@ -11,7 +11,7 @@ public class GameInstance implements IGameInstance{
 
 	private String key;
 	private User user = null;
-	private EntitiesControlor entityControl = null;
+	private EntitiesController entityController = null;
 	private Backup backup = null;
 	private BackupDAO backupDAO = null;
 	private BackupConstructionDAO backupConstructionDAO =null;
@@ -21,7 +21,7 @@ public class GameInstance implements IGameInstance{
 		if(user != null){
 			this.user = user;
 		}
-		this.entityControl = new EntitiesControlor(backupDAO,backupConstructionDAO,IdBackup);
+		this.entityController = new EntitiesController(backupDAO,backupConstructionDAO,IdBackup);
 	}
 
 	public String getKey() {
@@ -40,12 +40,12 @@ public class GameInstance implements IGameInstance{
 		this.user = user;
 	}
 
-	public EntitiesControlor getEntityControl() {
-		return this.entityControl;
+	public EntitiesController getentityController() {
+		return this.entityController;
 	}
 
-	public void setEntityControl(EntitiesControlor entityControl) {
-		this.entityControl = entityControl;
+	public void setentityController(EntitiesController entityController) {
+		this.entityController = entityController;
 	}
 
 	public Backup getBackup() {

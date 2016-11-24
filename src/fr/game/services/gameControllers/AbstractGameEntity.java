@@ -42,5 +42,4 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 		this.entityDao.save(this.entity);
 	}
 
-
 }

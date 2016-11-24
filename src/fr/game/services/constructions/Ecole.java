@@ -1,23 +1,23 @@
 package fr.game.services.constructions;
 
+import fr.Dao.BackupConstructionDAO;
+import fr.entities.BackupConstruction;
 import fr.game.services.batiments.Batiment;
 import fr.game.services.indicateurs.Budget;
 
 public class Ecole extends AbstractConstructionService {
 	
-	public Ecole (){
-		this.nbSalarie = 40;
-		this.nbCadre = 10;
-		Budget.setNbCadre(1);
-		Budget.setNbSalaries(4);
+	
+	public Ecole(BackupConstruction entity, BackupConstructionDAO entityDao){
+		super(entity,entityDao);
 	}
 	
-	public Ecole (int niveau){
-		this.nbSalarie = (int)(40*Math.pow(1.5, niveau-1));
-		this.nbCadre = (int)(10*Math.pow(1.2, niveau-1));
-		Budget.setNbCadre(this.nbCadre/10);
-		Budget.setNbSalaries((this.nbSalarie+this.nbCadre)/10);
-	}
+//	public Ecole (int niveau){
+//		this.nbSalarie = (int)(40*Math.pow(1.5, niveau-1));
+//		this.nbCadre = (int)(10*Math.pow(1.2, niveau-1));
+//		Budget.setNbCadre(this.nbCadre/10);
+//		Budget.setNbSalaries((this.nbSalarie+this.nbCadre)/10);
+//	}
 	
 	public void Ameliore (){
 		int newSalarie = (int)(this.nbSalarie*0.5);
