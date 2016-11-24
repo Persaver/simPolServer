@@ -26,7 +26,6 @@ public abstract class AbstractEntity<T> implements Serializable, IJsonEntity, IE
 	public String toJson(){
 		Gson gs = new Gson();
 		return gs.toJson(this);
-
 	}
 
 	public Integer getId() {

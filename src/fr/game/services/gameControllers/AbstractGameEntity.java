@@ -16,15 +16,15 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 		this.entity = entity;
 		this.entityDao = entityDao;
 	}
-	
+
 	@Override
 	public void setEntity(IEntity entity) {
 		this.entity =  (T) entity;
 	}
 
 	@Override
-	public IEntity getEntity() {
-		return (IEntity) this.entity;
+	public T getEntity() {
+		return this.entity;
 	}
 
 	@Override
