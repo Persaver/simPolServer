@@ -1,26 +1,34 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
+import fr.entities.Budget;
 import fr.entities.Construction;
-import fr.game.services.gameControlor.AbstractGameEntity;
-import fr.game.services.indicateurs.Budget;
-import fr.game.services.indicateurs.Population;
-import fr.interfaces.IBatiment;
+import fr.entities.Population;
+import fr.game.services.gameControllers.AbstractGameEntity;
+import fr.interfaces.IConstruction;
 
-public abstract class Batiment extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IBatiment{
+public abstract class AbstractConstructionService extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IConstruction{
+
 	// on cree une varible construction
 	// => this.entity = BackupConstruction
 	//    this.construction = Construction
 	private Construction construction;
 	private BackupConstructionDAO constructionDAO;
 
+<<<<<<< HEAD:src/fr/game/services/batiments/Batiment.java
 	public Batiment(){
 		// on recupere la construction de l'entity backupConstruction
 		this.construction = this.entity.getConstruction();
 	}
 	public Batiment(int baseS, int baseC, int baseR, int att) {
 		this();
+=======
+
+	public AbstractConstructionService(BackupConstruction entity, BackupConstructionDAO entityDao,int baseS, int baseC, int baseR, int att) {
+		super(entity, entityDao);
+		this.setEntity(this.getEntity());
+>>>>>>> d311f0ab0afbc0121305afd7b8ec2093513b54ce:src/fr/game/services/constructions/AbstractConstructionService.java
 		this.construction.setBaseSalarie(baseS);
 		this.construction.setBaseCadre(baseC);
 		this.construction.setModRisque(baseR);
@@ -30,7 +38,7 @@ public abstract class Batiment extends AbstractGameEntity<BackupConstruction, Ba
 
 	@Override
 	public void ameliore(){
-		this.entity.setNbSalarie(6);
+		this.getEntity().setNbSalarie(6);
 	}
 
 	@Override
@@ -64,3 +72,4 @@ public abstract class Batiment extends AbstractGameEntity<BackupConstruction, Ba
 		this.constructionDAO.save(this.entity);
 	}
 }
+

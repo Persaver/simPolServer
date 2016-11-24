@@ -7,16 +7,15 @@ import com.google.gson.Gson;
 import fr.interfaces.IEntity;
 import fr.interfaces.IJsonEntity;
 
-public abstract class AbstractEntity<T> implements Serializable,IJsonEntity,IEntity{
+public abstract class AbstractEntity<T> implements Serializable, IJsonEntity, IEntity{
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	protected Integer id;
-	
-	
-	protected AbstractEntity(){
-		this(null);
+
+
+	public AbstractEntity(){
 	}
 
 	public AbstractEntity(Integer id){
@@ -27,7 +26,6 @@ public abstract class AbstractEntity<T> implements Serializable,IJsonEntity,IEnt
 	public String toJson(){
 		Gson gs = new Gson();
 		return gs.toJson(this);
-
 	}
 
 	public Integer getId() {

@@ -24,21 +24,19 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			result = prepare.executeQuery();
 			if(result != null){
 				result.first();
-				construction = new Construction(
-						result.getInt("id"),
-						result.getString("designation"),
-						result.getString("url"),
-						result.getInt("h"),
-						result.getInt("w"),
-						result.getInt("baseSalarie"),
-						result.getInt("baseCadre"),
-						result.getInt("baseRisque"),
-						result.getInt("baseAttractivite"),
-						result.getInt("modSalarie"),
-						result.getInt("modCadre"),
-						result.getInt("modRisque"),
-						result.getInt("modAttractivite"),
-						result.getString("specificites"));
+				construction = new Construction();
+				construction.setId(result.getInt("id"));
+				construction.setDesignation(result.getString("designation"));
+				construction.setH(result.getInt("h"));
+				construction.setW(result.getInt("w"));
+				construction.setBaseSalarie(result.getInt("baseSalarie"));
+				construction.setBaseCadre(result.getInt("baseCadre"));
+				construction.setBaseRisque(result.getInt("baseRisque"));
+				construction.setBaseAttractivite(result.getInt("baseAttractivite"));
+				construction.setModSalarie(result.getInt("modSalarie"));
+				construction.setModCadre(result.getInt("modCadre"));
+				construction.setModAttractivite(result.getInt("modAttractivite"));
+				construction.setSpecificite(result.getString("specificites"));
 				categorie = new Categorie(result.getInt("id"));
 				construction.setCategorie(categorie);
 				return construction;
@@ -53,21 +51,20 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	@Override
 	public Construction save(Construction element) {
 		try {
-			String sql = "INSERT INTO backup_construction (h,w, url, basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO backup_construction (h,w,basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setInt(1, element.getH());
 			statement.setInt(2, element.getW());
-			statement.setString(3, element.getUrl());
-			statement.setInt(4, element.getBaseSalarie());
-			statement.setInt(5, element.getBaseCadre());
-			statement.setInt(6, element.getBaseRisque());
-			statement.setInt(7, element.getBaseAttractivite());
-			statement.setInt(8, element.getModSalarie());
-			statement.setInt(9, element.getModCadre());
-			statement.setInt(10, element.getModRisque());
-			statement.setInt(11, element.getModAttractivite());
-			statement.setString(12, element.getSpecificite());
-			statement.setInt(13, element.getCategorie().getId());
+			statement.setInt(3, element.getBaseSalarie());
+			statement.setInt(4, element.getBaseCadre());
+			statement.setInt(5, element.getBaseRisque());
+			statement.setInt(6, element.getBaseAttractivite());
+			statement.setInt(7, element.getModSalarie());
+			statement.setInt(8, element.getModCadre());
+			statement.setInt(9, element.getModRisque());
+			statement.setInt(10, element.getModAttractivite());
+			statement.setString(11, element.getSpecificite());
+			statement.setInt(12, element.getCategorie().getId());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
@@ -103,21 +100,20 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 		try {
 			result = this.connect.createStatement().executeQuery("Select * from construction");
 			while(result.next()){
-				Construction construction = new Construction(
-						result.getInt("id"),
-						result.getString("designation"),
-						result.getString("url"),
-						result.getInt("h"),
-						result.getInt("w"),
-						result.getInt("baseSalarie"),
-						result.getInt("baseCadre"),
-						result.getInt("baseRisque"),
-						result.getInt("baseAttractivite"),
-						result.getInt("modSalarie"),
-						result.getInt("modCadre"),
-						result.getInt("modRisque"),
-						result.getInt("modAttractivite"),
-						result.getString("specificites"));
+				Construction construction = new Construction();
+				construction = new Construction();
+				construction.setId(result.getInt("id"));
+				construction.setDesignation(result.getString("designation"));
+				construction.setH(result.getInt("h"));
+				construction.setW(result.getInt("w"));
+				construction.setBaseSalarie(result.getInt("baseSalarie"));
+				construction.setBaseCadre(result.getInt("baseCadre"));
+				construction.setBaseRisque(result.getInt("baseRisque"));
+				construction.setBaseAttractivite(result.getInt("baseAttractivite"));
+				construction.setModSalarie(result.getInt("modSalarie"));
+				construction.setModCadre(result.getInt("modCadre"));
+				construction.setModAttractivite(result.getInt("modAttractivite"));
+				construction.setSpecificite(result.getString("specificites"));
 				Categorie categorie = new Categorie(result.getInt("id"));
 				construction.setCategorie(categorie);
 				constructions.add(construction);
@@ -127,7 +123,7 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return constructions;
+		return null;
 	}
 
 }

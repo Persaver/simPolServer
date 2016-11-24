@@ -1,8 +1,8 @@
 package fr.entities;
 
-import java.io.Serializable;
+import fr.interfaces.IEntity;
 
-public class Categorie extends AbstractEntity<Categorie> implements Serializable{
+public class Categorie extends AbstractEntity<Categorie> implements IEntity{
 	private static final long serialVersionUID = 1L;
 	private String libelle;
 
@@ -10,10 +10,10 @@ public class Categorie extends AbstractEntity<Categorie> implements Serializable
 	}
 
 	public Categorie(Integer id) {
-		super(id);
+		this(id, null);
 	}
 	public Categorie(Integer id, String libelle) {
-		this.id = id;
+		super(id);
 		this.libelle = libelle;
 	}
 

@@ -1,4 +1,4 @@
-package fr.game.services.gameControlor;
+package fr.game.services.gameControllers;
 
 import fr.Dao.BackupDAO;
 

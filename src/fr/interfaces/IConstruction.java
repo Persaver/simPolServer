@@ -2,43 +2,44 @@ package fr.interfaces;
 
 import java.util.List;
 
-import fr.batiment.Batiment;
-import fr.indicateur.Budget;
-import fr.indicateur.Population;
+import fr.entities.Budget;
+import fr.entities.Population;
 
-public interface IBatiment  extends IGameEntity{
-	
+public interface IConstruction extends IGameEntity{
+
 	public void ameliore();
-	
+
 	public int getPostePourvu();
-	
+
 	public void prisePostes();
-	
+
 	public void ajoutPoste();
 
-	public static void usures();
-	
-
+	public static void usures() {
+	}
 
 	public static int getNbActifs(){
 		return getNbSalaries()+getNbCadres();
 	}
 	public static int getAttractivites(){
 		int att = 0;
-		for (int i = 0; i<constructions.size();i++)
+		for (int i = 0; i<constructions.size();i++) {
 			att += constructions.get(i).getAttractivite();
+		}
 		return att;
 	}
 	public static int getBudgets(){
 		int b= 0;
-		for (int i = 0; i<constructions.size();i++)
+		for (int i = 0; i<constructions.size();i++) {
 			b += constructions.get(i).getBudget();
+		}
 		return b;
 	}
 	public static int getPostesPourvus(){
 		int p = 0;
-		for (int i = 0; i<constructions.size();i++)
+		for (int i = 0; i<constructions.size();i++) {
 			p += constructions.get(i).getPostePourvu();
+		}
 		return p;
 	}
 	public static void effectifs(){
@@ -54,13 +55,12 @@ public interface IBatiment  extends IGameEntity{
 		int i = (int)Math.random()*constructions.size();
 		constructions.get(i).modifierRisque(amplitude);
 	}
-	
-		// Getter & Setter
+
+	// Getter & Setter
 	public static List<Batiment> getConstructions() {
 		return constructions;
 	}
 	public static void setConstructions(List<Batiment> constructions) {
 		Batiment.constructions = constructions;
 	}
-
 }

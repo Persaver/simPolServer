@@ -3,11 +3,11 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.User;
-import fr.interfaces.IEntity;
 
 public class UserDAO extends DAO<User,Integer>{
 
@@ -19,7 +19,7 @@ public class UserDAO extends DAO<User,Integer>{
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				User user = new User(result.getInt("id"), result.getString("pseudo"), result.getString("password"));
+				User user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
@@ -32,7 +32,6 @@ public class UserDAO extends DAO<User,Integer>{
 
 	public User checklogin(String login, String password){
 		ResultSet results = null;
-
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("SELECT * FROM user WHERE login = ? and password = ?");
 			prepare.setString(1, login);
@@ -47,40 +46,35 @@ public class UserDAO extends DAO<User,Integer>{
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
-
 		// a modifier
 		return null;
 	}
 
 	@Override
-	public void save(User element) {
-		// TODO Auto-generated method stub
-		ResultSet result;
-		PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO User (id,ageTravail,ageRetraite) VALUES (?,?,?)");
-		prepare.setInt(1, element.getId());
-		prepare.setString(2, element.getLogin());
-		prepare.setString(3, element.getPassword());
-		result = prepare.executeQuery();
-
+	public User save(User element) {
+		try {
+			String sql = "INSERT INTO user (login, password) VALUES (?,?)";
+			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
+			statement.setString(2, element.getLogin());
+			statement.setString(3, element.getPassword());
+			statement.executeUpdate();
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			if (generatedKeys.first()) {
+				element.setId(generatedKeys.getInt(1));
+			} else {
+				throw new SQLException("Creating user failed, no ID obtained.");
+			}
+			statement.close();
+			generatedKeys.close();
+			return element;
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-
-		ResultSet result;
-		PreparedStatement prepare;
-		try {
-			prepare = this.connect.prepareStatement("DELETE FROM User where id= ? ");
-			prepare.setInt(1, id);
-			result = prepare.executeQuery();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
 	}
 
 	@Override
@@ -90,24 +84,23 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public List<IEntity> getAllbyId() {
-
-		List<IEntity> userList = new ArrayList<IEntity>();
+	public List<User> getAll() {
 		ResultSet result;
-		PreparedStatement prepare;
-		prepare = this.connect.prepareStatement("select * from user");
-		result = prepare.executeQuery();
-		User myUser=new User();
-		
-		while(result.next()){
-			myUser.setId(result.getInt("id"));
-			myUser.setLogin(result.getString("login"));
-			myUser.setPassword(result.getString("password"));
-			userList.add(myUser);
+		List<User> users = new ArrayList<User>();
+		try {
+			String sql = "Select * from user";
+			result = this.connect.createStatement().executeQuery(sql);
+			while(result.next()){
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLogin(result.getString("login"));
+				user.setPassword(result.getString("password"));
+				users.add(user);
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return null;
+		return users ;
 	}
-
-
 }

@@ -1,48 +1,26 @@
 package fr.entities;
 
-import java.io.Serializable;
-import java.util.Date;
+import fr.interfaces.IEntity;
 
-public class Backup extends AbstractEntity<Backup> implements Serializable{
+public class Backup extends AbstractEntity<Backup> implements IEntity{
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private Date date_creation;
-	private Date date_last;
+	private String date_creation;
+	private String date_last;
 	private Integer nbj;
-
 	private User user;
 
 	public Backup() {
-		super();
 	}
 
 	public Backup(Integer id) {
-		this.id=id;
+		this(id, null, null, null, null);
 	}
 
-	public Backup(Integer id, Date date_creation, Date date_last, Integer nbj) {
-		super(id);
-		this.date_creation = date_creation;
-		this.date_last = date_last;
-		this.nbj = nbj;
-	}
-
-	public Backup(Integer id, Date date_creation, Integer nbj) {
-		super(id);
-		this.date_creation = date_creation;
-		this.nbj = nbj;
-	}
-
-	public Backup(Date date_creation, Date date_last, User user) {
-		this.date_creation = date_creation;
-		this.date_last = date_last;
-		this.user = user;
-	}
-
-	public Backup(Integer id, Date date_creation, Date date_last, Integer nbj, User user) {
+	public Backup(Integer id, String date_creation, String date_last, Integer nbj, User user) {
 		super(id);
 		this.date_creation = date_creation;
 		this.date_last = date_last;
@@ -50,19 +28,19 @@ public class Backup extends AbstractEntity<Backup> implements Serializable{
 		this.user = user;
 	}
 
-	public Date getDate_creation() {
+	public String getDate_creation() {
 		return this.date_creation;
 	}
 
-	public void setDate_creation(Date date_creation) {
+	public void setDate_creation(String date_creation) {
 		this.date_creation = date_creation;
 	}
 
-	public Date getDate_last() {
+	public String getDate_last() {
 		return this.date_last;
 	}
 
-	public void setDate_last(Date date_last) {
+	public void setDate_last(String date_last) {
 		this.date_last = date_last;
 	}
 

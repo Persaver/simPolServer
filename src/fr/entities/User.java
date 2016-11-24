@@ -1,37 +1,30 @@
 package fr.entities;
 
-import java.io.Serializable;
+import fr.interfaces.IEntity;
 
-public class User extends AbstractEntity<User> implements Serializable{
+public class User extends AbstractEntity<User> implements IEntity{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String login;
 	private String password;
 
 	public User(){
-		super();
+		this(null, null, null);
 	}
-
-
 
 	public User(Integer id){
-		super(id);
+		this(id, null, null);
 	}
 
-
 	public User(Integer id, String login, String password) {
-		super();
-		this.id = id;
+		super(id);
 		this.login = login;
 		this.password = password;
 	}
 
-	@Override
-	public Integer getId() {
-		return this.id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public String getLogin() {
 		return this.login;
 	}
@@ -44,7 +37,6 @@ public class User extends AbstractEntity<User> implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	@Override
 	public String toString() {
