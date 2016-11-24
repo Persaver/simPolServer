@@ -56,8 +56,7 @@ CREATE TABLE backup_construction(
   risque INT(5),
   budget INT(5),
   attractive INT(5),
-  postePourvu INT(5),
-  /*** string representant les spe en format json */
+  postePourvu INT(5), /*** string representant les spe en format json */
   specificite TEXT
   )ENGINE=InnoDB;
 
@@ -96,9 +95,9 @@ CREATE TABLE population(
 id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 fertilite INT DEFAULT 29,
 attractivite INT DEFAULT 0,
+popTab TEXT,
 backup INT(4)
 )ENGINE=InnoDB;
-/**** manque un attribut tableau***/
 
 ALTER TABLE budget ADD FOREIGN KEY(backup) REFERENCES backup (id);
 ALTER TABLE criminalite ADD FOREIGN KEY(backup) REFERENCES backup (id);

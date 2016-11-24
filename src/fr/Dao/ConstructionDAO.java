@@ -25,21 +25,20 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			if(result != null){
 				result.first();
 				construction = new Construction();
-					construction.setId(result.getInt("id"));
-					construction.setDesignation(result.getString("designation"));
-					construction.setUrl(result.getString("url"));
-					construction.setH(result.getInt("h"));
-					construction.setW(result.getInt("w"));
-					construction.setBaseSalarie(result.getInt("baseSalarie"));
-					construction.setBaseCadre(result.getInt("baseCadre");
-					construction.getBaseRisque(result.getInt("baseRisque");
-					construction.setBaseAttractivite(result.getInt("baseAttractivite")
-					,
-						result.getInt("modSalarie"),
-						result.getInt("modCadre"),
-						result.getInt("modRisque"),
-						result.getInt("modAttractivite"),
-						result.getString("specificites"));
+				construction.setId(result.getInt("id"));
+				construction.setDesignation(result.getString("designation"));
+				construction.setH(result.getInt("h"));
+				construction.setW(result.getInt("w"));
+				construction.setBaseSalarie(result.getInt("baseSalarie"));
+				construction.setBaseCadre(result.getInt("baseCadre");
+				construction.getBaseRisque(result.getInt("baseRisque");
+				construction.setBaseAttractivite(result.getInt("baseAttractivite");
+				construction.setModSalarie(result.getInt("modSalarie");
+				result.getInt("modSalarie"),
+				result.getInt("modCadre"),
+				result.getInt("modRisque"),
+				result.getInt("modAttractivite"),
+				result.getString("specificites"));
 				categorie = new Categorie(result.getInt("id"));
 				construction.setCategorie(categorie);
 				return construction;

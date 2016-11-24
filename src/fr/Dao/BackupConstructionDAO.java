@@ -60,18 +60,18 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	@Override
 	public BackupConstruction save(BackupConstruction element) {
 		try {
-			String sql = "INSERT INTO backup_construction (
-													x,
-													y,
-													nbSalarie,
-													nbCadre,
-													risque,
-													budget,
-													attractivite,
-													postePourvu,
-													specificite,
-													construction,
-													backup) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO backup_construction ("
+					+"x,"
+					+"y,"
+					+"nbSalarie,"
+					+"nbCadre,"
+					+"risque,"
+					+"budget,"
+					+"attractivite,"
+					+"postePourvu,"
+					+"specificite,"
+					+"construction,"
+					+"backup) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -138,12 +138,12 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		return null ;
 	}
 
-	public List<BackupConstruction> getAllByBackUp(Integer backupId) {
+	public List<BackupConstruction> getAllByBackUp(Backup backup) {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backupconstruction where backup = ?");
-			prepare.setInt(1, backupId);
+			prepare.setInt(1, backup.getId());
 			result = prepare.executeQuery();
 			while(result.next()){
 				BackupConstruction backupConstruction = new BackupConstruction();
@@ -158,7 +158,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				backupConstruction.setSpecificite(result.getString("specificites"));
 				Construction construction = new Construction(result.getInt("construction"));
-				Backup backup = new Backup(backupId);
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
