@@ -15,7 +15,7 @@ public abstract class Batiment extends AbstractGameEntity<BackupConstruction, Ba
 	private Construction construction;
 	private BackupConstructionDAO constructionDAO;
 
-	public Batiment (){
+	public Batiment(){
 		// on recupere la construction de l'entity backupConstruction
 		this.construction = this.entity.getConstruction();
 	}

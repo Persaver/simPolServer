@@ -17,6 +17,7 @@ public class Population extends AbstractGameEntity<Demographie, PopulationDAO> {
 // Remarque : /
 // Verifiee : oui
 	public Population (int a){
+		super();
 		int adulte = a/5*2;
 		int b = a-adulte;
 		ajoutPopulation(adulte, 18, 42);

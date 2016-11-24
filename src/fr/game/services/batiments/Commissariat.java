@@ -1,29 +1,19 @@
 package fr.game.services.batiments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.batiment.Commissariat;
 import fr.entities.BackupConstruction;
-import fr.game.services.indicateurs.Budget;
-import fr.indicateur.Criminalite;
-import fr.indicateur.Education;
-import fr.indicateur.Population;
-import fr.interfaces.IBatiment;
-import fr.interfaces.IEntity;
+import fr.entities.Crime;
+import fr.game.services.indicateurs.Education;
+import fr.game.services.indicateurs.Population;
+//import fr.game.services.indicateurs.Education;
 
 public class Commissariat extends Batiment<BackupConstruction>{
 	private int pInfluence;
 	private static int tolerance = 0;			// en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population
 	private int recette;
-	private static List<Commissariat> commissariats = new ArrayList<Commissariat>();
-	private int indiceCom;
 	
 		// Constructeurs
 	public Commissariat (){
 		super(60, 20, 2, 1);					// Appelle le constructeur de la classe mere pour stocker le batiment cree dans la liste et confier l'indice a l'instance, utile pour �tre dettruite
-		commissariats.add(this);				// Ajoute le commissariat dans la liste pour faciliter sa suppression ainsi que les action securisantes
-		this.indiceCom = commissariats.size()-1;
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100; //le Potentiel d'influence est l'attribut qui permet aux commissariat de nettoyer la racaille et les criminels. Moins efficace contre le terrorisme
 	}
 	public Commissariat (int niv){	// Possibilite de onstruire un commissariat plus grand
@@ -106,42 +96,42 @@ public class Commissariat extends Batiment<BackupConstruction>{
 		tolerance = val;
 	}
 	
-		// Fonctions communes
-	public static void allSecure(){
-		for(int i=0; i<commissariats.size(); i++)
-			commissariats.get(i).secure();
-	}
-	public static int leveRecettes(){
-		int r=0;
-		for(int i=0; i<commissariats.size(); i++)
-			r += commissariats.get(i).getRecette();
-		return r;
-	}
-	public static int Efficacites(){
-		int eff = 0;
-		for (int i = 0 ; i<commissariats.size(); i++)
-			eff += commissariats.get(i).getpInfluence();
-		return eff;
-}
-	public int getpInfluence() {
-		return pInfluence;
-	}
-	public void setpInfluence(int pInfluence) {
-		this.pInfluence = pInfluence;
-	}
-	public static List<Commissariat> getCommissariats() {
-		return commissariats;
-	}
-	public static void setCommissariats(List<Commissariat> commissariats) {
-		Commissariat.commissariats = commissariats;
-	}
-	public int getIndiceCom() {
-		return indiceCom;
-	}
-	public void setIndiceCom(int indiceCom) {
-		this.indiceCom = indiceCom;
-	}
-	public void setRecette(int recette) {
-		this.recette = recette;
-	}
+//		// Fonctions communes
+//	public static void allSecure(){
+//		for(int i=0; i<commissariats.size(); i++)
+//			commissariats.get(i).secure();
+//	}
+//	public static int leveRecettes(){
+//		int r=0;
+//		for(int i=0; i<commissariats.size(); i++)
+//			r += commissariats.get(i).getRecette();
+//		return r;
+//	}
+//	public static int Efficacites(){
+//		int eff = 0;
+//		for (int i = 0 ; i<commissariats.size(); i++)
+//			eff += commissariats.get(i).getpInfluence();
+//		return eff;
+//}
+//	public int getpInfluence() {
+//		return pInfluence;
+//	}
+//	public void setpInfluence(int pInfluence) {
+//		this.pInfluence = pInfluence;
+//	}
+//	public static List<Commissariat> getCommissariats() {
+//		return commissariats;
+//	}
+//	public static void setCommissariats(List<Commissariat> commissariats) {
+//		Commissariat.commissariats = commissariats;
+//	}
+//	public int getIndiceCom() {
+//		return indiceCom;
+//	}
+//	public void setIndiceCom(int indiceCom) {
+//		this.indiceCom = indiceCom;
+//	}
+//	public void setRecette(int recette) {
+//		this.recette = recette;
+//	}
 }
