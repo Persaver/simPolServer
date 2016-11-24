@@ -21,7 +21,10 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result != null){
-				categorie = new Categorie(result.getInt("id"), result.getString("libelle"));
+				result.first();
+				categorie = new Categorie();
+				categorie.setId(result.getInt("id"));
+				categorie.setLibelle(result.getString("libelle"));
 				return categorie;
 			}
 		} catch (SQLException e) {
@@ -76,7 +79,9 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 			String sql="Select * from categorie";
 			result = this.connect.createStatement().executeQuery(sql);
 			while(result.next()){
-				Categorie categorie = new Categorie(result.getInt("categorie.id"), result.getString("libelle"));
+				Categorie categorie = new Categorie();
+				categorie.setId(result.getInt("id"));
+				categorie.setLibelle(result.getString("libelle"));
 				categories.add(categorie);
 			}
 			return categories;

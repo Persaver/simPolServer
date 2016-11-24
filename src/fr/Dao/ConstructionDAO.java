@@ -24,16 +24,17 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			result = prepare.executeQuery();
 			if(result != null){
 				result.first();
-				construction = new Construction(
-						result.getInt("id"),
-						result.getString("designation"),
-						result.getString("url"),
-						result.getInt("h"),
-						result.getInt("w"),
-						result.getInt("baseSalarie"),
-						result.getInt("baseCadre"),
-						result.getInt("baseRisque"),
-						result.getInt("baseAttractivite"),
+				construction = new Construction();
+					construction.setId(result.getInt("id"));
+					construction.setDesignation(result.getString("designation"));
+					construction.setUrl(result.getString("url"));
+					construction.setH(result.getInt("h"));
+					construction.setW(result.getInt("w"));
+					construction.setBaseSalarie(result.getInt("baseSalarie"));
+					construction.setBaseCadre(result.getInt("baseCadre");
+					construction.getBaseRisque(result.getInt("baseRisque");
+					construction.setBaseAttractivite(result.getInt("baseAttractivite")
+					,
 						result.getInt("modSalarie"),
 						result.getInt("modCadre"),
 						result.getInt("modRisque"),

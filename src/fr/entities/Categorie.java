@@ -7,13 +7,14 @@ public class Categorie extends AbstractEntity<Categorie> implements Serializable
 	private String libelle;
 
 	public Categorie() {
+		this(null, null);
 	}
 
 	public Categorie(Integer id) {
-		super(id);
+		this(id, null);
 	}
 	public Categorie(Integer id, String libelle) {
-		this.id = id;
+		super(id);
 		this.libelle = libelle;
 	}
 

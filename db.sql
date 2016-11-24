@@ -94,8 +94,8 @@ CREATE TABLE criminalite (
 DROP TABLE IF EXISTS population;
 CREATE TABLE population(
 id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-fertilite INT,
-attractivite INT,
+fertilite INT DEFAULT 29,
+attractivite INT DEFAULT 0,
 backup INT(4)
 )ENGINE=InnoDB;
 /**** manque un attribut tableau***/

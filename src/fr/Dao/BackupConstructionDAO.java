@@ -16,6 +16,9 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	@Override
 	public BackupConstruction get(Integer id) {
 		ResultSet result;
+		BackupConstruction backupConstruction;
+		Construction construction;
+		Backup backup;
 		try
 		{
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backupconstruction where id = ?");
@@ -23,19 +26,19 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			result = prepare.executeQuery();
 			if(result != null){
 				result.first();
-				BackupConstruction backupConstruction = new BackupConstruction(
-						result.getInt("id"),
-						result.getInt("x"),
-						result.getInt("y"),
-						result.getInt("nbSalarie"),
-						result.getInt("nbCadre"),
-						result.getInt("risque"),
-						result.getInt("budget"),
-						result.getInt("attractivite"),
-						result.getInt("postePourvu"),
-						result.getString("specificites"));
-				Construction construction = new Construction(result.getInt("construction"));
-				Backup backup = new Backup(result.getInt("backup"));
+				backupConstruction = new BackupConstruction();
+				backupConstruction.setId(result.getInt("id"));
+				backupConstruction.setX(result.getInt("x"));
+				backupConstruction.setY(result.getInt("y"));
+				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
+				backupConstruction.setNbCadre(result.getInt("nbCadre"));
+				backupConstruction.setRisque(result.getInt("risque"));
+				backupConstruction.setBudget(result.getInt("budget"));
+				backupConstruction.setAttractivite(result.getInt("attractivite"));
+				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setSpecificite(result.getString("specificites"));
+				construction = new Construction(result.getInt("construction"));
+				backup = new Backup(result.getInt("backup"));
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);
 				return backupConstruction;
@@ -57,7 +60,18 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	@Override
 	public BackupConstruction save(BackupConstruction element) {
 		try {
-			String sql = "INSERT INTO backup_construction (x,y,nbSalarie,nbCadre,risque,budget,attractivite,postePourvu,specificite, construction, backup) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO backup_construction (
+													x,
+													y,
+													nbSalarie,
+													nbCadre,
+													risque,
+													budget,
+													attractivite,
+													postePourvu,
+													specificite,
+													construction,
+													backup) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -99,17 +113,17 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		try {
 			result = this.connect.createStatement().executeQuery("Select * from backupconstruction");
 			while(result.next()){
-				BackupConstruction backupConstruction = new BackupConstruction(
-						result.getInt("id"),
-						result.getInt("x"),
-						result.getInt("y"),
-						result.getInt("nbSalarie"),
-						result.getInt("nbCadre"),
-						result.getInt("risque"),
-						result.getInt("budget"),
-						result.getInt("attractivite"),
-						result.getInt("postePourvu"),
-						result.getString("specificites"));
+				BackupConstruction backupConstruction = new BackupConstruction();
+				backupConstruction.setId(result.getInt("id"));
+				backupConstruction.setX(result.getInt("x"));
+				backupConstruction.setY(result.getInt("y"));
+				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
+				backupConstruction.setNbCadre(result.getInt("nbCadre"));
+				backupConstruction.setRisque(result.getInt("risque"));
+				backupConstruction.setBudget(result.getInt("budget"));
+				backupConstruction.setAttractivite(result.getInt("attractivite"));
+				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setSpecificite(result.getString("specificites"));
 				Construction construction = new Construction(result.getInt("construction"));
 				Backup backup = new Backup(result.getInt("backup"));
 				backupConstruction.setConstruction(construction);
@@ -132,17 +146,17 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			prepare.setInt(1, backupId);
 			result = prepare.executeQuery();
 			while(result.next()){
-				BackupConstruction backupConstruction = new BackupConstruction(
-						result.getInt("id"),
-						result.getInt("x"),
-						result.getInt("y"),
-						result.getInt("nbSalarie"),
-						result.getInt("nbCadre"),
-						result.getInt("risque"),
-						result.getInt("budget"),
-						result.getInt("attractivite"),
-						result.getInt("postePourvu"),
-						result.getString("specificites"));
+				BackupConstruction backupConstruction = new BackupConstruction();
+				backupConstruction.setId(result.getInt("id"));
+				backupConstruction.setX(result.getInt("x"));
+				backupConstruction.setY(result.getInt("y"));
+				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
+				backupConstruction.setNbCadre(result.getInt("nbCadre"));
+				backupConstruction.setRisque(result.getInt("risque"));
+				backupConstruction.setBudget(result.getInt("budget"));
+				backupConstruction.setAttractivite(result.getInt("attractivite"));
+				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setSpecificite(result.getString("specificites"));
 				Construction construction = new Construction(result.getInt("construction"));
 				Backup backup = new Backup(backupId);
 				backupConstruction.setConstruction(construction);

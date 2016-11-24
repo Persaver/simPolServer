@@ -1,13 +1,19 @@
 package fr.game.services.indicateurs;
 
-public class Population extends Thread {
-	private static int[][] popTab = new int[130][12];
-	private static int fertilite = 29;		// fertilite x 10 pour rester en int
-	private static int attractivite = 0;
+import fr.Dao.PopulationDAO;
+import fr.game.service.gameController.AbstractGameEntity;
+
+public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
+	private Population entity;
+	
+	public Population(Demographie demographie, PopulationDAO populationDAO){
+		super(demographie, populationDAO);
+		this.entity = (Demographie) this.getEntity();
+	}
 	
 // Entree	: nombre total de la population
 // Fonction : reparti aleatoirement la population dans les differentes tranches d'age
-// Remarque : Version basique a detailler
+// Remarque : /
 // Verifiee : oui
 	public Population (int a){
 		int adulte = a/5*2;
@@ -15,23 +21,23 @@ public class Population extends Thread {
 		ajoutPopulation(adulte, 18, 42);
 		ajoutPopulation(b, 0, 80);
 	}	
-	public static void ajoutPopulation (int a, int agemin, int agemax){
+	public void ajoutPopulation (int a, int agemin, int agemax){
 		int i, col, lig;
 		for (i=a; i>0; i--){
 			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			popTab[col][lig] ++;
+			this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
 		}
 	}
-	public static void retraitPopulation (int a, int agemin, int agemax){
+	public void retraitPopulation (int a, int agemin, int agemax){
 		int col, lig;
 		while(a > 0){
 			int random = (int)(Math.random() * (agemax-agemin+1)*12); // permet de retirer al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			if (popTab[col][lig] > 0){
-				popTab[col][lig] --;
+			if (this.entity.getPopTab(col,lig) > 0){
+				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
 				a--;
 			}
 		}
@@ -45,7 +51,7 @@ public class Population extends Thread {
 //	  		  4 La fonction est public, peut-etre la rendre private
 //			  5 implementer comme facteur de mortalite : la quantite de population (et le taux de criminalite) 
 // Verifiee	: Oui
-	public static int morts(int nbIndiv, int age){
+	public int morts(int nbIndiv, int age){
 		int nbMort;
 		if (age < 3){
 			nbMort = (age-3)*(age-3);
@@ -64,8 +70,8 @@ public class Population extends Thread {
 		return nbMort;
 	}
 
-	public static void fertilite(){
-		fertilite = (int)(30+Math.sqrt(attractivite/4)-20);
+	public  void fertilite(){
+		this.entity.setFertilite((int)(30+Math.sqrt(this.entity.getAttractivite()/4)-20));
 	}
 // Entree	: / - La fonction regroupe toutes les naissances de la population et les regroupe dans la case des nouveaux nes
 // Fonction : Definit le nombre de naissance en fonction du nombre de personne en age de reproduction de la cite et du taux de fertilite
@@ -74,9 +80,9 @@ public class Population extends Thread {
 //			  3 - La fonction renvoie un entier, utile pour le developpement, possibilite de ne rien renvoyer
 //			  4 - La fonction est public, peut-etre la rendre private
 // Verifiee :
-	public static int naissances (){
+	public int naissances (){
 		int x, y, n = 0;
-		int num = nbIndiv(17, 42) * fertilite;
+		int num = nbIndiv(17, 42) * this.entity.getFertilite();
 		int denom = 2*12*25*10;							// Nb indiviu par couple * nb mois * nb annee * equilibrateur fertilite
 		while (num > denom){
 			num -= denom;
@@ -94,15 +100,15 @@ public class Population extends Thread {
 // Fonction : Renvoie le nombre d'individu de la tranche d'age demandee
 // Remarque :
 // Verifiee : Oui
-	public static int nbIndiv (int min, int max){
+	public int nbIndiv (int min, int max){
 		int i, j, nb = 0;
 		for (i = min; i <= max; i++){
 			for (j=0; j < 12; j++)
-				nb += popTab[i][j];
+				nb += this.entity.getPopTab(i, j);
 		}
 		return nb;
 	}
-	public static int nbIndiv(){
+	public int nbIndiv(){
 		return nbIndiv(0, 129);
 	}
 
@@ -110,18 +116,18 @@ public class Population extends Thread {
 // Fonction	: Effectue les differentes operations de naissance, de mort et de vieillissement de la population (fait appel aux fonctions 'naissance' et 'mort'
 // Remarque	: Fonction centrale de l'evolution de la population.
 // Verifiee	: Oui
-	public static int vieillissementM (){
+	public int vieillissementM (){
 		int i, j, nbN;
 		nbN = naissances();
 		for (i = 129; i >= 0; i--){
 			for (j = 11; j >= 0; j--){
 				if (i == 0 && j == 0){
-					popTab[i][j] = nbN;
+					this.entity.setPopTab(i, j, nbN);
 				} else {
 					if (j == 0){
-						popTab[i][j] = popTab[i-1][11]-morts(popTab[i-1][11], i);//vieillissement
+						this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
 					} else {
-						popTab[i][j] = popTab[i][j-1]-morts(popTab[i][j-1], i); //vieillissement
+						this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
 					}
 				}
 			}
@@ -133,12 +139,12 @@ public class Population extends Thread {
 // Fonction : Affiche tout le tableau
 // Remarque : L'affichage se fait a l'echelle annuelle
 // Verifiee : Oui
-	public static void affichePop (){
+	public  void affichePop (){
 		int i, j, nb;
 		for (i = 0; i < 130; i++){
 			nb=0;
 			for (j=0; j < 12; j++)
-				nb += popTab[i][j];
+				nb += this.entity.getPopTab(i, j);
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}
 	}
@@ -147,7 +153,7 @@ public class Population extends Thread {
 // Fonction	: Affiche la tranche d'age souhaitee
 // Remarque	: L'affichage se fait a l'echelle annuelle
 // Verifiee	: Oui
-	public static void affichePop (int min, int max){
+	public void affichePop (int min, int max){
 		int i, j, nb;
 		if (min > max){
 			int r = min;
@@ -161,7 +167,7 @@ public class Population extends Thread {
 		for (i = min; i <= max; i++){
 			nb=0;
 			for (j=0; j < 12; j++)
-				nb += popTab[i][j];
+				nb += this.entity.getPopTab(i, j);
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}
 	}
@@ -170,7 +176,7 @@ public class Population extends Thread {
 // Fonction	: reparti les migrants dans des tranches d'age coherentes et appelle les fonction pour modifier le tableau de population
 // Remarque	: 
 // Verifiee	: Oui
-	public static int flux (int a){
+	public int flux (int a){
 		if (a>=0){
 			int adulte = a/5*2;	// oblige les nouveaux arrivant a etre coherent
 			int b = a-adulte;
@@ -190,10 +196,10 @@ public class Population extends Thread {
 		}
 		return a;
 	}
-	public static int migration(){
-		return (int)((Math.random()*nbIndiv()/5+attractivite)-nbIndiv()/10);
+	public int migration(){
+		return (int)((Math.random()*nbIndiv()/5+this.entity.getAttractivite())-nbIndiv()/10);
 	}
-	public static void modAttraction(int mod){
-		attractivite += mod;
+	public void modAttraction(int mod){
+		this.entity.setAttractivite(this.entity.getAttractivite() + mod);
 	}
 }

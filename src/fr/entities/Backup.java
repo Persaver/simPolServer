@@ -16,30 +16,18 @@ public class Backup extends AbstractEntity<Backup> implements Serializable{
 	private User user;
 
 	public Backup() {
-		super();
+		this(null, null, null, null, null);
 	}
 
 	public Backup(Integer id) {
-		this.id=id;
+		this(id, null, null, null, null);
 	}
 
-	public Backup(Integer id, Date date_creation, Date date_last, Integer nbj) {
+	public Backup(Integer id, Date date_creation, Date date_last, Integer nbj, User user) {
 		super(id);
 		this.date_creation = date_creation;
 		this.date_last = date_last;
 		this.nbj = nbj;
-	}
-
-	public Backup(Date date_creation, Date date_last, User user) {
-		this.date_creation = date_creation;
-		this.date_last = date_last;
-		this.user = user;
-	}
-
-	public Backup(Integer id, Date date_creation, Date date_last, User user) {
-		this.id = id;
-		this.date_creation = date_creation;
-		this.date_last = date_last;
 		this.user = user;
 	}
 

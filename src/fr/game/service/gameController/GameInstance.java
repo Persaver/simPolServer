@@ -1,7 +1,9 @@
-package fr.game.services.gameControlor;
+package fr.game.service.gameController;
 
+import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
 import fr.entities.Backup;
+import fr.entities.BackupConstruction;
 import fr.entities.User;
 import fr.interfaces.IGameInstance;
 
@@ -12,13 +14,14 @@ public class GameInstance implements IGameInstance{
 	private EntitiesControlor entityControl = null;
 	private Backup backup = null;
 	private BackupDAO backupDAO = null;
+	private BackupConstructionDAO backupConstructionDAO =null;
 
-	public GameInstance(User user, BackupDAO backupDAO){
+
+	public GameInstance(User user, BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO,Integer IdBackup){
 		if(user != null){
 			this.user = user;
 		}
-		this.entityControl = new EntitiesControlor();
-		this.backup = this.backup;
+		this.entityControl = new EntitiesControlor(backupDAO,backupConstructionDAO,IdBackup);
 	}
 
 	public String getKey() {
@@ -56,6 +59,6 @@ public class GameInstance implements IGameInstance{
 
 
 	private void start(){
-
+		
 	}
 }

@@ -1,10 +1,11 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.batiment.Commissariat;
 import fr.entities.BackupConstruction;
+import fr.game.services.batiments.Batiment;
 import fr.game.services.indicateurs.Budget;
 import fr.indicateur.Criminalite;
 import fr.indicateur.Education;
@@ -12,7 +13,7 @@ import fr.indicateur.Population;
 import fr.interfaces.IBatiment;
 import fr.interfaces.IEntity;
 
-public class Commissariat extends Batiment<BackupConstruction>{
+public class Commissariat extends AbstractConstructionService{
 	private int pInfluence;
 	private static int tolerance = 0;			// en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population
 	private int recette;
@@ -52,41 +53,41 @@ public class Commissariat extends Batiment<BackupConstruction>{
 	public void secure(){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
 		int influence = this.pInfluence*this.potentiel()/100*(300+Education.getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
 		System.out.println("Influence actuelle = " + influence);
-		if (Criminalite.getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
-			influence -= Criminalite.getCrimeMineur();
-			this.recette += Criminalite.getCrimeMineur()*(100-tolerance)*35/100;		// Recette des amendes mineurs
-			Criminalite.cumulMineur(-Criminalite.getCrimeMineur());
+		if (Crime.getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
+			influence -= Crime.getCrimeMineur();
+			this.recette += Crime.getCrimeMineur()*(100-tolerance)*35/100;		// Recette des amendes mineurs
+			Crime.cumulMineur(-Crime.getCrimeMineur());
 		} else {
 			influence = influence/2;
 			this.recette += influence*(100-tolerance)*35/100;
-			Criminalite.cumulMineur(influence);
+			Crime.cumulMineur(influence);
 		}
-		if (Criminalite.getCrimeMoyen() < influence/2){				//25% de l'influence est dirigee vers les crimes moyens
-			influence -= Criminalite.getCrimeMoyen();				// Si le crime mineur n'est pas assez repandu, les effectifs sont rediriges vers des gestions de crime plus graves
-			this.recette += Criminalite.getCrimeMoyen()*(100-tolerance)*60/100;			// Recette des amendes intermediaires
-			Criminalite.cumulMoyen(-Criminalite.getCrimeMoyen());
+		if (Crime.getCrimeMoyen() < influence/2){				//25% de l'influence est dirigee vers les crimes moyens
+			influence -= Crime.getCrimeMoyen();				// Si le crime mineur n'est pas assez repandu, les effectifs sont rediriges vers des gestions de crime plus graves
+			this.recette += Crime.getCrimeMoyen()*(100-tolerance)*60/100;			// Recette des amendes intermediaires
+			Crime.cumulMoyen(-Crime.getCrimeMoyen());
 		} else {
 			influence = influence/2;
 			this.recette += influence*(100-tolerance)*60/100;
-			Criminalite.cumulMoyen(influence);
+			Crime.cumulMoyen(influence);
 		}
-		if (Criminalite.getCrimeGrave() < influence*4/5){			//20% de l'influence est dirigee vers les crimes graves
-			influence -= Criminalite.getCrimeGrave();
-			this.recette += Criminalite.getCrimeGrave()*(100-tolerance)*120/100;			// Recette des amendes lourdes
-			Criminalite.cumulGrave(-Criminalite.getCrimeGrave());
+		if (Crime.getCrimeGrave() < influence*4/5){			//20% de l'influence est dirigee vers les crimes graves
+			influence -= Crime.getCrimeGrave();
+			this.recette += Crime.getCrimeGrave()*(100-tolerance)*120/100;			// Recette des amendes lourdes
+			Crime.cumulGrave(-Crime.getCrimeGrave());
 		} else {
 			this.recette += influence*4*(100-tolerance)*120/100/5;
-			Criminalite.cumulGrave(influence*4/5);
+			Crime.cumulGrave(influence*4/5);
 			influence = influence/5;
 		}
-		if (Criminalite.getCrimeTerroriste() < influence){									//5% de l'influence est dirigee vers le terrorisme
-			this.recette += Criminalite.getCrimeTerroriste()*5000/100;						// Pas de tolerance pour le terrorrisme
-			Population.retraitPopulation(Criminalite.getCrimeTerroriste(), 15, 95);					// On "evacue" les terroristes
-			System.out.println(Criminalite.getCrimeTerroriste() + " Terroriste(s) a(ont) ete incarcere(s)");
-			Criminalite.cumulTerreur(-Criminalite.getCrimeTerroriste());
+		if (Crime.getCrimeTerroriste() < influence){									//5% de l'influence est dirigee vers le terrorisme
+			this.recette += Crime.getCrimeTerroriste()*5000/100;						// Pas de tolerance pour le terrorrisme
+			Population.retraitPopulation(Crime.getCrimeTerroriste(), 15, 95);					// On "evacue" les terroristes
+			System.out.println(Crime.getCrimeTerroriste() + " Terroriste(s) a(ont) ete incarcere(s)");
+			Crime.cumulTerreur(-Crime.getCrimeTerroriste());
 		} else {
 			this.recette += influence*5000/100;
-			Criminalite.cumulTerreur(influence);
+			Crime.cumulTerreur(influence);
 			Population.retraitPopulation(influence, 15, 95);						// On evacue les terroristes
 			System.out.println(influence + " Terroriste(s) a(ont) ete incarcere(s)");
 			

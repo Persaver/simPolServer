@@ -3,9 +3,11 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.User;
+import fr.interfaces.IEntity;
 
 public class UserDAO extends DAO<User,Integer>{
 
@@ -17,7 +19,7 @@ public class UserDAO extends DAO<User,Integer>{
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result!= null){
-				User user = new User(result.getInt("id"), result.getString("pseudo"), result.getString("password"));
+				User user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
@@ -53,6 +55,12 @@ public class UserDAO extends DAO<User,Integer>{
 	@Override
 	public void save(User element) {
 		// TODO Auto-generated method stub
+		ResultSet result;
+		PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO User (id,ageTravail,ageRetraite) VALUES (?,?,?)");
+		prepare.setInt(1, element.getId());
+		prepare.setString(2, element.getLogin());
+		prepare.setString(3, element.getPassword());
+		result = prepare.executeQuery();
 
 	}
 
@@ -83,9 +91,22 @@ public class UserDAO extends DAO<User,Integer>{
 
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet result;
+		List<User> users = new ArrayList<User>();
+		try {
+			result = this.connect.createStatement().executeQuery("Select * from user");
+			while(result.next()){
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLogin(result.getString("login"));
+				user.setPassword(result.getString("password"));
+				users.add(user);
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users ;
 	}
-
 
 }

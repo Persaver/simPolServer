@@ -7,14 +7,15 @@ import com.google.gson.Gson;
 import fr.interfaces.IEntity;
 import fr.interfaces.IJsonEntity;
 
-public abstract class AbstractEntity<T> implements Serializable,IJsonEntity,IEntity{
+public abstract class AbstractEntity<T> implements Serializable,IJsonEntity{
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	protected Integer id;
 
-	protected AbstractEntity(){
+
+	public AbstractEntity(){
 		this(null);
 	}
 

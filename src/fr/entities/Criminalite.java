@@ -1,63 +1,89 @@
 package fr.entities;
 
-public class Crime {
-	private int indicMineur;
-	private int crimeMineur;
-	private int indicMoyen;
-	private int crimeMoyen;
-	private int indicGrave;
-	private int crimeGrave;
-	private int indicTerrorisme;
-	private int crimeTerroriste;
-	
-	
-	public int getIndicMineur() {
+public class Criminalite extends AbstractEntity<Criminalite>{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer indicMineur;
+	private Integer crimeMineur;
+	private Integer indicMoyen;
+	private Integer crimeMoyen;
+	private Integer indicGrave;
+	private Integer crimeGrave;
+	private Integer indicTerrorisme;
+	private Integer crimeTerroriste;
+	private Backup backup;
+
+	public Integer getIndicMineur() {
 		return indicMineur;
 	}
+
 	public void setIndicMineur(int indicMineur) {
 		this.indicMineur = indicMineur;
 	}
-	public int getCrimeMineur() {
+
+	public Integer  getCrimeMineur() {
 		return crimeMineur;
 	}
+
 	public void setCrimeMineur(int crimeMineur) {
 		this.crimeMineur = crimeMineur;
 	}
-	public int getIndicMoyen() {
+
+	public Integer  getIndicMoyen() {
 		return indicMoyen;
 	}
+
 	public void setIndicMoyen(int indicMoyen) {
 		this.indicMoyen = indicMoyen;
 	}
-	public int getCrimeMoyen() {
+
+	public Integer  getCrimeMoyen() {
 		return crimeMoyen;
 	}
+
 	public void setCrimeMoyen(int crimeMoyen) {
 		this.crimeMoyen = crimeMoyen;
 	}
-	public int getIndicGrave() {
+
+	public Integer  getIndicGrave() {
 		return indicGrave;
 	}
+
 	public void setIndicGrave(int indicGrave) {
 		this.indicGrave = indicGrave;
 	}
-	public int getCrimeGrave() {
+
+	public Integer  getCrimeGrave() {
 		return crimeGrave;
 	}
+
 	public void setCrimeGrave(int crimeGrave) {
 		this.crimeGrave = crimeGrave;
 	}
-	public int getIndicTerrorisme() {
+
+	public Integer  getIndicTerrorisme() {
 		return indicTerrorisme;
 	}
+
 	public void setIndicTerrorisme(int indicTerrorisme) {
 		this.indicTerrorisme = indicTerrorisme;
 	}
-	public int getCrimeTerroriste() {
+
+	public Integer  getCrimeTerroriste() {
 		return crimeTerroriste;
 	}
+
 	public void setCrimeTerroriste(int crimeTerroriste) {
 		this.crimeTerroriste = crimeTerroriste;
 	}
-	
+
+	public Backup getBackup(){
+		return this.backup;
+	}
+
+	public void setBackup(Backup backup){
+		this.backup=backup;
+	}
 }

@@ -1,14 +1,13 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
 import fr.entities.Construction;
-import fr.game.services.gameControlor.AbstractGameEntity;
-import fr.game.services.indicateurs.Budget;
-import fr.game.services.indicateurs.Population;
-import fr.interfaces.IBatiment;
+import fr.game.services.gameController.AbstractGameEntity;
+import fr.game.services.constructions.IBatiment;
+import fr.interfaces.IConstruction;
 
-public abstract class Batiment extends AbstractGameEntity<BackupConstruction> implements IBatiment{
+public abstract class AbstractConstructionService extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IConstruction{
 	// on cree une varible construction
 	// => this.entity = BackupConstruction
 	//    this.construction = Construction
@@ -64,3 +63,4 @@ public abstract class Batiment extends AbstractGameEntity<BackupConstruction> im
 		this.constructionDAO.save(this.entity);
 	}
 }
+
