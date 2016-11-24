@@ -1,5 +1,7 @@
 package fr.entities;
 
+import java.util.Map;
+
 import fr.interfaces.IEntity;
 
 public class BackupConstruction extends AbstractEntity<BackupConstruction> implements IEntity{
@@ -15,7 +17,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> imple
 	private Integer budget;
 	private Integer attractivite; //
 	private Integer postePourvu;
-	private String specificite;
+	private Map<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
 
@@ -107,11 +109,12 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> imple
 		this.postePourvu = postePourvu;
 	}
 
-	public String getSpecificite() {
-		return this.specificite;
+
+	public Map<String, Integer> getSpecificite() {
+		return specificite;
 	}
 
-	public void setSpecificite(String specificite) {
+	public void setSpecificite(Map<String, Integer> specificite) {
 		this.specificite = specificite;
 	}
 
