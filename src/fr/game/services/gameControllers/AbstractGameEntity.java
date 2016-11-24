@@ -1,4 +1,4 @@
-package fr.game.service.gameController;
+package fr.game.services.gameControllers;
 
 import fr.Dao.DAO;
 import fr.interfaces.IEntity;
