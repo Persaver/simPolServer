@@ -1,4 +1,4 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import java.util.ArrayList;
 
