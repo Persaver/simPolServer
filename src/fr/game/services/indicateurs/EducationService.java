@@ -1,14 +1,14 @@
 package fr.game.services.indicateurs;
 
 import fr.Dao.EnseignementDAO;
-import fr.entities.Enseignement;
+import fr.entities.Education;
 import fr.game.services.gameControlor.AbstractGameEntity;
 
-public abstract class Education extends AbstractGameEntity<Enseignement, EnseignementDAO> {
+public abstract class EducationService extends AbstractGameEntity<EducationService, EnseignementDAO> {
 	
-	public Education(Enseignement entity, EnseignementDAO entityDao) {
+	public EducationService(EducationService entity, EnseignementDAO entityDao) {
 		super(entity, entityDao);
-		this.entity = (Enseignement) this.getEntity();
+		this.entity = (EducationService) this.getEntity();
 	}
 
 	public void recupEducation(){
@@ -112,7 +112,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 			} else
 				possible --;
 			if (edSecurite > 0 && mod > 0){
-				edSecurite --;
+				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
 				edEntretien ++;
 				mod --;
 			} else
@@ -120,14 +120,14 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 			
 		}
 	}
-	public static void descendreEntretien (int mod){
+	public void descendreEntretien (int mod){
 		if (mod > edEntretien)
 			mod = edEntretien;
-		edEntretien -= mod;
-		edSante += mod/4;
-		edRecherche += mod/4;
-		edTourisme += mod/4;
-		edSecurite += mod/4;
+		this.entity.setEdEntretien(this.entity.getEdEntretien()-mod);
+		this.entity.setEdSante(this.entity.getEdSante()+mod/4);
+		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4);
+		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
+		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
 		mod = mod%4;
 		if (mod > 0){
 			edSante ++;
@@ -168,7 +168,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 			} else
 				possible --;
 			if (edSecurite > 0 && mod > 0){
-				edSecurite --;
+				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
 				edSante ++;
 				mod --;
 			} else
@@ -185,9 +185,9 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 		if (mod > edSante)
 			mod = edSante;
 		edSante -= mod;
-		edRecherche += mod/4;
-		edTourisme += mod/4;
-		edSecurite += mod/4;
+		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4)
+		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
+		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
 		edEntretien += mod/4;
 		mod = mod%4;
 		if (mod > 0){
@@ -223,7 +223,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 			} else
 				possible --;
 			if (edSecurite > 0 && mod > 0){
-				edSecurite --;
+				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
 				edRecherche ++;
 				mod --;
 			} else
@@ -246,10 +246,10 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 		if (mod > edRecherche)
 			mod = edRecherche;
 		edRecherche -= mod;
-		edTourisme += mod/4;
-		edSecurite += mod/4;
+		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
+		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
 		edEntretien += mod/4;
-		edSante += mod/4;
+		this.entity.setEdSante(this.entity.getEdSante()+mod/4)
 		mod = mod%4;
 		if (mod > 0){
 			edTourisme ++;
@@ -274,11 +274,11 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 		else
 			descendreRecherche(-mod);
 	}
-	public static void monterTourisme (int mod){
+	public void monterTourisme (int mod){
 		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
 		while (mod > 0 && possible > 0){
 			if (edSecurite > 0 && mod > 0){
-				edSecurite --;
+				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
 				edTourisme ++;
 				mod --;
 			} else
@@ -307,10 +307,10 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 		if (mod > edTourisme)
 			mod = edTourisme;
 		edTourisme -= mod;
-		edSecurite += mod/4;
+		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
 		edEntretien += mod/4;
-		edSante += mod/4;
-		edRecherche += mod/4;
+		this.entity.setEdSante(this.entity.getEdSante()+mod/4)
+		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4)
 		mod = mod%4;
 		if (mod > 0){
 			edSecurite ++;
@@ -354,7 +354,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 	}
 
 	public static void setEdSecurite(int edSecurite) {
-		Education.edSecurite = edSecurite;
+		EducationService.edSecurite = edSecurite;
 	}
 
 	public static int getEdEntretien() {
@@ -362,7 +362,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 	}
 
 	public static void setEdEntretien(int edEntretien) {
-		Education.edEntretien = edEntretien;
+		EducationService.edEntretien = edEntretien;
 	}
 
 	public static int getEdSante() {
@@ -370,7 +370,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 	}
 
 	public static void setEdSante(int edSante) {
-		Education.edSante = edSante;
+		EducationService.edSante = edSante;
 	}
 
 	public static int getEdRecherche() {
@@ -378,7 +378,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 	}
 
 	public static void setEdRecherche(int edRecherche) {
-		Education.edRecherche = edRecherche;
+		EducationService.edRecherche = edRecherche;
 	}
 
 	public static int getEdTourisme() {
@@ -386,7 +386,7 @@ public abstract class Education extends AbstractGameEntity<Enseignement, Enseign
 	}
 
 	public static void setEdTourisme(int edTourisme) {
-		Education.edTourisme = edTourisme;
+		EducationService.edTourisme = edTourisme;
 	}
 
 	public static int getEdTotale() {

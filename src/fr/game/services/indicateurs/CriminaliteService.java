@@ -1,18 +1,17 @@
 package fr.game.services.indicateurs;
 
 import fr.Dao.CriminaliteDAO;
-
+import fr.entities.Budget;
 import fr.entities.Criminalite;
 import fr.entities.Population;
 import fr.game.services.gameControllers.AbstractGameEntity;
 
-public class CriminaliteService 
-	extends AbstractGameEntity<Criminalite ,CriminaliteDAO> {
+public class CriminaliteService extends AbstractGameEntity<Criminalite ,CriminaliteDAO> {
 		private Criminalite entity;
 		
 		public CriminaliteService(Criminalite crime, CriminaliteDAO criminaliteDAO){
 			super(crime,criminaliteDAO);
-			this.entity = (Criminalite) this.getEntity();
+			this.entity = this.getEntity();
 		}
 		
 		// Une fonction pour calculer la valeur quotidienne du crime mineur

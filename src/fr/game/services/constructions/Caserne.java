@@ -1,4 +1,4 @@
-package fr.game.services.batiments;
+package fr.game.services.constructions;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class Caserne extends Batiment<BackupConstruction> {
 		// Les employes vont effectuer des inspection.
 	public void entretien(){
 		int l = Batiment.constructions.size();
-		int e = this.pEntretien*this.potentiel()/100*(300+Education.getEdSecurite())/500;
+		int e = this.pEntretien*this.potentiel()/100*(300+EducationService.getEdSecurite())/500;
 		int indice = (int)(Math.random()*l);
 		while (e>0){		// Si un batiment est bien endommage, les ouvriers vont se concentrer dessus
 			if (Batiment.constructions.get(indice).getRisque()>=10){

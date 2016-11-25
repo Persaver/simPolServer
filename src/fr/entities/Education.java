@@ -1,13 +1,31 @@
 package fr.entities;
 
-public class Enseignement {
+public class Education {
 	private int edTotale;		// L'Education apportee par les ecoles
 	private int edSecurite;		// L'education distribuee aux commissariats
-	private int edEntretien;		// L'education distribuee aux casernes
-	private int edSante;			// L'education distribuee aux hopitaux
-	private int edRecherche;		// L'education distribuee aux recherches
+	private int edEntretien;	// L'education distribuee aux casernes
+	private int edSante;		// L'education distribuee aux hopitaux
+	private int edRecherche;	// L'education distribuee aux recherches
 	private int edTourisme;		// L'education distribuee aux batiment touristiques
 	
+	public Education (){
+		super();
+	}
+	
+	public Education (int edTotale){
+		super();
+		this.setEdTotale(edTotale);
+	}
+	
+	public Education (int edTot, int edSec, int edEnt, int edSan, int edRec, int edTou){
+		super();
+		this.setEdTotale(edTot);
+		this.setEdSecurite(edSec);
+		this.setEdEntretien(edEnt);
+		this.setEdSante(edSan);
+		this.setEdRecherche(edRec);
+		this.setEdTourisme(edTou);
+	}
 	
 	public int getEdTotale() {
 		return edTotale;

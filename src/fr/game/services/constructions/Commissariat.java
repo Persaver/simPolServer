@@ -38,7 +38,7 @@ public class Commissariat extends AbstractConstructionService{
 		System.out.println("Influence : " + this.pInfluence);
 	}
 	public void secure(){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
-		int influence = this.pInfluence*this.potentiel()/100*(300+Education.getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
+		int influence = this.pInfluence*this.potentiel()/100*(300+EducationService.getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
 		System.out.println("Influence actuelle = " + influence);
 		if (Crime.getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
 			influence -= Crime.getCrimeMineur();
@@ -81,7 +81,7 @@ public class Commissariat extends AbstractConstructionService{
 		}
 	}
 	public void afficheEfficacite(){
-		System.out.println(this.pInfluence*this.potentiel()/100*(400+Education.getEdSecurite())/500);
+		System.out.println(this.pInfluence*this.potentiel()/100*(400+EducationService.getEdSecurite())/500);
 	}
 	
 	public int getRecette(){
