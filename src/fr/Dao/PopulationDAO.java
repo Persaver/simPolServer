@@ -37,12 +37,13 @@ public class PopulationDAO extends DAO<Population, Integer> {
 				population.setPopTab(gson.fromJson(result.getString("popTab"), Integer[][].class));
 				backup = new Backup(result.getInt("id"));
 				population.setBackup(backup);
+				return population;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return population;
+		return null;
 }
 
 @Override
@@ -76,29 +77,29 @@ public void update(Population element) {
 }
 
 
-public List<Population> getAll(Integer backup) {
-	List<Population> historique = new ArrayList<Population>();
-	Population p = null;
+public List<Population> getAllByBackup(Integer backup) {
+	List<Population> populations = new ArrayList<Population>();
 	Gson gson = new Gson();
 	try {
 		//this.connect = AccessDB.seConnecter(); // Connection deja etablie avec le parent?
-		String req = "SELECT repartitionPop, fertilite, attractivite FROM population WHERE id=?";
+		String req = "SELECT repartitionPop, fertilite, attractivite FROM population WHERE backup=?";
 		PreparedStatement statement = this.connect.prepareStatement(req);
 		statement.setInt(1, backup);
 		ResultSet results = statement.executeQuery();
 		while ( results.next() ) {
-			p = new Population();
+			Population population = new Population();
 			// fonction pour transformer "repartitionPop" en tab[][]
 			// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
-			p.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
-			p.setFertilite(results.getInt("fertilite"));
-			p.setAttractivite(results.getInt("attractivite"));
-			historique.add(p);
+			population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
+			population.setFertilite(results.getInt("fertilite"));
+			population.setAttractivite(results.getInt("attractivite"));
+			populations.add(population);
 		}
+		return populations;
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	return historique;
+	return null;
 }
 
 @Override
