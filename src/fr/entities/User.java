@@ -1,8 +1,6 @@
 package fr.entities;
 
-import fr.interfaces.IEntity;
-
-public class User extends AbstractEntity<User> implements IEntity{
+public class User extends AbstractEntity<User> {
 	/**
 	 *
 	 */

@@ -2,9 +2,7 @@ package fr.entities;
 
 import java.util.Map;
 
-import fr.interfaces.IEntity;
-
-public class BackupConstruction extends AbstractEntity<BackupConstruction> implements IEntity{
+public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 	/**
 	 *
 	 */
@@ -30,7 +28,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> imple
 	}
 
 	public BackupConstruction(Integer id, Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
-			Integer attractivite, Integer postePourvu, String specificite, Construction construction, Backup backup) {
+			Integer attractivite, Integer postePourvu, Map<String,Integer> specificite, Construction construction, Backup backup) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -111,7 +109,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> imple
 
 
 	public Map<String, Integer> getSpecificite() {
-		return specificite;
+		return this.specificite;
 	}
 
 	public void setSpecificite(Map<String, Integer> specificite) {

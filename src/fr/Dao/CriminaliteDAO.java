@@ -10,7 +10,7 @@ import fr.entities.Criminalite;
 
 
 
-public class CriminaliteDAO extends DAO<Criminalite, Integer> {
+public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 
 
 	@Override
@@ -19,7 +19,7 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 		Criminalite criminalite = null;
 		try{
 			String req = "SELECT * FROM criminalite WHERE id=?";
-			PreparedStatement statement = connect.prepareStatement(req);
+			PreparedStatement statement = this.connect.prepareStatement(req);
 			statement.setInt(1, id);
 			results = statement.executeQuery();
 			if(results != null){
@@ -59,7 +59,7 @@ public class CriminaliteDAO extends DAO<Criminalite, Integer> {
 		Criminalite crim = null;
 		try{
 			String req = "SELECT * FROM criminalite WHERE backup=? ORDER BY date DESC";
-			PreparedStatement statement = connect.prepareStatement(req);
+			PreparedStatement statement = this.connect.prepareStatement(req);
 			statement.setInt(1, backup.getId());
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {

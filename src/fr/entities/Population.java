@@ -2,9 +2,7 @@ package fr.entities;
 
 import java.util.Arrays;
 
-import fr.interfaces.IEntity;
-
-public class Population extends AbstractEntity<Population> implements IEntity{
+public class Population extends AbstractEntity<Population> {
 	/**
 	 *
 	 */

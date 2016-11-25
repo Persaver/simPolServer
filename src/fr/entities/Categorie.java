@@ -1,8 +1,6 @@
 package fr.entities;
 
-import fr.interfaces.IEntity;
-
-public class Categorie extends AbstractEntity<Categorie> implements IEntity{
+public class Categorie extends AbstractEntity<Categorie> {
 	private static final long serialVersionUID = 1L;
 	private String libelle;
 

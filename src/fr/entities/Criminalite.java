@@ -1,8 +1,6 @@
 package fr.entities;
 
-import fr.interfaces.IEntity;
-
-public class Criminalite extends AbstractEntity<Criminalite> implements IEntity{
+public class Criminalite extends AbstractEntity<Criminalite> {
 	/**
 	 *
 	 */
