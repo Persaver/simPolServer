@@ -1,8 +1,6 @@
 package fr.entities;
 
-import fr.interfaces.IEntity;
-
-public class Backup extends AbstractEntity<Backup> implements IEntity{
+public class Backup extends AbstractEntity<Backup> {
 	/**
 	 *
 	 */

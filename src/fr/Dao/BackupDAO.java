@@ -11,7 +11,7 @@ import fr.entities.Backup;
 import fr.entities.User;
 
 
-public class BackupDAO extends DAO<Backup,Integer>{
+public class BackupDAO extends DAO<Backup,Integer> {
 
 	@Override
 	public Backup get(Integer id) {

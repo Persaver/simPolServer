@@ -9,11 +9,9 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import fr.entities.Backup;
-import fr.entities.Categorie;
-import fr.entities.Construction;
 import fr.entities.Population;
 
-public class PopulationDAO extends DAO<Population, Integer> {
+public class PopulationDAO extends DAO<Population,Integer> {
 
 	@Override
 	public Population get(Integer id){
@@ -44,68 +42,68 @@ public class PopulationDAO extends DAO<Population, Integer> {
 			e.printStackTrace();
 		}
 		return null;
-}
+	}
 
-@Override
-public Population save(Population element) {
-	try {
-		String req = "INSERT INTO population (repartitionPop, fertilite, attractivite) VALUES (?, ?, ?)";
-		PreparedStatement statement = this.connect.prepareStatement(req);
-		String pop = null;
-		// fonction pour faire passer tab[][] en "repartitionPop"
-		statement.setString(1, pop);
-		statement.setInt(2, element.getFertilite());
-		statement.setInt(3, element.getAttractivite());
-	} catch (SQLException e) {
-		e.printStackTrace();
+	@Override
+	public Population save(Population element) {
+		try {
+			String req = "INSERT INTO population (repartitionPop, fertilite, attractivite) VALUES (?, ?, ?)";
+			PreparedStatement statement = this.connect.prepareStatement(req);
+			String pop = null;
+			// fonction pour faire passer tab[][] en "repartitionPop"
+			statement.setString(1, pop);
+			statement.setInt(2, element.getFertilite());
+			statement.setInt(3, element.getAttractivite());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return element;
+
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(Population element) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	public List<Population> getAllByBackup(Integer backup) {
+		List<Population> populations = new ArrayList<Population>();
+		Gson gson = new Gson();
+		try {
+			//this.connect = AccessDB.seConnecter(); // Connection deja etablie avec le parent?
+			String req = "SELECT repartitionPop, fertilite, attractivite FROM population WHERE backup=?";
+			PreparedStatement statement = this.connect.prepareStatement(req);
+			statement.setInt(1, backup);
+			ResultSet results = statement.executeQuery();
+			while ( results.next() ) {
+				Population population = new Population();
+				// fonction pour transformer "repartitionPop" en tab[][]
+				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
+				population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
+				population.setFertilite(results.getInt("fertilite"));
+				population.setAttractivite(results.getInt("attractivite"));
+				populations.add(population);
+			}
+			return populations;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
-	return element;
 
-}
-
-@Override
-public void delete(Integer id) {
-	// TODO Auto-generated method stub
-
-}
-
-@Override
-public void update(Population element) {
-	// TODO Auto-generated method stub
-
-}
-
-
-public List<Population> getAllByBackup(Integer backup) {
-	List<Population> populations = new ArrayList<Population>();
-	Gson gson = new Gson();
-	try {
-		//this.connect = AccessDB.seConnecter(); // Connection deja etablie avec le parent?
-		String req = "SELECT repartitionPop, fertilite, attractivite FROM population WHERE backup=?";
-		PreparedStatement statement = this.connect.prepareStatement(req);
-		statement.setInt(1, backup);
-		ResultSet results = statement.executeQuery();
-		while ( results.next() ) {
-			Population population = new Population();
-			// fonction pour transformer "repartitionPop" en tab[][]
-			// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
-			population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
-			population.setFertilite(results.getInt("fertilite"));
-			population.setAttractivite(results.getInt("attractivite"));
-			populations.add(population);
-		}
-		return populations;
-	} catch (SQLException e) {
-		e.printStackTrace();
+	@Override
+	public List<Population> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	return null;
-}
-
-@Override
-public List<Population> getAll() {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

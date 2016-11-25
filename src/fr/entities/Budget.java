@@ -1,8 +1,6 @@
 package fr.entities;
 
-import fr.interfaces.IEntity;
-
-public class Budget extends AbstractEntity<Budget> implements IEntity{
+public class Budget extends AbstractEntity<Budget> {
 
 	/**
 	 *

@@ -1,6 +1,6 @@
 package fr.entities;
 
-public class Construction extends AbstractEntity<Construction>{
+public class Construction extends AbstractEntity<Construction> {
 
 	private static final long serialVersionUID = 1L;
 	private String designation;
