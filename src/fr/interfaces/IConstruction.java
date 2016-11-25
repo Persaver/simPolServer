@@ -18,5 +18,4 @@ public interface IConstruction extends IGameEntity{
 	public static void usures() {
 	}
 
-
 }
