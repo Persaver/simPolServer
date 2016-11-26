@@ -6,14 +6,10 @@ import fr.entities.BackupConstruction;
 
 public class Caserne extends Batiment<BackupConstruction> {
 	private int pEntretien;		// Potentiel d'entretien des batiments
-	private static List<Caserne> casernes = new ArrayList<Caserne>();
-	private int indiceCas;
 
 	public Caserne() {
 		super(60, 20, 0, 1);
 		this.pEntretien = 6;
-		this.indiceCas = casernes.size();
-		casernes.add(this);
 	}
 	public Caserne(int niv) {
 		this();
@@ -50,7 +46,7 @@ public class Caserne extends Batiment<BackupConstruction> {
 				}				// Des qu'ils verront des defauts, les ouvriers vont apporter des reparation
 			} else
 				if (Batiment.constructions.get(indice).getRisque()>0){
-				Batiment.constructions.get(indice).modifierRisque(1); // entre deux batiment, le deplacement leur prend du temps (et Ã§a assure d'arruver a 'e=0'
+				Batiment.constructions.get(indice).modifierRisque(1); // entre deux batiment, le deplacement leur prend du temps (et ca assure d'arriver a 'e=0'
 				e--;
 			} // Si tout va bien, on recommence jusqu'a ce qu'il soit l'heure d'arreter
 			indice = (indice+1)%l;

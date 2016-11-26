@@ -22,7 +22,9 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 
 	@Override
 	public void ameliore(){
-		this.getEntity().setNbSalarie(6);
+		this.getEntity().setNbCadre(this.entity.getNbCadre()*this.construction.getModCadre());
+		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
+//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
 	}
 
 	@Override

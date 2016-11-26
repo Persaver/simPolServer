@@ -6,7 +6,7 @@ public class Construction extends AbstractEntity<Construction> {
 	private String designation;
 	private Integer h;
 	private Integer w;
-	private Double price;
+	private Double price;		// Pourquoi un double?(Robin)
 	private Integer baseSalarie;
 	private Integer baseCadre;
 	private Integer baseRisque;

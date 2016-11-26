@@ -1,23 +1,23 @@
 package fr.entities;
 
 public class Education {
-	private int edTotale;		// L'Education apportee par les ecoles
-	private int edSecurite;		// L'education distribuee aux commissariats
-	private int edEntretien;	// L'education distribuee aux casernes
-	private int edSante;		// L'education distribuee aux hopitaux
-	private int edRecherche;	// L'education distribuee aux recherches
-	private int edTourisme;		// L'education distribuee aux batiment touristiques
+	private Integer edTotale;		// L'Education apportee par les ecoles
+	private Integer edSecurite;		// L'education distribuee aux commissariats
+	private Integer edEntretien;	// L'education distribuee aux casernes
+	private Integer edSante;		// L'education distribuee aux hopitaux
+	private Integer edRecherche;	// L'education distribuee aux recherches
+	private Integer edTourisme;		// L'education distribuee aux batiment touristiques
 	
 	public Education (){
 		super();
 	}
 	
-	public Education (int edTotale){
+	public Education (Integer edTotale){
 		super();
 		this.setEdTotale(edTotale);
 	}
 	
-	public Education (int edTot, int edSec, int edEnt, int edSan, int edRec, int edTou){
+	public Education (Integer edTot, Integer edSec, Integer edEnt, Integer edSan, Integer edRec, Integer edTou){
 		super();
 		this.setEdTotale(edTot);
 		this.setEdSecurite(edSec);
@@ -27,40 +27,40 @@ public class Education {
 		this.setEdTourisme(edTou);
 	}
 	
-	public int getEdTotale() {
+	public Integer getEdTotale() {
 		return edTotale;
 	}
-	public void setEdTotale(int edTotale) {
+	public void setEdTotale(Integer edTotale) {
 		this.edTotale = edTotale;
 	}
-	public int getEdSecurite() {
+	public Integer getEdSecurite() {
 		return edSecurite;
 	}
-	public void setEdSecurite(int edSecurite) {
+	public void setEdSecurite(Integer edSecurite) {
 		this.edSecurite = edSecurite;
 	}
-	public int getEdEntretien() {
+	public Integer getEdEntretien() {
 		return edEntretien;
 	}
-	public void setEdEntretien(int edEntretien) {
+	public void setEdEntretien(Integer edEntretien) {
 		this.edEntretien = edEntretien;
 	}
-	public int getEdSante() {
+	public Integer getEdSante() {
 		return edSante;
 	}
-	public void setEdSante(int edSante) {
+	public void setEdSante(Integer edSante) {
 		this.edSante = edSante;
 	}
-	public int getEdRecherche() {
+	public Integer getEdRecherche() {
 		return edRecherche;
 	}
-	public void setEdRecherche(int edRecherche) {
+	public void setEdRecherche(Integer edRecherche) {
 		this.edRecherche = edRecherche;
 	}
-	public int getEdTourisme() {
+	public Integer getEdTourisme() {
 		return edTourisme;
 	}
-	public void setEdTourisme(int edTourisme) {
+	public void setEdTourisme(Integer edTourisme) {
 		this.edTourisme = edTourisme;
 	}
 	@Override
