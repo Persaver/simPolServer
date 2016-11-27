@@ -51,9 +51,26 @@ public class CriminaliteService extends AbstractGameEntity<Criminalite ,Criminal
 			this.entity.setCrimeTerroriste(0);
 		}
 	}
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public int getCrimeMineur() {
+		return this.entity.getCrimeMineur();
+	}
+
+	public int getCrimeMoyen() {
+		return this.entity.getCrimeMoyen();
+	}
+
+	public int getCrimeGrave() {
+		return this.entity.getCrimeGrave();
+	}
+
+	public int getCrimeTerroriste() {
+		return this.entity.getCrimeTerroriste();
 	}
 }

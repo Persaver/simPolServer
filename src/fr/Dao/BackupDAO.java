@@ -9,6 +9,7 @@ import java.util.List;
 
 import fr.entities.Backup;
 import fr.entities.User;
+import fr.splExceptions.DAOException;
 
 
 public class BackupDAO extends DAO<Backup,Integer> {
@@ -21,15 +22,15 @@ public class BackupDAO extends DAO<Backup,Integer> {
 		try {
 			String sql = "SELECT * FROM backup WHERE id =?";
 			PreparedStatement prepare = this.connect.prepareStatement(sql);
-			prepare.setInt(1, id);
+			prepare.setInt(1, id.intValue());
 			result = prepare.executeQuery();
-			if(result!= null){
+			if(result!= null && result.next()){
 				backup = new Backup();
 				backup.setId(result.getInt("id"));
 				backup.setDate_creation(result.getString("date_creation"));
 				backup.setDate_last(result.getString("date_last"));
 				backup.setNbj(result.getInt("nbj"));
-				user = new User(result.getInt("user"));
+				user = new UserDAO().get(result.getInt("user"));
 				backup.setUser(user);
 			}
 			return backup;
@@ -39,8 +40,9 @@ public class BackupDAO extends DAO<Backup,Integer> {
 		return backup;
 	}
 
-	public Backup getByUser(User user){
+	public List<Backup> getByUser(User user){
 		ResultSet result;
+		List<Backup> backups = null;
 		Backup backup = null;
 		try {
 			String sql = "SELECT * FROM backup WHERE user =?";
@@ -48,18 +50,22 @@ public class BackupDAO extends DAO<Backup,Integer> {
 			prepare.setInt(1, user.getId());
 			result = prepare.executeQuery();
 			if(result!= null){
-				backup = new Backup();
-				backup.setId(result.getInt("id"));
-				backup.setDate_creation(result.getString("date_creation"));
-				backup.setDate_last(result.getString("date_last"));
-				backup.setNbj(result.getInt("nbj"));
-				backup.setUser(user);
+				backups = new ArrayList<Backup>(); {
+				};
+				while(result.next()){
+					backup = new Backup();
+					backup.setId(result.getInt("id"));
+					backup.setDate_creation(result.getString("date_creation"));
+					backup.setDate_last(result.getString("date_last"));
+					backup.setNbj(result.getInt("nbj"));
+					backup.setUser(user);
+					backups.add(backup);
+				}
 			}
-			return backup;
 		}catch (SQLException e){
-			e.printStackTrace();
+			backups = null;
 		}
-		return backup;
+		return backups;
 	}
 
 	@Override

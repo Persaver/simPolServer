@@ -16,9 +16,11 @@ import fr.entities.BackupConstruction;
 import fr.entities.Budget;
 import fr.entities.Population;
 import fr.game.services.constructions.Commissariat;
-import fr.game.services.constructions.Ecole;
+//import fr.game.services.constructions.Ecole;
 import fr.interfaces.IConstruction;
 import fr.interfaces.IGameEntity;
+import fr.interfaces.IEntity;
+
 import fr.splExceptions.EntityException;
 
 // il s'occupe des Game entities et de leur sauvegarde
@@ -97,36 +99,42 @@ public class EntitiesController {
 	}
 
 	// lance la recuperation de toutes les entitées
-	public void getGameEntitiesFromDao(){
-		List<BackupConstruction> gameEntities = null;
+	public List<IEntity> getGameEntitiesFromDao(Integer idBackup){
+		List<IEntity> gameEntities = null;
+		List<BackupConstruction> gameConstruction = null;
 		IGameEntity entity = null;
 		Backup backup = null;
-		backup = this.backupDAO.get(this.idBackup);
+		backup = this.backupDAO.get(idBackup);
 		int ix = 0;
 
 		// si on recupere corectement le backup
 		if(backup != null){
 			//on essaye de recuperer les constructions
-			gameEntities = this.backupConstructionDAO.getAllByBackUp(backup);
+			gameConstruction =  this.backupConstructionDAO.getAllByBackUp(backup);
+			for(BackupConstruction backupConstruction : gameConstruction){
+				gameEntities.add((IEntity) backupConstruction );
+			}
 
 			// si il y en a
-			if(gameEntities != null){
-				// on les stocke dans la map
-				for(BackupConstruction backupConstruction : gameEntities){
-					if(backupConstruction.getConstruction().getDesignation().equals(EntitiesController.DES_COMMISARIAT)){
-						entity = new Commissariat(backupConstruction,backupConstructionDAO);
-					}
-					if(backupConstruction.getConstruction().getDesignation().equals(EntitiesController.DES_ECOLE)){
-						entity = new Ecole(backupConstruction,backupConstructionDAO);
-					}
-					this.gameEntities.put(entity.getName(),(IGameEntity) backupConstruction );
-				}
-			}
+//			if(gameEntities != null){
+//				// on les stocke dans la map
+//				for(IEntity backupConstruction : gameEntities){
+//					if(((BackupConstruction) backupConstruction).getConstruction().getDesignation().equals(EntitiesController.DES_COMMISARIAT)){
+//						entity = new Commissariat(backupConstruction,backupConstructionDAO);
+//					}
+//					if(backupConstruction.getConstruction().getDesignation().equals(EntitiesController.DES_ECOLE)){
+//					//	entity = new Ecole(backupConstruction,backupConstructionDAO);
+//					}
+//					this.gameEntities.put(entity.getName(),(IGameEntity) backupConstruction );
+//				}
+//			}else{
+//				gameEntities = null;	
+//			}
 			
-			gameEntities = null;
 			
 			
 		}
+		return gameEntities;
 	}
 
 	//	public static int getNbActifs(){

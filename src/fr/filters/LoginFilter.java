@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import fr.entities.User;
+import fr.splExceptions.LoginException;
 import fr.tools.LoginTools;
 
 /**
@@ -41,10 +42,15 @@ public class LoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		User user = LoginTools.checkLogin((HttpServletRequest) request);
+		User user = null;
+		try {
+			user = LoginTools.checkLogin((HttpServletRequest) request);
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
 		if (user != null){
 			request.setAttribute("user", user);
-			chain.doFilter((ServletRequest)request, response);
+			chain.doFilter(request, response);
 
 		}
 		else {

@@ -2,8 +2,7 @@ package fr.game.services.constructions;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
-import fr.entities.Construction;
-import fr.entities.Criminalite;
+import fr.game.services.indicateurs.BudgetService;
 import fr.game.services.indicateurs.CriminaliteService;
 import fr.game.services.indicateurs.EducationService;
 import fr.game.services.indicateurs.PopulationService;
@@ -19,12 +18,12 @@ public class Commissariat extends AbstractConstructionService{
 		super(entity, entityDao);	// Appelle le constructeur de la classe mere pour stocker le batiment cree dans la liste et confier l'indice a l'instance, utile pour etre dettruite
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100; //le Potentiel d'influence est l'attribut qui permet aux commissariat de nettoyer la racaille et les criminels. Moins efficace contre le terrorisme
 	}
-//	public Commissariat (int niv){	// Possibilite de onstruire un commissariat plus grand
-//		this();
-//		for (int i=1; i<niv; i++)
-//			this.ameliore();
-//	}
-//	
+	public Commissariat (int niv, BackupConstruction entity, BackupConstructionDAO entityDao){	// Possibilite de onstruire un commissariat plus grand
+		this(entity, entityDao);
+		for (int i=1; i<niv; i++)
+			this.ameliore();
+	}
+	
 		// Fonctions individuelles
 	public void ameliore (){		// Permet d'augmenter le potentiel dd'un commissariat
 		super.ameliore();
@@ -42,8 +41,8 @@ public class Commissariat extends AbstractConstructionService{
 //		System.out.println("Usure : " + this.risque + "/1000");
 //		System.out.println("Influence : " + this.pInfluence);
 //	}
-	public void secure(CriminaliteService c, PopulationService p, EducationService e){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
-		int influence = this.pInfluence*potentiel/100*(300+e.getEntity().getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
+	public void secure(CriminaliteService c, PopulationService p, EducationService e, BudgetService b){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
+		int influence = this.pInfluence*this.potentiel(b)/100*(300+e.getEntity().getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
 		System.out.println("Influence actuelle = " + influence);
 		if (c.getEntity().getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
 			influence -= c.getEntity().getCrimeMineur();
@@ -82,13 +81,12 @@ public class Commissariat extends AbstractConstructionService{
 			c.cumulTerreur(influence);
 			p.retraitPopulation(influence, 15, 95);						// On evacue les terroristes
 			System.out.println(influence + " Terroriste(s) a(ont) ete incarcere(s)");
-			
 		}
 	}
-	public void afficheEfficacite(){
-		System.out.println(this.pInfluence*this.potentiel()/100*(400+EducationService.getEdSecurite())/500);
+	public void afficheEfficacite(BudgetService b){
+		System.out.println(this.pInfluence*this.potentiel(b)/100*(400+EducationService.getEdSecurite())/500);
 	}
-	
+
 	public int getRecette(){
 		return this.recette;
 	}

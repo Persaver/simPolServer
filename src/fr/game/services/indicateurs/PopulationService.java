@@ -7,23 +7,20 @@ import fr.game.services.gameControllers.AbstractGameEntity;
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
 
 	public PopulationService(Population entity, PopulationDAO entityDao) {
-		super(entity, entityDao);
+		this(entity, entityDao, null);
 		// TODO Auto-generated constructor stub
 	}
 
 	private Population entity;
 
-	public Population(Population population, PopulationDAO populationDAO){
-		super(population, populationDAO);
-		this.entity = this.getEntity();
-	}
+
 
 	// Entree	: nombre total de la population
 	// Fonction : reparti aleatoirement la population dans les differentes tranches d'age
 	// Remarque : /
 	// Verifiee : oui
-	public Population (int a){
-		super();
+	public PopulationService (Population entity, PopulationDAO entityDao,Integer a){
+		super(entity, entityDao);
 		int adulte = a/5*2;
 		int b = a-adulte;
 		this.ajoutPopulation(adulte, 18, 42);
@@ -35,7 +32,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
+		//	this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
 		}
 	}
 	public void retraitPopulation (int a, int agemin, int agemax){
@@ -44,10 +41,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin+1)*12); // permet de retirer al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			if (this.entity.getPopTab(col,lig) > 0){
-				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
-				a--;
-			}
+//			if (this.entity.getPopTab(col,lig) > 0){
+//				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
+//				a--;
+//			}
 		}
 	}
 
@@ -113,7 +110,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		int i, j, nb = 0;
 		for (i = min; i <= max; i++){
 			for (j=0; j < 12; j++) {
-				nb += this.entity.getPopTab(i, j);
+			//	nb += this.entity.getPopTab(i, j);
 			}
 		}
 		return nb;
@@ -132,12 +129,12 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = 129; i >= 0; i--){
 			for (j = 11; j >= 0; j--){
 				if (i == 0 && j == 0){
-					this.entity.setPopTab(i, j, nbN);
+			//		this.entity.setPopTab(i, j, nbN);
 				} else {
 					if (j == 0){
-						this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
+				//		this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
 					} else {
-						this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
+			//			this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
 					}
 				}
 			}
@@ -154,7 +151,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = 0; i < 130; i++){
 			nb=0;
 			for (j=0; j < 12; j++) {
-				nb += this.entity.getPopTab(i, j);
+				//nb += this.entity.getPopTab(i, j);
 			}
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}
@@ -178,7 +175,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = min; i <= max; i++){
 			nb=0;
 			for (j=0; j < 12; j++) {
-				nb += this.entity.getPopTab(i, j);
+				//nb += this.entity.getPopTab(i, j);
 			}
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}

@@ -5,7 +5,6 @@ public class Backup extends AbstractEntity<Backup> {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private String date_creation;
 	private String date_last;
 	private Integer nbj;
@@ -56,6 +55,15 @@ public class Backup extends AbstractEntity<Backup> {
 
 	public void setNbj(Integer nbj) {
 		this.nbj = nbj;
+	}
+
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override
