@@ -12,6 +12,7 @@ public class Commissariat extends AbstractConstructionService{
 	private int pInfluence;
 	private static int tolerance = 0;	/* en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population*/
 	private int recette;
+	private int potentiel = 0;
 	
 		// Constructeurs
 	public Commissariat (BackupConstruction entity, BackupConstructionDAO entityDao){
@@ -42,6 +43,7 @@ public class Commissariat extends AbstractConstructionService{
 //		System.out.println("Influence : " + this.pInfluence);
 //	}
 	public void secure(CriminaliteService c){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
+		
 		int influence = this.pInfluence*potentiel/100*(300+EducationService.getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
 		System.out.println("Influence actuelle = " + influence);
 		if (c.getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
@@ -73,13 +75,13 @@ public class Commissariat extends AbstractConstructionService{
 		}
 		if (c.getCrimeTerroriste() < influence){									//5% de l'influence est dirigee vers le terrorisme
 			this.recette += c.getCrimeTerroriste()*5000/100;						// Pas de tolerance pour le terrorrisme
-			p.retraitPopulation(c.getCrimeTerroriste(), 15, 95);					// On "evacue" les terroristes
+			//p.retraitPopulation(c.getCrimeTerroriste(), 15, 95);					// On "evacue" les terroristes
 			System.out.println(c.getCrimeTerroriste() + " Terroriste(s) a(ont) ete incarcere(s)");
 			c.cumulTerreur(-c.getCrimeTerroriste());
 		} else {
 			this.recette += influence*5000/100;
 			c.cumulTerreur(influence);
-			p.retraitPopulation(influence, 15, 95);						// On evacue les terroristes
+			//p.retraitPopulation(influence, 15, 95);						// On evacue les terroristes
 			System.out.println(influence + " Terroriste(s) a(ont) ete incarcere(s)");
 			
 		}
@@ -88,6 +90,10 @@ public class Commissariat extends AbstractConstructionService{
 		System.out.println(this.pInfluence*this.potentiel()/100*(400+EducationService.getEdSecurite())/500);
 	}
 	
+	private int potentiel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	public int getRecette(){
 		return this.recette;
 	}

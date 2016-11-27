@@ -1,10 +1,14 @@
 package fr.game.services.gameControllers;
 
+import java.util.List;
+
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
 import fr.entities.Backup;
 import fr.entities.BackupConstruction;
 import fr.entities.User;
+import fr.interfaces.IEntity;
+import fr.interfaces.IGameEntity;
 import fr.interfaces.IGameInstance;
 
 public class GameInstance implements IGameInstance{
@@ -55,7 +59,9 @@ public class GameInstance implements IGameInstance{
 	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
-
+	public List<IEntity> getEntities() {
+		return this.entityController.getGameEntitiesFromDao(backup.getId());
+	}
 
 
 	private void start(){

@@ -26,6 +26,12 @@ SET time_zone = "+00:00";
 -- Structure de la table `backup_construction`
 --
 
+DROP DATABASE IF EXISTS simpol;
+CREATE DATABASE simpol DEFAULT CHARACTER SET utf8;
+
+USE simpol;
+
+
 CREATE TABLE IF NOT EXISTS `backup_construction` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `backup` int(4) NOT NULL,
@@ -44,6 +50,17 @@ CREATE TABLE IF NOT EXISTS `backup_construction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
+INSERT INTO backup_construction (backup,construction,x,y)
+VALUES (1,1,10,10),(1,2,10,10),(1,3,10,10);
+
+id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+  date_last DATETIME DEFAULT CURRENT_TIMESTAMP,
+  nbj INT(5) NOT NULL DEFAULT 0,
+  user 
+  INSERT INTO backup (nbj,user)
+  VALUES(1,1);
 
 --
 -- Structure de la table `budget`

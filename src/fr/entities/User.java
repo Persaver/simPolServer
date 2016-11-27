@@ -5,7 +5,6 @@ public class User extends AbstractEntity<User> {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private String login;
 	private String password;
 

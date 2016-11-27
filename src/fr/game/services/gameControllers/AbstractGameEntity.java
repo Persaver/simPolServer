@@ -19,7 +19,7 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 
 	@Override
 	public void setEntity(IEntity entity) {
-		this.entity =  (T) entity;
+		this.entity =  entityDao.save((T)entity);
 	}
 
 	@Override

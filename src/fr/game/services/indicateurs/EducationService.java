@@ -348,4 +348,9 @@ public class EducationService extends AbstractGameEntity<Education, Enseignement
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static int getEdSecurite() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
