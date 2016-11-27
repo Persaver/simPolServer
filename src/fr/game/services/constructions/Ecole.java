@@ -20,17 +20,19 @@ public class Ecole extends AbstractConstructionService {
 //	}
 	
 	public void Ameliore (){
-		int newSalarie = (int)(this.nbSalarie*0.5);
-		int  newCadre =  (int)(this.nbCadre*0.2);
-		if ((((this.nbCadre + newCadre)/10>(this.nbCadre)/10))){				// Pour garder une coherence dans les chiffres
-			Budget.setNbCadre((this.nbCadre+newCadre)/10-this.nbCadre/10);
-			System.out.println("nbCadres + " + newCadre/10);
-		}
-		this.nbCadre += newCadre;
-		if ((this.nbSalarie + newSalarie)/10>(this.nbSalarie)/10){
-			Budget.setNbSalaries((this.nbSalarie+newSalarie)/10-this.nbSalarie/10);
-			System.out.println("nbPoste + " + (newSalarie)/10);
-		}
-		this.nbSalarie += newSalarie;
+		super.ameliore();
+		
+//		int newSalarie = (int)(this.entity.getNbSalarie()*0.5);
+//		int  newCadre =  (int)(this.entity.getNbCadre()*0.2);
+////		if ((((this.entity.getNbCadre() + newCadre)/10>(this.entity.getNbCadre())/10))){				// Pour garder une coherence dans les chiffres
+////			Budget.setNbCadre((this.entity.getNbCadre()+newCadre)/10-this.entity.getNbCadre()/10);
+////			System.out.println("nbCadres + " + newCadre/10);
+////		}
+//		this.entity.setNbCadre(this.entity.getNbCadre()+newCadre);
+////		if ((this.nbSalarie + newSalarie)/10>(this.nbSalarie)/10){
+////			Budget.setNbSalaries((this.nbSalarie+newSalarie)/10-this.nbSalarie/10);
+////			System.out.println("nbPoste + " + (newSalarie)/10);
+////		}
+//		this.entity.setNbSalarie(this.entity.getNbSalarie() + newSalarie);
 	}
 }
