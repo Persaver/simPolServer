@@ -7,23 +7,20 @@ import fr.game.services.gameControllers.AbstractGameEntity;
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
 
 	public PopulationService(Population entity, PopulationDAO entityDao) {
-		super(entity, entityDao);
+		this(entity, entityDao, null);
 		// TODO Auto-generated constructor stub
 	}
 
 	private Population entity;
 
-	public Population(Population population, PopulationDAO populationDAO){
-		super(population, populationDAO);
-		this.entity = this.getEntity();
-	}
+
 
 	// Entree	: nombre total de la population
 	// Fonction : reparti aleatoirement la population dans les differentes tranches d'age
 	// Remarque : /
 	// Verifiee : oui
-	public Population (int a){
-		super();
+	public PopulationService (Population entity, PopulationDAO entityDao,Integer a){
+		super(entity, entityDao);
 		int adulte = a/5*2;
 		int b = a-adulte;
 		this.ajoutPopulation(adulte, 18, 42);

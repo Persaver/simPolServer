@@ -5,13 +5,13 @@ import fr.entities.Education;
 import fr.entities.Budget;
 import fr.entities.Population;
 import fr.game.services.gameControllers.AbstractGameEntity;
+import fr.interfaces.IEntity;
 
 public class EducationService extends AbstractGameEntity<Education, EnseignementDAO> {
 	private Education education;
 	
 	public EducationService(Education entity, EnseignementDAO entityDao) {
 		super(entity, entityDao);
-		this.entity = this.getEntity();
 	}
 
 	public void recupEducation(PopulationService p, Budget b){
@@ -335,5 +335,17 @@ public class EducationService extends AbstractGameEntity<Education, Enseignement
 			monterTourisme(mod);
 		else
 			descendreTourisme(-mod);
+	}
+
+	@Override
+	public Education getEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

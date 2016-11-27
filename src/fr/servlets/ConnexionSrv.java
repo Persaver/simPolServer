@@ -49,11 +49,11 @@ public class ConnexionSrv extends HttpServlet {
 				}
 				
 				// on cree est on enregistre l'instance
-				gameInstance = GameInstanceControlor.createGameInstance(user);
+				gameInstance = GameInstanceControlor.createGameInstance(user,null);
 				out.append(" instance crée");
 
 				
-				out.append(" user "+ user.getPseudo() );
+				out.append(" user "+ user.getLogin() );
 			}
 			out.close();
 

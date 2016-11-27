@@ -22,7 +22,6 @@ public class Backup extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RestTools.getId(request);
-		if()
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

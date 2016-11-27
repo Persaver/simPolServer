@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import fr.entities.BackupConstruction;
 
-public class Caserne extends Batiment<BackupConstruction> {
+public class Caserne extends AbstractConstructionService {
 	private int pEntretien;		// Potentiel d'entretien des batiments
 
 	public Caserne() {
