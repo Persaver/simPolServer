@@ -2,12 +2,18 @@ package fr.game.services.constructions;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
+import fr.game.services.indicateurs.BudgetService;
+import fr.game.services.indicateurs.EducationService;
 
 public class Hopital extends AbstractConstructionService {
 	private int pSoin;	// potentiel de soins prodigues par l'hopital
 	
 	public Hopital (BackupConstruction entity, BackupConstructionDAO entityDao){
-		super(entity, entityDao);	//(70, 10, 3, 2);
+		super(entity, entityDao);
+		this.entity.setNbSalarie(70);
+		this.entity.setNbCadre(10);
+		this.entity.setRisque(3);
+		this.entity.setAttractivite(2);
 		this.pSoin = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/5)/100;
 	}
 	public Hopital (int niv, BackupConstruction entity, BackupConstructionDAO entityDao){
@@ -28,8 +34,17 @@ public class Hopital extends AbstractConstructionService {
 //			hopitaux.get(i).indiceH --;
 	}
 	
-	public int soins (){
-		return this.pSoin*this.potentiel()/100*(300+Education.getEdSante())/500;	// N'est qu'a 60% si l'education est nulle
+	public int soins (EducationService e, BudgetService b){
+		return this.pSoin*this.potentiel(b)/100*(300+e.getEntity().getEdSante())/500;	// N'est qu'a 60% si l'education est nulle
+	}
+	@Override
+	public void prisePostes() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void ajoutPoste() {
+		// TODO Auto-generated method stub
 	}
 	
 //	public static int soinsTotal(){

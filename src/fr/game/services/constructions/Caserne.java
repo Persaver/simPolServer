@@ -12,6 +12,10 @@ public class Caserne extends AbstractConstructionService {
 
 	public Caserne(BackupConstruction entity, BackupConstructionDAO entityDao){
 		super(entity,entityDao);
+		this.entity.setNbSalarie(80);
+		this.entity.setNbCadre(20);
+		this.entity.setRisque(0);
+		this.entity.setAttractivite(1);
 		this.setEntretien(6);
 	}
 	public Caserne(int niv, BackupConstruction entity, BackupConstructionDAO entityDao) {

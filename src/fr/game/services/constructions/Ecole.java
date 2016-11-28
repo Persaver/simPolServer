@@ -8,7 +8,11 @@ public class Ecole extends AbstractConstructionService {
 	private int pEducation; // Le potentiel d'education de l'ecole
 	
 	public Ecole(BackupConstruction entity, BackupConstructionDAO entityDao) {
-		super(entity, entityDao);		//(40, 10, 3, 1);
+		super(entity, entityDao);
+		this.entity.setNbSalarie(40);
+		this.entity.setNbCadre(10);
+		this.entity.setRisque(3);
+		this.entity.setAttractivite(1);;
 		this.setpEducation(40);
 		// TODO Auto-generated constructor stub
 	}

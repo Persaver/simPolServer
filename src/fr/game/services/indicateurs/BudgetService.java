@@ -13,7 +13,7 @@ public class BudgetService extends AbstractIndicateursService{
 	private int nbCadres = 0;
 	
 	public int pauvrete(PopulationService p){
-		int a = p.nbIndiv(ageTravail, ageRetraite);										// On r�cup�re tous les citoyens en age de travailler
+		int a = p.nbIndiv(ageTravail, ageRetraite);										// On recupere tous les citoyens en age de travailler
 		double postEfficience = Math.min((double)(nbCadres + nbSalaries)/a, (double)a/(nbCadres + nbSalaries));			// On compare ce nombre au nombre de postes de la ville 
 		int ratio = nbSalaries*100/a;													// On note le ratio Ouvrier / Cadres									
 		double pauvreteO = Math.min((double)(salaireStandard*(100-chargeSalariale)/100-300)/6, 100.)*postEfficience;	// en dessous de 900, la pauvrete s'installe. a 300, elle est au maximum

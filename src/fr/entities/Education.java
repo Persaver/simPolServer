@@ -1,6 +1,10 @@
 package fr.entities;
 
 public class Education extends AbstractEntity<Education>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer edTotale;		// L'Education apportee par les ecoles
 	private Integer edSecurite;		// L'education distribuee aux commissariats
 	private Integer edEntretien;	// L'education distribuee aux casernes

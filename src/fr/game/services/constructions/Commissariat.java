@@ -16,6 +16,10 @@ public class Commissariat extends AbstractConstructionService{
 		// Constructeurs
 	public Commissariat (BackupConstruction entity, BackupConstructionDAO entityDao){
 		super(entity, entityDao);	// Appelle le constructeur de la classe mere pour stocker le batiment cree dans la liste et confier l'indice a l'instance, utile pour etre dettruite
+		this.entity.setNbSalarie(120);
+		this.entity.setNbCadre(20);
+		this.entity.setRisque(4);
+		this.entity.setAttractivite(1);
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100; //le Potentiel d'influence est l'attribut qui permet aux commissariat de nettoyer la racaille et les criminels. Moins efficace contre le terrorisme
 	}
 	public Commissariat (int niv, BackupConstruction entity, BackupConstructionDAO entityDao){	// Possibilite de onstruire un commissariat plus grand
@@ -95,6 +99,16 @@ public class Commissariat extends AbstractConstructionService{
 	}
 	public static void setTolerance(int val){
 		tolerance = val;
+	}
+	@Override
+	public void prisePostes() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void ajoutPoste() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 //		// Fonctions communes

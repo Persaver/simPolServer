@@ -1,7 +1,6 @@
 package fr.entities;
 
 public class Budget extends AbstractEntity<Budget> {
-
 	/**
 	 *
 	 */
