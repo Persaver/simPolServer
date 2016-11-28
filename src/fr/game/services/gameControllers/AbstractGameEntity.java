@@ -11,6 +11,7 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	protected T entity = null;
 	protected D entityDao = null;
 	protected boolean isModify = false;
+	
 
 	public AbstractGameEntity(T entity,D entityDao){
 		this.entity = entity;

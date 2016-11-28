@@ -16,9 +16,14 @@ public class BackupService extends AbstractGameEntity<Backup, BackupDAO>{
 
 	private UserDAO userDAO;
 
+	public BackupService() {
+		this(new Backup(), new BackupDAO());
+	}
+	
 	public BackupService(Backup entity, BackupDAO entityDao) {
 		super(entity, entityDao);
 	}
+
 
 	@Override
 	public String getName() {
@@ -26,12 +31,7 @@ public class BackupService extends AbstractGameEntity<Backup, BackupDAO>{
 		return null;
 	}
 	
-	public Backup getBackupById(Integer id){
-		Backup backup = null; 
-		backup = new BackupDAO().get(id);
-		return backup;
-	}
-	
+
 	public List<Backup> getBackupsByUser(User user){
 		List<Backup> backups = null;
 		backups = new BackupDAO().getByUser(user);
@@ -44,11 +44,15 @@ public class BackupService extends AbstractGameEntity<Backup, BackupDAO>{
 		}
 		Backup backup = null; 
 		backup = new BackupDAO().get(idBackup);
-		System.out.println("user"+user);
-		System.out.println("idbackup"+idBackup);
-		System.out.println("backup"+backup);
+//		System.out.println("user"+user);
+//		System.out.println("idbackup"+idBackup);
+//		System.out.println("backup"+backup);
+//		System.out.println("backup.getUser().getId()"+backup.getUser().getId());
+//		System.out.println("user.getId()"+user.getId());
 
-		if(!(backup.getUser().getId() == user.getId())){
+
+
+		if(!(backup.getUser().getId().equals(user.getId()))){
 			throw new ServiceException("pas de backup correspondant"+ user.toString() + idBackup.toString());
 		}
 		return backup;

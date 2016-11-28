@@ -38,6 +38,10 @@ public class EntitiesController {
 	private BackupConstructionDAO backupConstructionDAO= null;
 	private Integer idBackup = null;
 
+	public EntitiesController(Integer idBackup){
+		this(new BackupDAO(),new BackupConstructionDAO(),idBackup);
+	}
+	
 	public EntitiesController(BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO, Integer idBackup){
 		super();
 		this.backupDAO = backupDAO;

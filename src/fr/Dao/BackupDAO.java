@@ -33,7 +33,6 @@ public class BackupDAO extends DAO<Backup,Integer> {
 				user = new UserDAO().get(result.getInt("user"));
 				backup.setUser(user);
 			}
-			return backup;
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
