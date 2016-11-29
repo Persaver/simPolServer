@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import fr.entities.Backup;
 import fr.entities.BackupConstruction;
 import fr.entities.Construction;
+import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
@@ -27,7 +28,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		Gson gson = null;
 		try
 		{
-			PreparedStatement prepare = this.connect.prepareStatement("Select * from backupconstruction where id = ?");
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where id = ?");
 			prepare.setInt(1, id);
 			result = prepare.executeQuery();
 			if(result != null){
@@ -126,7 +127,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		List<BackupConstruction> backupConstructions = new ArrayList<BackupConstruction>();
 		Gson gson = null;
 		try {
-			result = this.connect.createStatement().executeQuery("Select * from backupconstruction");
+			result = this.connect.createStatement().executeQuery("Select * from backup_construction");
 			while(result.next()){
 				BackupConstruction backupConstruction = new BackupConstruction();
 				backupConstruction.setId(result.getInt("id"));
@@ -156,12 +157,12 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		return null ;
 	}
 
-	public List<BackupConstruction> getAllByBackUp(Backup backup) {
+	public List<BackupConstruction> getAllByBackUp(Backup backup) throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
 		Gson gson = null;
 		try {
-			PreparedStatement prepare = this.connect.prepareStatement("Select * from backupconstruction where backup = ?");
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ?");
 			prepare.setInt(1, backup.getId());
 			result = prepare.executeQuery();
 			while(result.next()){
@@ -170,26 +171,26 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setX(result.getInt("x"));
 				backupConstruction.setY(result.getInt("y"));
 				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
-				backupConstruction.setNbCadre(result.getInt("nbCadre"));
+				backupConstruction.setNbCadre(result.getInt("nbCadres"));
 				backupConstruction.setRisque(result.getInt("risque"));
 				backupConstruction.setBudget(result.getInt("budget"));
-				backupConstruction.setAttractivite(result.getInt("attractivite"));
+				backupConstruction.setAttractivite(result.getInt("attractive"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				// gson
 				gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
-				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificites"), stringIntegerMap));
+				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
 				Construction construction = new Construction(result.getInt("construction"));
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
 			}
-			return backupConstructionsByBackup ;
+			
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null ;
+		return backupConstructionsByBackup ;
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import fr.entities.Backup;
+import fr.entities.BackupConstruction;
 import fr.game.services.gameControllers.EntitiesController;
 import fr.interfaces.IEntity;
 import fr.splExceptions.BackupException;
@@ -57,12 +58,13 @@ public class BackupConstructionSrv extends HttpServlet {
 		if(backup != null){
 			if(request.getAttribute("id") != null){
 				try {
-					bc=(BackupConstruction) new EntitiesController(backup.getId()).getGameEntity(BackupConstruction.class.getName()+request.getAttribute("id"));
+					bc=(BackupConstruction) new EntitiesController().getGameEntity((Integer) Integer.parseInt(request.getAttribute("id").toString()));
 				} catch (EntityException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					out.append(RestTools.getReturn(e.getMessage(), true));
 				}
-
+				
+				out.append(RestTools.getReturn(bc, bc == null));
 
 			}else{
 				//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 

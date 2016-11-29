@@ -26,10 +26,10 @@ public class RestTools {
 		buffer.append("{");
 
 		if(error){
-			buffer.append("error:");
+			buffer.append("\"error\":");
 		}
 		else{
-			buffer.append("succes:");
+			buffer.append("\"succes\":");
 		}
 
 		buffer.append(gson.toJson(obj));

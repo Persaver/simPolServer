@@ -2,6 +2,8 @@ package fr.game.services.gameControllers;
 
 
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +22,7 @@ import fr.game.services.constructions.Commissariat;
 import fr.interfaces.IConstruction;
 import fr.interfaces.IGameEntity;
 import fr.interfaces.IEntity;
-
+import fr.splExceptions.DAOException;
 import fr.splExceptions.EntityException;
 import fr.splExceptions.ServiceException;
 
@@ -75,14 +77,19 @@ public class EntitiesController {
 
 	// recupere un entite par sa clef
 	// clef = class de l'entité+id ex: user1
-	public IEntity getGameEntity(String key) throws EntityException{
+	public IEntity getGameEntity(Integer id) throws EntityException{
 		IEntity entity = null;
+		
+			entity = backupConstructionDAO.get(id);
+			if(entity == null){
+				throw new EntityException("Pas d'entité trouvé");
+			}else{
+				this.gameEntities.put(entity.getClass().getName()+id, entity);
 
-		try{
-			entity = this.gameEntities.get(key);
-		}catch(NullPointerException e){
-			throw new EntityException("Pas d'entité trouvé");
-		}
+			}
+		
+			
+		
 
 		return entity;
 
@@ -130,8 +137,14 @@ public class EntitiesController {
 		// si on recupere corectement le backup
 		if(backup != null){
 			//on essaye de recuperer les constructions
-			gameConstruction =  this.backupConstructionDAO.getAllByBackUp(backup);
+			try {
+				gameConstruction =  this.backupConstructionDAO.getAllByBackUp(backup);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				throw new ServiceException(e.getMessage());
+			}
 			if(gameConstruction != null && !gameConstruction.isEmpty()){
+				gameEntities=new ArrayList<IEntity>();
 				for(BackupConstruction backupConstruction : gameConstruction){
 					gameEntities.add((IEntity) backupConstruction );
 					this.getGameEntities().put(backupConstruction.getClass().getName()+backupConstruction.getId(),(IEntity) backupConstruction);
