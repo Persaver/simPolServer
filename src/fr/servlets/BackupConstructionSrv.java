@@ -25,16 +25,15 @@ import fr.tools.RestTools;
  * Servlet implementation class BackupConstruction
  */
 @WebServlet(urlPatterns={"/backupconstructions","/backupconstructions/*"})
-public class BackupConstruction extends HttpServlet {
+public class BackupConstructionSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BackupConstruction() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public BackupConstructionSrv() {
+
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,38 +46,38 @@ public class BackupConstruction extends HttpServlet {
 		RestTools.getId(request);
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
+
 		try {
 			backup = LoginTools.checkBackup(request);
 		} catch (BackupException e) {
 			// TODO Auto-generated catch block
 			RestTools.getReturn(e.getMessage(), true);
 		}
-		
-		if(backup != null){
-		if(request.getAttribute("id") != null){
-			try {
-				bc=(BackupConstruction) new EntitiesController(backup.getId()).getGameEntity(BackupConstruction.class.getName()+request.getAttribute("id"));
-			} catch (EntityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}else{
-			//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
-			try {
-				bcs=new EntitiesController(backup.getId()).getGameEntitiesFromDao(backup.getId());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			out.append(new Gson().toJson(bcs));
 
+		if(backup != null){
+			if(request.getAttribute("id") != null){
+				try {
+					bc=(BackupConstruction) new EntitiesController(backup.getId()).getGameEntity(BackupConstruction.class.getName()+request.getAttribute("id"));
+				} catch (EntityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+			}else{
+				//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
+				try {
+					bcs=new EntitiesController().getGameEntitiesFromDao(backup.getId());
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				out.append(new Gson().toJson(bcs));
+
+			}
+			
 		}
 		out.close();
-		}
-		
 	}
 
 	/**

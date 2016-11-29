@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.User;
+import fr.splExceptions.DAOException;
 
 public class UserDAO extends DAO<User,Integer>{
 
@@ -50,7 +51,7 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public User save(User element) {
+	public User save(User element) throws DAOException {
 		try {
 			String sql = "INSERT INTO user (login, password) VALUES (?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
@@ -65,11 +66,10 @@ public class UserDAO extends DAO<User,Integer>{
 			}
 			statement.close();
 			generatedKeys.close();
-			return element;
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
+		return element;
 	}
 
 	@Override

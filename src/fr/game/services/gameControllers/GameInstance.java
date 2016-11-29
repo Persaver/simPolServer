@@ -10,6 +10,7 @@ import fr.entities.User;
 import fr.interfaces.IEntity;
 import fr.interfaces.IGameEntity;
 import fr.interfaces.IGameInstance;
+import fr.splExceptions.ServiceException;
 
 public class GameInstance implements IGameInstance{
 
@@ -25,7 +26,7 @@ public class GameInstance implements IGameInstance{
 		if(user != null){
 			this.user = user;
 		}
-		this.entityController = new EntitiesController(backupDAO,backupConstructionDAO,IdBackup);
+		this.entityController = new EntitiesController();
 	}
 
 	public String getKey() {
@@ -59,7 +60,7 @@ public class GameInstance implements IGameInstance{
 	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
-	public List<IEntity> getEntities() {
+	public List<IEntity> getEntities() throws ServiceException {
 		return this.entityController.getGameEntitiesFromDao(backup.getId());
 	}
 

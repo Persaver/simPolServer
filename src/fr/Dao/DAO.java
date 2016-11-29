@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.db.AccessDB;
+import fr.splExceptions.DAOException;
 
 public abstract class DAO<T,I>{
 	public Connection connect = null;
@@ -19,7 +20,7 @@ public abstract class DAO<T,I>{
 		//		System.out.println("Connecté");
 	};
 	public abstract T get(I id);
-	public abstract T save(T element);
+	public abstract T save(T element) throws DAOException;
 	public abstract void delete(I id);
 	public abstract void update(T element);
 	public abstract List<T> getAll();

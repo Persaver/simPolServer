@@ -14,7 +14,11 @@ import com.google.gson.Gson;
 
 import fr.Dao.UserDAO;
 import fr.entities.User;
+import fr.game.services.user.UserService;
+import fr.splExceptions.LoginException;
+import fr.splExceptions.ServiceException;
 import fr.tools.RestTools;
+import javafx.scene.control.TreeTableRow;
 
 /**
  * Servlet implementation class UserSrv
@@ -47,15 +51,50 @@ public class UserSrv extends HttpServlet {
 
 
 		}
+		// si user == null return {error:{msg} }
 		out.append(RestTools.getReturn( user, user == null));
 		out.close();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Verifie le login && token ;)
+	 * 
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+
+		User user = null;
+		String login,token;
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		// on verifie si on le recupere
+		if((request.getParameter("login") != null) && (request.getParameter("token") != null)){
+			login = request.getParameter("login");
+			token = request.getParameter("token");
+			user = new UserDAO().checklogin(login, token);
+			//System.out.println(user);
+
+		}
+
+		if(user != null){
+			session.setAttribute("user",user);
+			request.setAttribute("user", user);
+			//out.append(new Gson().toJson(user));
+		}
+		out.append(RestTools.getReturn( user, user == null));
+		out.close();
+	}
+
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 * Ajouter un utilisateur 
+	 * requiere login and token
+	 */
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 
 		User user = null;
@@ -63,35 +102,24 @@ public class UserSrv extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		if(request.getAttribute("id") != null){
+		login=(String) request.getAttribute("login");
+		password=(String) request.getAttribute("password");
 
-		}
-		else{
-			if((request.getParameter("login") != null) && (request.getParameter("password") != null)){
-				login = request.getParameter("login");
-				password = request.getParameter("password");
-				user = new UserDAO().checklogin(login, password);
-				//System.out.println(user);
-
+		// verifie les param dans un try catch pour recuperer les erreurs les erreurs
+		try{
+			if(login == null || login.equals("")){
+				throw new LoginException("login obligatoire");
 			}
-		}
-		if(user != null){
-			session.setAttribute("user",user);
-			request.setAttribute("user", user);
-			out.append(new Gson().toJson(user));
-		}
-		else{
-			out.append("pas backup");
+			if(password == null || password.equals("")){
+				throw new LoginException("password obligatoire");
+			}
+			// insere en bdd
+			user = new UserService().createUser(login, password);
+			out.append(RestTools.getReturn(user, user == null));
+		}catch(LoginException | ServiceException e){
+			out.append(RestTools.getReturn(e.getMessage(), true));
 		}
 		out.close();
-	}
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**

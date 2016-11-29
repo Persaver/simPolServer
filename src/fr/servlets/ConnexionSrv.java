@@ -22,6 +22,7 @@ import fr.game.services.gameControllers.GameInstanceControlor;
 import fr.interfaces.IGameInstance;
 import fr.splExceptions.BackupException;
 import fr.splExceptions.GameInstanceException;
+import fr.splExceptions.ServiceException;
 import fr.splExceptions.SplException;
 import fr.tools.LoginTools;
 import fr.tools.RestTools;
@@ -57,7 +58,11 @@ public class ConnexionSrv extends HttpServlet {
 		
 		gameInstance = new GameInstance(user, new BackupDAO(),new BackupConstructionDAO(), backup.getId());
 		
-		out.append(new Gson().toJson(gameInstance.getEntities()));
+		try {
+			out.append(new Gson().toJson(gameInstance.getEntities()));
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 
 		out.close();
 

@@ -22,6 +22,7 @@ import fr.interfaces.IGameEntity;
 import fr.interfaces.IEntity;
 
 import fr.splExceptions.EntityException;
+import fr.splExceptions.ServiceException;
 
 // il s'occupe des Game entities et de leur sauvegarde
 
@@ -32,26 +33,34 @@ public class EntitiesController {
 	private final static String DES_ECOLE = "ecoles";
 
 
-	private Map<String,IGameEntity> gameEntities = new HashMap<String,IGameEntity>();
+	private Map<String,IEntity> gameEntities = new HashMap<String,IEntity>();
 
-	private BackupDAO backupDAO =null;
-	private BackupConstructionDAO backupConstructionDAO= null;
+	private BackupDAO backupDAO =new BackupDAO();
+	private BackupConstructionDAO backupConstructionDAO= new BackupConstructionDAO();
 	private Integer idBackup = null;
 
-	public EntitiesController(Integer idBackup){
-		this(new BackupDAO(),new BackupConstructionDAO(),idBackup);
+	public EntitiesController(){
+		this(null);
 	}
 	
-	public EntitiesController(BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO, Integer idBackup){
-		super();
-		this.backupDAO = backupDAO;
-		this.backupConstructionDAO = backupConstructionDAO;
+	public EntitiesController(Integer idBackup){
 		this.idBackup = idBackup;
 	}
 
 	// ajoute a gameEntities
-	public void addGameEntity(IGameEntity entity){
-		this.gameEntities.put(entity.getName(), entity);
+	public void addGameEntity(IEntity entity) throws ServiceException{
+		BackupConstruction bckCons = null;
+		try{
+			
+			if( entity instanceof BackupConstruction){
+				bckCons=(BackupConstruction)entity;
+				backupConstructionDAO.save(bckCons);
+			}
+			
+			this.gameEntities.put(bckCons.getClass().getName()+bckCons.getId(), entity);
+		}catch(NullPointerException e ){
+			throw new ServiceException(e.getMessage());
+		}
 	}
 
 	// supprime de gameEntities
@@ -65,8 +74,9 @@ public class EntitiesController {
 	}
 
 	// recupere un entite par sa clef
-	public IGameEntity getGameEntity(String key) throws EntityException{
-		IGameEntity entity = null;
+	// clef = class de l'entité+id ex: user1
+	public IEntity getGameEntity(String key) throws EntityException{
+		IEntity entity = null;
 
 		try{
 			entity = this.gameEntities.get(key);
@@ -87,23 +97,29 @@ public class EntitiesController {
 	}
 
 	// recupere toute les entites
-	public Map<String,IGameEntity> getGameEntities(){
+	public Map<String, IEntity> getGameEntities(){
 		return this.gameEntities;
 	}
 
 	// lance la sauvergarde de toutes les entitées
-	public void saveGameEntities(){
+	public void saveGameEntities() throws ServiceException{
 
 		Iterator<String> itKey = this.getGameEntities().keySet().iterator();
-		Iterator<IGameEntity> itValue = this.getGameEntities().values().iterator();
+		Iterator<IEntity> itValue = this.getGameEntities().values().iterator();
+		IEntity entity = null;
 
 		while(itKey.next() != null){
-			itValue.next().saveEntity();
+			entity = itValue.next();
+			if(entity != null){
+				if(entity instanceof BackupConstruction){
+					backupConstructionDAO.save((BackupConstruction)entity);
+				}
+			}			
 		}
 	}
 
 	// lance la recuperation de toutes les entitées
-	public List<IEntity> getGameEntitiesFromDao(Integer idBackup){
+	public List<IEntity> getGameEntitiesFromDao(Integer idBackup) throws ServiceException{
 		List<IEntity> gameEntities = null;
 		List<BackupConstruction> gameConstruction = null;
 		IGameEntity entity = null;
@@ -115,9 +131,14 @@ public class EntitiesController {
 		if(backup != null){
 			//on essaye de recuperer les constructions
 			gameConstruction =  this.backupConstructionDAO.getAllByBackUp(backup);
-			for(BackupConstruction backupConstruction : gameConstruction){
-				gameEntities.add((IEntity) backupConstruction );
+			if(gameConstruction != null && !gameConstruction.isEmpty()){
+				for(BackupConstruction backupConstruction : gameConstruction){
+					gameEntities.add((IEntity) backupConstruction );
+					this.getGameEntities().put(backupConstruction.getClass().getName()+backupConstruction.getId(),(IEntity) backupConstruction);
+				}
 			}
+			else throw new ServiceException("Pas de construction pour ce backup");
+
 
 			// si il y en a
 //			if(gameEntities != null){

@@ -18,15 +18,15 @@ public final class LoginTools {
 	public static final User checkLogin(HttpServletRequest HttpReq) throws LoginException{
 		HttpSession session = HttpReq.getSession(true);
 		String login = null;
-		String password = null;
+		String token = null;
 		User user = null;
 		
 		// teste deans la session si deja enregistré
 		if(session.getAttribute("user") == null){
-			if(HttpReq.getParameter("login") != null && HttpReq.getParameter("password") != null){
+			if(HttpReq.getParameter("login") != null && HttpReq.getParameter("token") != null){
 				login = HttpReq.getParameter("login");
-				password = HttpReq.getParameter("password");
-				user = new UserDAO().checklogin(login, password);
+				token = HttpReq.getParameter("token");
+				user = new UserDAO().checklogin(login, token);
 				session.setAttribute("user", user);
 				HttpReq.setAttribute("user", user);
 				System.out.println(user);

@@ -3,6 +3,8 @@ package fr.game.services.gameControllers;
 import fr.Dao.DAO;
 import fr.interfaces.IEntity;
 import fr.interfaces.IGameEntity;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 //recois le type de l'entites a stocker
 
@@ -19,8 +21,12 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	}
 
 	@Override
-	public void setEntity(IEntity entity) {
-		this.entity =  entityDao.save((T)entity);
+	public void setEntity(IEntity entity) throws ServiceException{
+		try {
+			this.entity =  entityDao.save((T)entity);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
 	}
 
 	@Override
@@ -39,8 +45,12 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	}
 
 	@Override
-	public void saveEntity(){
-		this.entityDao.save(this.entity);
+	public void saveEntity() throws ServiceException{
+		try {
+			this.entityDao.save(this.entity);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
 	}
 
 }
