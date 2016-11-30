@@ -6,72 +6,90 @@ public class Sante  extends AbstractEntity<Sante> {
 	private Integer nbMalades;
 	private Integer nbAccidents;		// accident li�s au risque des batiments
 	private Integer soins;			// Soins apport� par les hopitaux
-	private Integer echecs = 5;		// en % tous les soins ne sont pas fructueux, et parfois des gens meurent
-	
+	private Integer echecs = 5;// en % tous les soins ne sont pas fructueux, et parfois des gens meurent
+	private Backup backup;
+
 	public Sante (){
 		super();
 	}
+
 	public Sante(Integer id){
-		this(id, null, null, null, null, null);
+		this(id, null, null, null, null, null, null);
 	}
-	public Sante(Integer id, Integer h, Integer nbM, Integer nbA, Integer sn, Integer e){
+
+	public Sante(Integer id, Integer h, Integer nbM, Integer nbA, Integer sn, Integer e, Backup backup){
 		super(id);
 		this.setHygiene(h);
 		this.setNbMalades(nbM);
 		this.setNbAccidents(nbA);
 		this.setSoins(sn);
 		this.setEchecs(e);
+		this.setBackup(backup);
 	}
+
 	public Integer getHygiene() {
-		return hygiene;
+		return this.hygiene;
 	}
+
 	public void setHygiene(Integer hygiene) {
 		this.hygiene = hygiene;
 	}
+
 	public Integer getNbMalades() {
-		return nbMalades;
+		return this.nbMalades;
 	}
+
 	public void setNbMalades(Integer nbMalades) {
 		this.nbMalades = nbMalades;
 	}
+
 	public Integer getNbAccidents() {
-		return nbAccidents;
+		return this.nbAccidents;
 	}
+
 	public void setNbAccidents(Integer nbAccidents) {
 		this.nbAccidents = nbAccidents;
 	}
+
 	public Integer getSoins() {
-		return soins;
+		return this.soins;
 	}
+
 	public void setSoins(Integer soins) {
 		this.soins = soins;
 	}
+
 	public Integer getEchecs() {
-		return echecs;
+		return this.echecs;
 	}
+
 	public void setEchecs(Integer echecs) {
 		this.echecs = echecs;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+	public Backup getBackup() {
+		return this.backup;
 	}
+
+	public void setBackup(Backup backup) {
+		this.backup = backup;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Sante [hygiene=");
-		builder.append(hygiene);
+		builder.append(this.hygiene);
 		builder.append(", nbMalades=");
-		builder.append(nbMalades);
+		builder.append(this.nbMalades);
 		builder.append(", nbAccidents=");
-		builder.append(nbAccidents);
+		builder.append(this.nbAccidents);
 		builder.append(", soins=");
-		builder.append(soins);
+		builder.append(this.soins);
 		builder.append(", echecs=");
-		builder.append(echecs);
+		builder.append(this.echecs);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
+
 }

@@ -99,9 +99,22 @@ popTab TEXT,
 backup INT(4)
 )ENGINE=InnoDB;
 
+DROP TABLE IF EXISTS education;
+CREATE TABLE education (
+id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+edTotale INT,
+edSecurite INT,
+edEntretien INT,
+edSante INT,
+edRecherche INT,
+edTourisme INT,
+backup INT(4)
+)
+
 ALTER TABLE budget ADD FOREIGN KEY(backup) REFERENCES backup (id);
 ALTER TABLE criminalite ADD FOREIGN KEY(backup) REFERENCES backup (id);
 ALTER TABLE population ADD FOREIGN KEY(backup) REFERENCES backup (id);
+ALTER TABLE education ADD FOREIGN KEY(backup) REFERENCES backup(id);
 ALTER TABLE backup ADD FOREIGN KEY(user) REFERENCES user (id);
 ALTER TABLE construction ADD FOREIGN KEY(categorie) REFERENCES categorie (id);
 ALTER TABLE backup_construction ADD FOREIGN KEY(backup) REFERENCES backup (id);
