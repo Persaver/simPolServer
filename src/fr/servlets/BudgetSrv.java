@@ -49,15 +49,13 @@ public class BudgetSrv extends HttpServlet {
 		BudgetDAO budgetDao = new BudgetDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(session.getAttribute("backup")!= null){
-				if(request.getQueryString() != null){
-					budget = budgetDao.getByBackup(backup);
-					out.append(RestTools.getReturn( budget, budget == null));
-				}
-				else{
-					budgets = budgetDao.getAllByBackup(backup);
-					out.append(RestTools.getReturn( budgets, budgets == null));
-				}
+			if(request.getQueryString() != null){
+				budget = budgetDao.getByBackup(backup);
+				out.append(RestTools.getReturn( budget, budget == null));
+			}
+			else{
+				budgets = budgetDao.getAllByBackup(backup);
+				out.append(RestTools.getReturn( budgets, budgets == null));
 			}
 		} catch (DAOException | BackupException e) {
 			// TODO Auto-generated catch block
