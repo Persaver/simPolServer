@@ -18,7 +18,7 @@ import fr.entities.Construction;
 import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
-	
+
 	public final static Integer IDECOLE = 1;
 	final static Integer IDHOPITAL = 2;
 
@@ -133,7 +133,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 					+"postePourvu=?, "
 					+"specificite=?, "
 					+"construction=?, "
-					+"backup =? ";
+					+"backup =? "
+					+ "WHERE id= ?";
 			PreparedStatement statement = this.connect.prepareStatement( sql);
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -149,7 +150,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setInt(10, element.getConstruction().getId());
 			statement.setInt(11, element.getBackup().getId());
 			cptRow = statement.executeUpdate();
-			if (cptRow == null || cptRow < 1){
+			if ((cptRow == null) || (cptRow < 1)){
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();

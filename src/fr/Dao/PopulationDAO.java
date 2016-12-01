@@ -74,11 +74,14 @@ public class PopulationDAO extends DAO<Population,Integer> {
 	}
 	@Override
 	public Population save(Population element) throws DAOException {
+		Gson gson = null;
 		try {
 			String req = "INSERT INTO population (repartitionPop, fertilite, attractivite, backup) VALUES (?, ?, ?, ?)";
 			PreparedStatement statement = this.connect.prepareStatement(req);
-			String pop = null;
+			gson = new Gson();
+			String pop = gson.toJson(element.getPopTab());
 			// fonction pour faire passer tab[][] en "repartitionPop"
+
 			statement.setString(1, pop);
 			statement.setInt(2, element.getFertilite());
 			statement.setInt(3, element.getAttractivite());
