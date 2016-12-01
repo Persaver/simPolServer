@@ -116,6 +116,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	@Override
 	public BackupConstruction update(BackupConstruction element) throws DAOException {
 		Gson gson = null;
+		Integer cptRow = null;
 		try {
 			String sql = "Update backup_construction "
 					+ "Set "
@@ -144,15 +145,11 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setString(9, gson.toJson(element.getSpecificite()));
 			statement.setInt(10, element.getConstruction().getId());
 			statement.setInt(11, element.getBackup().getId());
-			statement.executeUpdate();
-			ResultSet generatedKeys = statement.getGeneratedKeys();
-			if (generatedKeys.first()) {
-				element.setId(generatedKeys.getInt(1));
-			} else {
+			cptRow = statement.executeUpdate();
+			if (cptRow == null || cptRow < 1){
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
-			generatedKeys.close();
 			return element;
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());

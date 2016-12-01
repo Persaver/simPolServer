@@ -148,6 +148,21 @@ public class EntitiesController {
 		}
 	}
 
+	public IEntity updategGameEntity(IEntity upEntity) throws ServiceException{
+		IEntity entity = null;
+
+		if(upEntity == null){
+			throw new ServiceException("upEntity == null");
+		}
+		try{
+			entity = new BackupConstructionDAO().update((BackupConstruction)upEntity);
+
+		}catch(DAOException e){
+			throw new ServiceException(e.getMessage());
+		}
+
+		return entity;
+	}
 	// lance la recuperation de toutes les entitées
 	public List<IEntity> getGameEntitiesFromDao(Integer idBackup) throws ServiceException{
 		List<IEntity> gameEntities = null;

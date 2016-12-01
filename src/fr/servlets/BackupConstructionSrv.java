@@ -62,6 +62,7 @@ public class BackupConstructionSrv extends HttpServlet {
 		if(backup != null){
 			if(request.getAttribute("id") != null){
 
+
 				try {
 					bc=(BackupConstruction) new EntitiesController().getGameEntity(Integer.parseInt(request.getAttribute("id").toString()));
 				} catch (NumberFormatException | ServiceException e) {
@@ -156,7 +157,8 @@ public class BackupConstructionSrv extends HttpServlet {
 		}
 
 		out.append(RestTools.getReturn(bc, bc == null));
-		out.close();	}
+		out.close();
+	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
