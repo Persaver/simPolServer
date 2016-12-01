@@ -9,6 +9,8 @@ import fr.game.services.gameControllers.AbstractGameEntity;
 import fr.game.services.indicateurs.BudgetService;
 import fr.game.services.indicateurs.PopulationService;
 import fr.interfaces.IConstruction;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 public abstract class AbstractConstructionService extends AbstractGameEntity<BackupConstruction, BackupConstructionDAO> implements IConstruction{
 	// on cree une varible construction
@@ -25,14 +27,14 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	public void ameliore(){
 		this.getEntity().setNbCadre(this.entity.getNbCadre()*this.construction.getModCadre());
 		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
-//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
+		//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
 	}
-	
-		// fonction utilitaires
+
+	// fonction utilitaires
 	// Le potentiel sera utilise pour chaque batiment et evaluer son rendement.
 	public int potentiel(BudgetService b) {		// Le budget influe directement sur les capacites du batiment a 30% du budget necessaire le batiment n'a plus de potentiel
-		int potentiel =  this.entity.getBudget()*100/(this.entity.getNbSalarie()/10*b.getSalaireStandard()+this.entity.getNbCadre()/10*b.getSalaireCadre());
-		potentiel = (int)Math.max((potentiel*100-3000)/70., 0.);
+		int potentiel =  (this.entity.getBudget()*100)/(((this.entity.getNbSalarie()/10)*b.getSalaireStandard())+((this.entity.getNbCadre()/10)*b.getSalaireCadre()));
+		potentiel = (int)Math.max(((potentiel*100)-3000)/70., 0.);
 		return potentiel;
 	}
 	public void modifierRisque(int mod){
@@ -50,6 +52,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 		return nbPostes;
 	}
+
 	
 	public void prisePostes(PopulationService p, BudgetService b){
 		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
@@ -74,28 +77,36 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	}
 	public int retirerPersonnel(BudgetService b){
 		int nbEmploye = this.entity.getNbSalarie()+this.entity.getNbCadre();
-		int budgetMax = this.entity.getNbSalarie()/10*b.getSalaireStandard()+this.entity.getNbCadre()/10*b.getSalaireCadre();
-		if (this.entity.getBudget() > budgetMax/nbEmploye){
-			this.entity.setBudget(this.entity.getBudget() - budgetMax/nbEmploye);
+		int budgetMax = ((this.entity.getNbSalarie()/10)*b.getSalaireStandard())+((this.entity.getNbCadre()/10)*b.getSalaireCadre());
+		if (this.entity.getBudget() > (budgetMax/nbEmploye)){
+			this.entity.setBudget(this.entity.getBudget() - (budgetMax/nbEmploye));
 			return 1;	// Une personne a bien ete viree
-		} else
+		}
+		else {
 			return 0;	// Personne n'a ete vire
+		}
 	}
 	public int retirerPersonnel(BudgetService b, int n){
 		boolean possible = true;
 		int verif;
-		while (n > 0 && possible){
+		while ((n > 0) && possible){
 			verif = this.retirerPersonnel(b);
-			if (verif == 1)
+			if (verif == 1) {
 				n--;
-			else
+			} else {
 				possible = false;
+			}
 		}
 		return n;
 	}
 
-	public void save(){
-		this.constructionDAO.save(this.entity);
+	public void save() throws ServiceException{
+		try {
+			this.constructionDAO.save(this.entity);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
+		}
 	}
 
 	@Override

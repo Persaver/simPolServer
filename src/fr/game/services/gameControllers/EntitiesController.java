@@ -2,26 +2,18 @@ package fr.game.services.gameControllers;
 
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Vector;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
 import fr.entities.Backup;
 import fr.entities.BackupConstruction;
-import fr.entities.Budget;
-import fr.entities.Population;
-import fr.game.services.constructions.Commissariat;
-//import fr.game.services.constructions.Ecole;
-import fr.interfaces.IConstruction;
-import fr.interfaces.IGameEntity;
 import fr.interfaces.IEntity;
+import fr.interfaces.IGameEntity;
 import fr.splExceptions.DAOException;
 import fr.splExceptions.EntityException;
 import fr.splExceptions.ServiceException;
@@ -44,7 +36,7 @@ public class EntitiesController {
 	public EntitiesController(){
 		this(null);
 	}
-	
+
 	public EntitiesController(Integer idBackup){
 		this.idBackup = idBackup;
 	}
@@ -53,12 +45,16 @@ public class EntitiesController {
 	public void addGameEntity(IEntity entity) throws ServiceException{
 		BackupConstruction bckCons = null;
 		try{
-			
+
 			if( entity instanceof BackupConstruction){
 				bckCons=(BackupConstruction)entity;
-				backupConstructionDAO.save(bckCons);
+				try {
+					this.backupConstructionDAO.save(bckCons);
+				} catch (DAOException e) {
+					throw new ServiceException(e.getMessage());
+				}
 			}
-			
+
 			this.gameEntities.put(bckCons.getClass().getName()+bckCons.getId(), entity);
 		}catch(NullPointerException e ){
 			throw new ServiceException(e.getMessage());
@@ -77,19 +73,23 @@ public class EntitiesController {
 
 	// recupere un entite par sa clef
 	// clef = class de l'entité+id ex: user1
-	public IEntity getGameEntity(Integer id) throws EntityException{
+	public IEntity getGameEntity(Integer id) throws ServiceException{
 		IEntity entity = null;
-		
-			entity = backupConstructionDAO.get(id);
-			if(entity == null){
-				throw new EntityException("Pas d'entité trouvé");
-			}else{
-				this.gameEntities.put(entity.getClass().getName()+id, entity);
 
-			}
-		
-			
-		
+		try {
+			entity = this.backupConstructionDAO.get(id);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		if(entity == null){
+			throw new ServiceException("Pas d'entité trouvé");
+		}else{
+			this.gameEntities.put(entity.getClass().getName()+id, entity);
+
+		}
+
+
+
 
 		return entity;
 
@@ -119,9 +119,13 @@ public class EntitiesController {
 			entity = itValue.next();
 			if(entity != null){
 				if(entity instanceof BackupConstruction){
-					backupConstructionDAO.save((BackupConstruction)entity);
+					try {
+						this.backupConstructionDAO.save((BackupConstruction)entity);
+					} catch (DAOException e) {
+						throw new ServiceException(e.getMessage());
+					}
 				}
-			}			
+			}
 		}
 	}
 
@@ -131,7 +135,11 @@ public class EntitiesController {
 		List<BackupConstruction> gameConstruction = null;
 		IGameEntity entity = null;
 		Backup backup = null;
-		backup = this.backupDAO.get(idBackup);
+		try {
+			backup = this.backupDAO.get(idBackup);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
 		int ix = 0;
 
 		// si on recupere corectement le backup
@@ -143,34 +151,35 @@ public class EntitiesController {
 				// TODO Auto-generated catch block
 				throw new ServiceException(e.getMessage());
 			}
-			if(gameConstruction != null && !gameConstruction.isEmpty()){
+			if((gameConstruction != null) && !gameConstruction.isEmpty()){
 				gameEntities=new ArrayList<IEntity>();
 				for(BackupConstruction backupConstruction : gameConstruction){
-					gameEntities.add((IEntity) backupConstruction );
-					this.getGameEntities().put(backupConstruction.getClass().getName()+backupConstruction.getId(),(IEntity) backupConstruction);
+					gameEntities.add(backupConstruction );
+					this.getGameEntities().put(backupConstruction.getClass().getName()+backupConstruction.getId(),backupConstruction);
 				}
+			} else {
+				throw new ServiceException("Pas de construction pour ce backup");
 			}
-			else throw new ServiceException("Pas de construction pour ce backup");
 
 
 			// si il y en a
-//			if(gameEntities != null){
-//				// on les stocke dans la map
-//				for(IEntity backupConstruction : gameEntities){
-//					if(((BackupConstruction) backupConstruction).getConstruction().getDesignation().equals(EntitiesController.DES_COMMISARIAT)){
-//						entity = new Commissariat(backupConstruction,backupConstructionDAO);
-//					}
-//					if(backupConstruction.getConstruction().getDesignation().equals(EntitiesController.DES_ECOLE)){
-//					//	entity = new Ecole(backupConstruction,backupConstructionDAO);
-//					}
-//					this.gameEntities.put(entity.getName(),(IGameEntity) backupConstruction );
-//				}
-//			}else{
-//				gameEntities = null;	
-//			}
-			
-			
-			
+			//			if(gameEntities != null){
+			//				// on les stocke dans la map
+			//				for(IEntity backupConstruction : gameEntities){
+			//					if(((BackupConstruction) backupConstruction).getConstruction().getDesignation().equals(EntitiesController.DES_COMMISARIAT)){
+			//						entity = new Commissariat(backupConstruction,backupConstructionDAO);
+			//					}
+			//					if(backupConstruction.getConstruction().getDesignation().equals(EntitiesController.DES_ECOLE)){
+			//					//	entity = new Ecole(backupConstruction,backupConstructionDAO);
+			//					}
+			//					this.gameEntities.put(entity.getName(),(IGameEntity) backupConstruction );
+			//				}
+			//			}else{
+			//				gameEntities = null;
+			//			}
+
+
+
 		}
 		return gameEntities;
 	}

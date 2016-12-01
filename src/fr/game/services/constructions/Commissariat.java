@@ -29,6 +29,7 @@ public class Commissariat extends AbstractConstructionService{
 	}
 	
 		// Fonctions individuelles
+	@Override
 	public void ameliore (){		// Permet d'augmenter le potentiel dd'un commissariat
 		super.ameliore();
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100;
@@ -100,53 +101,4 @@ public class Commissariat extends AbstractConstructionService{
 	public static void setTolerance(int val){
 		tolerance = val;
 	}
-	@Override
-	public void prisePostes() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void ajoutPoste() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-//		// Fonctions communes
-//	public static void allSecure(){
-//		for(int i=0; i<commissariats.size(); i++)
-//			commissariats.get(i).secure();
-//	}
-//	public static int leveRecettes(){
-//		int r=0;
-//		for(int i=0; i<commissariats.size(); i++)
-//			r += commissariats.get(i).getRecette();
-//		return r;
-//	}
-//	public static int Efficacites(){
-//		int eff = 0;
-//		for (int i = 0 ; i<commissariats.size(); i++)
-//			eff += commissariats.get(i).getpInfluence();
-//		return eff;
-//}
-//	public int getpInfluence() {
-//		return pInfluence;
-//	}
-//	public void setpInfluence(int pInfluence) {
-//		this.pInfluence = pInfluence;
-//	}
-//	public static List<Commissariat> getCommissariats() {
-//		return commissariats;
-//	}
-//	public static void setCommissariats(List<Commissariat> commissariats) {
-//		Commissariat.commissariats = commissariats;
-//	}
-//	public int getIndiceCom() {
-//		return indiceCom;
-//	}
-//	public void setIndiceCom(int indiceCom) {
-//		this.indiceCom = indiceCom;
-//	}
-//	public void setRecette(int recette) {
-//		this.recette = recette;
-//	}
 }

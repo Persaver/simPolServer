@@ -20,7 +20,7 @@ import fr.splExceptions.DAOException;
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	@Override
-	public BackupConstruction get(Integer id) {
+	public BackupConstruction get(Integer id) throws DAOException {
 		ResultSet result;
 		BackupConstruction backupConstruction;
 		Construction construction;
@@ -69,7 +69,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	}
 
 	@Override
-	public BackupConstruction save(BackupConstruction element) {
+	public BackupConstruction save(BackupConstruction element) throws DAOException {
 		Gson gson = null;
 		try {
 			String sql = "INSERT INTO backup_construction ("
@@ -111,7 +111,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -121,7 +120,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	}
 
 	@Override
-	public List<BackupConstruction> getAll() {
+	public List<BackupConstruction> getAll() throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructions = new ArrayList<BackupConstruction>();
 		Gson gson = null;
@@ -153,7 +152,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			// TODO Auto-generated catch block
 			throw new DAOException(e.getMessage());
 		}
-		return null ;
 	}
 
 	public List<BackupConstruction> getAllByBackUp(Backup backup) throws DAOException {
@@ -189,7 +187,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			// TODO Auto-generated catch block
 			throw new DAOException(e.getMessage());
 		}
-		
+
 	}
 
 }

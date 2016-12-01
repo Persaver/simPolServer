@@ -17,7 +17,7 @@ public class PopulationDAO extends DAO<Population,Integer> {
 	@Override
 	public Population get(Integer id) throws DAOException{
 		ResultSet result;
-		Population population = null;
+		Population population = new Population();
 		Backup backup = null;
 		// population recuperé en Gson
 		Gson gson = null;
@@ -45,6 +45,33 @@ public class PopulationDAO extends DAO<Population,Integer> {
 		return null;
 	}
 
+	public Population getByBackup(Backup backup) throws DAOException{
+		ResultSet result;
+		Population population = new Population();
+		// population recuperé en Gson
+		Gson gson = null;
+		try {
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from population where backup = ?");
+			prepare.setInt(1, backup.getId());
+			result = prepare.executeQuery();
+			if(result != null){
+				gson = new Gson();
+				result.first();
+				population = new Population();
+				population.setId(result.getInt("id"));
+				population.setFertilite(result.getInt("fertilite"));
+				population.setAttractivite(result.getInt("attractivite"));
+				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
+				population.setPopTab(gson.fromJson(result.getString("popTab"), Integer[][].class));
+				population.setBackup(backup);
+				return population;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DAOException(e.getMessage());
+		}
+		return null;
+	}
 	@Override
 	public Population save(Population element) throws DAOException {
 		try {
@@ -109,7 +136,6 @@ public class PopulationDAO extends DAO<Population,Integer> {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override

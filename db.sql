@@ -113,7 +113,7 @@ edRecherche INT,
 edTourisme INT,
 nbj INT,
 backup INT(4)
-)
+)ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS sante;
 CREATE TABLE sante (
@@ -125,7 +125,7 @@ soins INT,
 echecs INT,
 nbj INT,
 backup INT(4)
-)
+)ENGINE=InnoDB;
 
 
 ALTER TABLE budget ADD FOREIGN KEY(backup) REFERENCES backup (id);
