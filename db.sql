@@ -75,6 +75,7 @@ CREATE TABLE budget (
   nbCadres INT,
   nbj INT,
   backup INT(4)
+  --ARGENT DU JOUEUR
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS criminalite;
