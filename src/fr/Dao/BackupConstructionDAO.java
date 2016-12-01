@@ -22,6 +22,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	private final static Integer IDECOLE = 1;
 	private final static Integer IDHOPITAL = 2;
 
+
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
 		ResultSet result;
@@ -49,7 +50,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				// gson
 				gson = new Gson();
 				// on recupere le type de la Map pour Gson
-				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificites"), stringIntegerMap));
 				construction = new Construction(result.getInt("construction"));
 				backup = new Backup(result.getInt("backup"));
@@ -83,7 +84,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	@Override
 	public BackupConstruction save(BackupConstruction element) throws DAOException {
-		Gson gson = null;
+		Gson gson = new Gson();
 		try {
 			String sql = "INSERT INTO backup_construction ("
 					+"x,"
@@ -107,7 +108,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setInt(7, element.getAttractivite());
 			statement.setInt(8, element.getPostePourvu());
 			// gson au boulot on json tt ca
-			gson = new Gson();
 			statement.setString(9, gson.toJson(element.getSpecificite()));
 			statement.setInt(10, element.getConstruction().getId());
 			statement.setInt(11, element.getBackup().getId());
@@ -143,7 +143,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 					+"postePourvu=?, "
 					+"specificite=?, "
 					+"construction=?, "
-					+"backup =? ";
+					+"backup =? "
+					+ "WHERE id= ?";
 			PreparedStatement statement = this.connect.prepareStatement( sql);
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -159,7 +160,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setInt(10, element.getConstruction().getId());
 			statement.setInt(11, element.getBackup().getId());
 			cptRow = statement.executeUpdate();
-			if (cptRow == null || cptRow < 1){
+			if ((cptRow == null) || (cptRow < 1)){
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
@@ -173,7 +174,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public List<BackupConstruction> getAll() throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructions = new ArrayList<BackupConstruction>();
-		Gson gson = null;
 		try {
 			result = this.connect.createStatement().executeQuery("Select * from backup_construction");
 			while(result.next()){
@@ -188,8 +188,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				// gson
-				gson = new Gson();
-				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
+				Gson gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificites"), stringIntegerMap));
 				Construction construction = new Construction(result.getInt("construction"));
 				Backup backup = new Backup(result.getInt("backup"));
@@ -207,7 +207,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public List<BackupConstruction> getAllByBackUp(Backup backup) throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
-		Gson gson = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ?");
 			prepare.setInt(1, backup.getId());
@@ -224,8 +223,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setAttractivite(result.getInt("attractive"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				// gson
-				gson = new Gson();
-				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
+				Gson gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
 				Construction construction = new Construction(result.getInt("construction"));
 				backupConstruction.setConstruction(construction);
@@ -243,7 +242,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public List<BackupConstruction> getAllByBackUpByConstruction(Backup backup, Integer idConstruction) throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
-		Gson gson = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ? and construction=?");
 			prepare.setInt(1, backup.getId());
@@ -261,8 +259,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setAttractivite(result.getInt("attractive"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				// gson
-				gson = new Gson();
-				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
+				Gson gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
 				Construction construction = new Construction(result.getInt("construction"));
 				backupConstruction.setConstruction(construction);
