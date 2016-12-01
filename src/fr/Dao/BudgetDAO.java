@@ -25,7 +25,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			prepare.setInt(1, id.intValue());
 			result = prepare.executeQuery();
 
-			if(result!= null && result.next()){
+			if((result!= null) && result.next()){
 				budget = new Budget();
 				budget.setId(result.getInt("id"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
@@ -56,7 +56,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			prepare.setInt(1, backup.getId());
 			result = prepare.executeQuery();
 
-			if(result!= null && result.next()){
+			if((result!= null) && result.next()){
 				result.last();
 				budget = new Budget();
 				budget.setId(result.getInt("id"));
@@ -127,8 +127,9 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	}
 
 	@Override
-	public void update(Budget budget) {
+	public Budget update(Budget budget) {
 		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

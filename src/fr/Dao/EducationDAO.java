@@ -105,8 +105,9 @@ public class EducationDAO extends DAO<Education,Integer>{
 	}
 
 	@Override
-	public void update(Education element) {
+	public Education update(Education element) {
 		// TODO Auto-generated method stub
+		return null;
 
 	}
 

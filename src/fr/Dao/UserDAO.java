@@ -20,16 +20,16 @@ public class UserDAO extends DAO<User,Integer>{
 			PreparedStatement prepare = this.connect.prepareStatement("SELECT * FROM user WHERE id =?");
 			prepare.setInt(1, id.intValue());
 			result = prepare.executeQuery();
-			if(result!= null && result.next()){
-				 user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
-				 return user;
+			if((result!= null) && result.next()){
+				user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
+				return user;
 			}
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());
 		}
 		return null;
 
-		
+
 	}
 
 	public User checklogin(String login, String password) throws DAOException{
@@ -40,7 +40,7 @@ public class UserDAO extends DAO<User,Integer>{
 			prepare.setString(2, password);
 
 			result = prepare.executeQuery();
-			if(result!= null && result.next()){
+			if((result!= null) && result.next()){
 
 				User user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
@@ -80,9 +80,9 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public void update(User element) {
+	public User update(User element) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
