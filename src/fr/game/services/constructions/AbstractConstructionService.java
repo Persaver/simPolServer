@@ -25,8 +25,12 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	}
 	@Override
 	public void ameliore(){
-		this.getEntity().setNbCadre(this.entity.getNbCadre()*this.construction.getModCadre());
-		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
+		this.getEntity().setNbCadre(this.getEntity().getNbCadre()*this.construction.getModCadre());
+		this.getEntity().setNbSalarie(this.getEntity().getNbSalarie()*this.construction.getModSalarie());
+		this.getEntity().setRisque(this.getEntity().getRisque()*this.construction.getModRisque());
+		this.getEntity().setAttractivite(this.getEntity().getAttractivite()*this.construction.getModAttractivite());
+//		this.getEntity().setNbCadre(this.entity.getNbCadre()*this.construction.getModCadre());
+//		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
 		//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
 	}
 
@@ -60,50 +64,76 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 
 	
 	public void prisePostes(PopulationService p, BudgetService b) throws ServiceException{
+			// On verifie que les demandeurs d'emploi sont assez nombreux
 		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
 		if (pEmbauche <= 0) {
 			this.entity.setPostePourvu(0);
 		} else{
 			if (pEmbauche > ((this.entity.getNbSalarie()+this.entity.getNbCadre())/10)) {
-				this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
+					// S'il y a des demandeurs d'emploi, mais pas assez pour remplir tous les postes a pourvoir, le batiment recrute tous ceux qu'il peut
+				int cadres = (int)(Math.random()*pEmbauche/4+1);
+				int salaries = pEmbauche - cadres;
+				this.modifierCadre(b, cadres);
+				this.modifierSalarie(b, salaries);
 			} else {
+					// Si les demandeurs d'emploi sont legion
+				this.entity.setNbCadre(this.getEntity().getNbCadre());
+				this.entity.setNbCadre(this.getEntity().getNbSalarie());
 				this.entity.setPostePourvu(pEmbauche);
 			}
 		}
 	}
-	
-	public void ajoutPoste(PopulationService p, BudgetService b) throws ServiceException{
-		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
-		if (pEmbauche > ((this.entity.getNbSalarie()+this.entity.getNbCadre())/10)) {
-			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
+	public void modifierCadre(BudgetService b, int n){
+		if (n < 0){
+			for (int i = 0; i > n; i--){
+				this.retirerCadre(b);
+			}
 		} else {
-			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche);
-		}
-	}
-	public int retirerPersonnel(BudgetService b){
-		int nbEmploye = this.entity.getNbSalarie()+this.entity.getNbCadre();
-		int budgetMax = ((this.entity.getNbSalarie()/10)*b.getSalaireStandard())+((this.entity.getNbCadre()/10)*b.getSalaireCadre());
-		if (this.entity.getBudget() > (budgetMax/nbEmploye)){
-			this.entity.setBudget(this.entity.getBudget() - (budgetMax/nbEmploye));
-			return 1;	// Une personne a bien ete viree
-		}
-		else {
-			return 0;	// Personne n'a ete vire
-		}
-	}
-	public int retirerPersonnel(BudgetService b, int n){
-		boolean possible = true;
-		int verif;
-		while ((n > 0) && possible){
-			verif = this.retirerPersonnel(b);
-			if (verif == 1) {
-				n--;
-			} else {
-				possible = false;
+			for (int i = 0; i > n; i--){
+				this.ajouterCadre(b);
 			}
 		}
-		return n;
 	}
+	public void modifierSalarie(BudgetService b, int n){
+		if (n < 0){
+			for (int i = 0; i > n; i--){
+				this.retirerSalarie(b);
+			}
+		} else {
+			for (int i = 0; i > n; i--){
+				this.ajouterSalarie(b);
+			}
+		}
+	}
+	public void retirerCadre(BudgetService b){
+		if (this.entity.getNbCadre() > 9){// >9 car les postes sont comptabilise en fonction des dizaines
+			this.entity.setNbCadre(this.entity.getNbCadre()-10);
+			this.entity.setBudget(this.entity.getBudget()-b.getSalaireCadre());
+			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
+		}
+	}
+	public void retirerSalarie(BudgetService b){
+		if (this.entity.getNbSalarie() > 9){
+			this.entity.setNbSalarie(this.entity.getNbSalarie()-10);
+			this.entity.setBudget(this.entity.getBudget()-b.getSalaireStandard());
+			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
+		}
+	}
+	public void ajouterCadre(BudgetService b){
+		if (this.entity.getNbCadre() < this.getEntity().getNbCadre()){
+			this.entity.setNbCadre(this.entity.getNbCadre()+10);
+			this.entity.setBudget(this.entity.getBudget()+b.getSalaireCadre());
+			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);
+		}
+	}
+	public void ajouterSalarie(BudgetService b){
+		if (this.entity.getNbSalarie() < this.getEntity().getNbSalarie()){
+			this.entity.setNbSalarie(this.entity.getNbSalarie()+10);
+			this.entity.setBudget(this.entity.getBudget()+b.getSalaireStandard());
+			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);
+		}
+	}
+
 
 	public void save() throws ServiceException{
 		try {
