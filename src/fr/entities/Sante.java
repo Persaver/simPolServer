@@ -2,11 +2,11 @@ package fr.entities;
 
 public class Sante  extends AbstractEntity<Sante> {
 	private static final long serialVersionUID = 1L;
-	private Integer hygiene = 80;	// en % parametre qui influe sur le nombre de malades | influence par les recherches en medecine et par les decrets
+	private Integer hygiene = 80;		// en % parametre qui influe sur le nombre de malades | influence par les recherches en medecine et par les decrets
 	private Integer nbMalades;
 	private Integer nbAccidents;		// accident li�s au risque des batiments
-	private Integer soins;			// Soins apport� par les hopitaux
-	private Integer echecs = 5;// en % tous les soins ne sont pas fructueux, et parfois des gens meurent
+	private Integer soins;				// Soins apport� par les hopitaux
+	private Integer echecs = 5;			// en % tous les soins ne sont pas fructueux, et parfois des gens meurent
 	private Integer nbj;
 	private Backup backup;
 

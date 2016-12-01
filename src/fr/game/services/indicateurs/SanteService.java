@@ -3,8 +3,8 @@ package fr.game.services.indicateurs;
 import java.util.List;
 
 import fr.Dao.SanteDAO;
+import fr.entities.BackupConstruction;
 import fr.entities.Sante;
-import fr.game.services.constructions.AbstractConstructionService;
 import fr.game.services.gameControllers.AbstractGameEntity;
 
 public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
@@ -15,17 +15,17 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 
 	public void journeeMedicale(PopulationService p, BudgetService b){
 		this.tombeMalades(p);		// On comptabilise les nouveaux malades
-		// a revoir avec liste
+			// a revoir avec liste
 		System.out.println(this.entity.getNbMalades() + " gens sont malades");
-		//this.accidente(p, b);			// de meme pour les accidentes
+		//this.accidente(p, b);		// de meme pour les accidentes
 		System.out.println(this.entity.getNbAccidents() + " gens ont eu un accident");
-		this.mortalite(p, b);			// Parmi ces victimes, certaines ne se reveilleront jamais
+		this.mortalite(p, b);		// Parmi ces victimes, certaines ne se reveilleront jamais
 		System.out.println(this.entity.getNbMalades()+this.entity.getNbAccidents() + " ne sont pas encore morts");
 		this.recupSoins();			// Heureusement, les medecins sont la avec leurs competences
 		System.out.println(this.entity.getSoins() + " patients vont �tre secourus");
 		this.apportMedicaux();		// Ces chevaliers de la sante sauvent autant de vies que possible
 		System.out.println("il reste " + this.entity.getNbMalades() + " malades et " + this.entity.getNbAccidents() + " accidentes");
-		this.guerison();				// Et puis, il y a ceux qui se soignent en mangeant bio
+		this.guerison();			// Et puis, il y a ceux qui se soignent en mangeant bio
 		System.out.println(this.entity.getNbMalades() + this.entity.getNbAccidents() + " patients sont encore dans les hopitaux en fin de soiree");
 	}
 
@@ -33,10 +33,14 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		int nbSains =  p.nbIndiv()- this.entity.getNbMalades();
 		this.entity.setNbMalades(this.entity.getNbMalades() + (int)((Math.random()*(100-this.entity.getHygiene())*nbSains)/3000));	// actualisation quotidienne du nombre de malades
 	}
-	public void accidente (PopulationService p, BudgetService b,List <AbstractConstructionService> liste){
-		int nbSaufs = p.nbIndiv(0, b.getAgeRetraite())- this.entity.getNbAccidents();	// Seuls ceux qui se deplacent et ne sont pas deja accidente peuvent subir un accident
+	public void accidente (PopulationService p, BudgetService b,List <BackupConstruction> liste){
+		// int nbSaufs = p.nbIndiv(0, b.getAgeRetraite())- this.entity.getNbAccidents();	// Seuls ceux qui se deplacent et ne sont pas deja accidente peuvent subir un accident
 		// a revoir modif avec list
-		//this.entity.setNbAccidents(this.entity.getNbAccidents() + (int)((Math.random()*Batiment.getTotalRisque()*nbSaufs)/1000/30));
+		int nbAcc = 0;
+		for (BackupConstruction element : liste){
+			nbAcc += (int)(Math.random()*(element.getRisque()*element.getPostePourvu()));
+		}
+		this.entity.setNbAccidents(this.entity.getNbAccidents() + nbAcc/1000/30);
 	}
 	public void ajoutBlesse(int nb){			// Victimes d'agressions
 		this.entity.setNbAccidents(this.entity.getNbAccidents() + nb);

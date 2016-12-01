@@ -35,16 +35,4 @@ public class Ecole extends AbstractConstructionService {
 	public void setpEducation(int pEducation) {
 		this.pEducation = pEducation;
 	}
-
-	@Override
-	public void prisePostes() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void ajoutPoste() {
-		// TODO Auto-generated method stub
-
-	}
 }

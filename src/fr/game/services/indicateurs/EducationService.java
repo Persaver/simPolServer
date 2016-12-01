@@ -15,7 +15,7 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 		int place = this.entity.getEdTotale();
 		int etudiant = p.nbIndiv(0, b.getAgeTravail());
 		if (place-etudiant < 0) {
-			this.entity.setEdTotale((place*500/etudiant)*((int)(Math.sqrt(b.getAgeTravail())/4)));		// varie aussi selon l'age estime de fin d'etude. a 16 ans, facteur de 1, ï¿½ 25 ans, facteur de 1.25, 36 ans, facteur de 1.5 ...
+			this.entity.setEdTotale((place*500/etudiant)*((int)(Math.sqrt(b.getAgeTravail())/4)));		// varie aussi selon l'age estime de fin d'etude. a 16 ans, facteur de 1, a 25 ans, facteur de 1.25, 36 ans, facteur de 1.5 ...
 		} else {						// S'il y a plus de place, alors, les cours du soir et les formation d'ouvrier peuvent augmenter la productivite
 			this.entity.setEdTotale(((100+(place-etudiant)/4)*5)*((int)(Math.sqrt(b.getAgeTravail())/4)));
 		}
