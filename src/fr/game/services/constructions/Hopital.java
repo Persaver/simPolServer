@@ -37,15 +37,6 @@ public class Hopital extends AbstractConstructionService {
 	public int soins (EducationService e, BudgetService b){
 		return this.pSoin*this.potentiel(b)/100*(300+e.getEntity().getEdSante())/500;	// N'est qu'a 60% si l'education est nulle
 	}
-	@Override
-	public void prisePostes() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void ajoutPoste() {
-		// TODO Auto-generated method stub
-	}
 	
 //	public static int soinsTotal(){
 //		int sT = 0;

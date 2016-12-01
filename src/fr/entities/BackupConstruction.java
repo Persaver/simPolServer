@@ -11,9 +11,9 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 	private Integer y;
 	private Integer nbSalarie;
 	private Integer nbCadre;
-	private Integer risque; // pour 1000
+	private Integer risque;				// pour 1000
 	private Integer budget;
-	private Integer attractivite; //
+	private Integer attractivite;	 	//
 	private Integer postePourvu;
 	private Map<String,Integer> specificite;
 	private Construction construction;
