@@ -22,7 +22,7 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class PopulationSrv
  */
-@WebServlet("/populationSrv")
+@WebServlet(urlPatterns={"/population","/population/*"})
 public class PopulationSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

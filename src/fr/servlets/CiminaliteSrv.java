@@ -22,7 +22,7 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class CiminaliteSrv
  */
-@WebServlet("/ciminaliteSrv")
+@WebServlet(urlPatterns={"/ciminalite","/criminalite/*"})
 public class CiminaliteSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

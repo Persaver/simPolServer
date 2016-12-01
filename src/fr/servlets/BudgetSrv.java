@@ -22,7 +22,7 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class BudgetSrv
  */
-@WebServlet("/budgetSrv")
+@WebServlet(urlPatterns={"/budget", "/budget/*"})
 public class BudgetSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
