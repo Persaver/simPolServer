@@ -5,13 +5,12 @@ import fr.entities.Population;
 import fr.game.services.gameControllers.AbstractGameEntity;
 
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
+	private Population entity;
 
 	public PopulationService(Population entity, PopulationDAO entityDao) {
 		this(entity, entityDao, null);
-		// TODO Auto-generated constructor stub
 	}
 
-	private Population entity;
 
 	// Entree	: nombre total de la population
 	// Fonction : reparti aleatoirement la population dans les differentes tranches d'age
@@ -27,10 +26,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	public void ajoutPopulation (int a, int agemin, int agemax){
 		int i, col, lig;
 		for (i=a; i>0; i--){
-			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre al�atoirement la population dans la tranche d'age choisie.
+			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre aleatoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			//	this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
+			this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
 		}
 	}
 	public void retraitPopulation (int a, int agemin, int agemax){
@@ -39,10 +38,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin+1)*12); // permet de retirer al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			//			if (this.entity.getPopTab(col,lig) > 0){
-			//				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
-			//				a--;
-			//			}
+				if (this.entity.getPopTab(col,lig) > 0){
+					this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
+					a--;
+				}
 		}
 	}
 
@@ -65,9 +64,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 				nbMort = (age-10)*(age-10)/400;
 			}
 		}
-		//System.out.println("1 - nbMort = " + nbMort);
 		nbMort -= nbMort*((int)(Math.random()*100)-50)/100;
-		//System.out.println("2 - nbMort = " + nbMort);
 		if (nbMort < 0 || nbMort > nbIndiv){
 			return 0;
 		}

@@ -32,9 +32,15 @@ public class Population extends AbstractEntity<Population> {
 	public Integer[][] getPopTab() {
 		return this.popTab;
 	}
+	public Integer getPopTab(int l, int c) {
+		return this.popTab[l][c];
+	}
 
 	public void setPopTab(Integer[][] popTab) {
 		this.popTab = popTab;
+	}
+	public void setPopTab(int c, int l, int val){
+		this.popTab[c][l] = val;
 	}
 
 	public Integer getFertilite() {

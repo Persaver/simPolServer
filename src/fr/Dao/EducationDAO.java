@@ -51,7 +51,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 			prepare.setInt(1, backup.getId());
 			result = prepare.executeQuery();
 			if(result != null){
-				result.first();
+				result.last();
 				education = new Education();
 				education.setId(result.getInt("id"));
 				education.setEdTotale(result.getInt("edTotale"));

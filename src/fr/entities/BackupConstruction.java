@@ -25,6 +25,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 
 	public BackupConstruction(Integer id) {
 		this(id, null, null, null, null, null, null, null, null, null, null, null);
+		//specificite.get("educ");
 	}
 
 	public BackupConstruction(Integer id, Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
