@@ -22,6 +22,6 @@ public abstract class DAO<T,I>{
 	public abstract T get(I id) throws DAOException;
 	public abstract T save(T element) throws DAOException;
 	public abstract void delete(I id);
-	public abstract void update(T element);
+	public abstract T update(T element) throws DAOException;
 	public abstract List<T> getAll() throws DAOException;
 }
