@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
-import fr.game.services.indicateurs.BudgetService;
 import fr.game.services.indicateurs.EducationService;
 import fr.splExceptions.DAOException;
 import fr.splExceptions.ServiceException;
@@ -28,15 +27,15 @@ public class Caserne extends AbstractConstructionService {
 
 	}
 	public void ameliorer(){
-		super.ameliore(); //(0.3, 0.1, 0, 1);
+		super.ameliore();
 		this.pEntretien = ((10+(this.entity.getNbCadre()/3))*this.entity.getNbSalarie())/50;
 	}
-	//	public void detruire(){
-	//		super.detruire(this.indice);
-	//		casernes.remove(this.indiceCas);
-	//		for (int i = this.indice; i < casernes.size(); i++)
-	//			casernes.get(i).indiceCas --;
-	//	}
+	/*	public void detruire(){
+	/		super.detruire(this.indice);
+	*		casernes.remove(this.indiceCas);
+	*		for (int i = this.indice; i < casernes.size(); i++)
+	*			casernes.get(i).indiceCas --;
+		}*/
 	public int getEntretien(){
 		return this.pEntretien;
 	}
@@ -44,14 +43,13 @@ public class Caserne extends AbstractConstructionService {
 		this.pEntretien = pEntretien;
 	}
 	// Les employes vont effectuer des inspection.
-	// Note : Il faut une liste de batiment en parametre
-	public void entretien(BudgetService b) throws ServiceException{
+	public void entretien() throws ServiceException{
 		List<BackupConstruction> liste;
 		try {
 			liste = this.entityDao.getAll();
 		
 		int l = liste.size();
-		int e = (((this.pEntretien*this.potentiel(b))/100)*(300+EducationService.getEdSecurite()))/500;
+		int e = (((this.pEntretien*this.potentiel())/100)*(300+EducationService.getEdSecurite()))/500;
 		int indice = (int)(Math.random()*l);
 		while (e>0){		// Si un batiment est bien endommage, les ouvriers vont se concentrer dessus
 			if (liste.get(indice).getRisque()>=10){
@@ -75,5 +73,4 @@ public class Caserne extends AbstractConstructionService {
 			throw new ServiceException(e.getMessage());
 		}
 	}
-
 }

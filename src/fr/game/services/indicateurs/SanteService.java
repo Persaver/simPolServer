@@ -2,10 +2,14 @@ package fr.game.services.indicateurs;
 
 import java.util.List;
 
+import fr.Dao.BackupConstructionDAO;
 import fr.Dao.SanteDAO;
+import fr.entities.Backup;
 import fr.entities.BackupConstruction;
 import fr.entities.Sante;
 import fr.game.services.gameControllers.AbstractGameEntity;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 
@@ -13,14 +17,14 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		super(entity, entityDao);
 	}
 
-	public void journeeMedicale(PopulationService p, BudgetService b, List <BackupConstruction> liste){
+	public void journeeMedicale(PopulationService p, BudgetService b, Backup backup) throws ServiceException{
 		this.tombeMalades(p);				// On comptabilise les nouveaux malades
 		System.out.println(this.entity.getNbMalades() + " gens sont malades");
-		this.accidente(p, b, liste);		// de meme pour les accidentes
+		this.accidente(p, b, backup);		// de meme pour les accidentes
 		System.out.println(this.entity.getNbAccidents() + " gens ont eu un accident");
 		this.mortalite(p, b);				// Parmi ces victimes, certaines ne se reveilleront jamais
 		System.out.println(this.entity.getNbMalades()+this.entity.getNbAccidents() + " ne sont pas encore morts");
-		this.recupSoins(liste);				// Heureusement, les medecins sont la avec leurs competences
+		this.recupSoins(backup);				// Heureusement, les medecins sont la avec leurs competences
 		System.out.println(this.entity.getSoins() + " patients vont �tre secourus");
 		this.apportMedicaux();				// Ces chevaliers de la sante sauvent autant de vies que possible
 		System.out.println("il reste " + this.entity.getNbMalades() + " malades et " + this.entity.getNbAccidents() + " accidentes");
@@ -32,12 +36,19 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		int nbSains =  p.nbIndiv()- this.entity.getNbMalades();
 		this.entity.setNbMalades(this.entity.getNbMalades() + (int)((Math.random()*(100-this.entity.getHygiene())*nbSains)/3000));	// actualisation quotidienne du nombre de malades
 	}
-	public void accidente (PopulationService p, BudgetService b,List <BackupConstruction> liste){
+	public void accidente (PopulationService p, BudgetService b, Backup backup) throws ServiceException{
 		// int nbSaufs = p.nbIndiv(0, b.getAgeRetraite())- this.entity.getNbAccidents();	// Seuls ceux qui se deplacent et ne sont pas deja accidente peuvent subir un accident
 		// a revoir modif avec list
+		List<BackupConstruction> backupConstructions = null;
 		int nbAcc = 0;
-		for (BackupConstruction element : liste){
-			nbAcc += (int)(Math.random()*(element.getRisque()*element.getPostePourvu()));
+		try {
+			backupConstructions = new BackupConstructionDAO().getAllByBackUpByConstruction(backup, BackupConstructionDAO.getIDHOPITAL());
+			for (BackupConstruction element : backupConstructions){
+				nbAcc += (int)(Math.random()*(element.getRisque()*element.getPostePourvu()));
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
 		}
 		this.entity.setNbAccidents(this.entity.getNbAccidents() + nbAcc/1000/30);
 	}
@@ -54,10 +65,17 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 	}
 	
 		//Fonction a appeler quotidiennement
-	public void recupSoins (List <BackupConstruction> liste){
+	public void recupSoins (Backup backup) throws ServiceException{
+		List<BackupConstruction> backupConstructions = null;
 		int soinsT = 0;
-		for (BackupConstruction element : liste){
-			soinsT += element.getSpecificite().get("soins");	// La clef des map Ecoles doit etre 'soins'
+		try {
+			backupConstructions = new BackupConstructionDAO().getAllByBackUpByConstruction(backup, BackupConstructionDAO.getIDHOPITAL());
+			for (BackupConstruction element : backupConstructions){
+				soinsT += element.getSpecificite().get("soins");	// La clef des map Ecoles doit etre 'soins'
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
 		}
 		this.entity.setSoins(soinsT);
 	}

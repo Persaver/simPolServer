@@ -10,7 +10,7 @@ import fr.game.services.indicateurs.PopulationService;
 
 public class Commissariat extends AbstractConstructionService{
 	private int pInfluence;
-	private static int tolerance = 0;	/* en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population*/
+	private int tolerance = 1;	/* en %, quantite de crime qui ne sont pas verbalises -> influe sur la recette des contraventions et sur la satisfaction de la population*/
 	private int recette;
 	
 		// Constructeurs
@@ -27,27 +27,26 @@ public class Commissariat extends AbstractConstructionService{
 		for (int i=1; i<niv; i++)
 			this.ameliore();
 	}
-	
 		// Fonctions individuelles
 	@Override
-	public void ameliore (){		// Permet d'augmenter le potentiel dd'un commissariat
+	public void ameliore (){		// Permet d'augmenter le potentiel d'un commissariat
 		super.ameliore();
 		this.pInfluence = this.entity.getNbSalarie()*(10+this.entity.getNbCadre()/10)/100;
 	}
-//	public void detruire(){
-//		super.detruire(this.indice);
-//		commissariats.remove(this.indiceCom);
-//		for (int i = this.indice; i < commissariats.size(); i++)
-//			commissariats.get(i).indiceCom --;
-//	}
-//	public void afficheCommissariat(){
-//		System.out.println("nb Salaries : " + this.nbSalarie/10);
-//		System.out.println("nb Cadres : " + this.nbCadre/10);
-//		System.out.println("Usure : " + this.risque + "/1000");
-//		System.out.println("Influence : " + this.pInfluence);
-//	}
+/*	public void detruire(){
+*		super.detruire(this.indice);
+*		commissariats.remove(this.indiceCom);
+*		for (int i = this.indice; i < commissariats.size(); i++)
+*			commissariats.get(i).indiceCom --;
+*	}
+*	public void afficheCommissariat(){
+*		System.out.println("nb Salaries : " + this.nbSalarie/10);
+*		System.out.println("nb Cadres : " + this.nbCadre/10);
+*		System.out.println("Usure : " + this.risque + "/1000");
+*		System.out.println("Influence : " + this.pInfluence);
+	}*/
 	public void secure(CriminaliteService c, PopulationService p, EducationService e, BudgetService b){	// La capacite des commissariats depend de leur budget ainsi que de l'education / formation re�ue
-		int influence = this.pInfluence*this.potentiel(b)/100*(300+e.getEntity().getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
+		int influence = this.pInfluence*this.potentiel()/100*(300+e.getEntity().getEdSecurite())/500;		// N'est effectif qu'a 60% si l'education est nulle.
 		System.out.println("Influence actuelle = " + influence);
 		if (c.getEntity().getCrimeMineur() < influence/2){			//50% de l'influence est dirigee vers les crimes mineurs
 			influence -= c.getEntity().getCrimeMineur();
@@ -89,16 +88,15 @@ public class Commissariat extends AbstractConstructionService{
 		}
 	}
 	public void afficheEfficacite(BudgetService b){
-		System.out.println(this.pInfluence*this.potentiel(b)/100*(400+EducationService.getEdSecurite())/500);
+		System.out.println(this.pInfluence*this.potentiel()/100*(400+EducationService.getEdSecurite())/500);
 	}
-
 	public int getRecette(){
 		return this.recette;
 	}
-	public static int getTolerance(){
+	public int getTolerance(){
 		return tolerance;
 	}
-	public static void setTolerance(int val){
+	public void setTolerance(int val){
 		tolerance = val;
 	}
 }
