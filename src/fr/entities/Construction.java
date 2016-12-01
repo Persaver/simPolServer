@@ -1,12 +1,14 @@
 package fr.entities;
 
+import java.util.Map;
+
 public class Construction extends AbstractEntity<Construction> {
 
 	private static final long serialVersionUID = 1L;
 	private String designation;
 	private Integer h;
 	private Integer w;
-	private Double price;		// Pourquoi un double?(Robin)
+	private Integer price;
 	private Integer baseSalarie;
 	private Integer baseCadre;
 	private Integer baseRisque;
@@ -15,7 +17,7 @@ public class Construction extends AbstractEntity<Construction> {
 	private Integer modCadre;
 	private Integer modRisque;
 	private Integer modAttractivite;
-	private String specificite;
+	private Map<String,Integer> specificite;
 	private Categorie categorie;
 
 	public Construction() {
@@ -25,9 +27,9 @@ public class Construction extends AbstractEntity<Construction> {
 		this(id, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
-	public Construction(Integer id, String designation, Integer h, Integer w, Double price, Integer baseSalarie, Integer baseCadre,
+	public Construction(Integer id, String designation, Integer h, Integer w, Integer price, Integer baseSalarie, Integer baseCadre,
 			Integer baseRisque, Integer baseAttractivite, Integer modSalarie, Integer modCadre, Integer modRisque,
-			Integer modAttractivite, String specificite, Categorie categorie) {
+			Integer modAttractivite, Map<String,Integer> specificite, Categorie categorie) {
 		super(id);
 		this.designation = designation;
 		this.h = h;
@@ -69,11 +71,11 @@ public class Construction extends AbstractEntity<Construction> {
 		this.w = w;
 	}
 
-	public Double getPrice() {
+	public Integer getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -141,11 +143,11 @@ public class Construction extends AbstractEntity<Construction> {
 		this.modAttractivite = modAttractivite;
 	}
 
-	public String getSpecificite() {
+	public Map<String,Integer> getSpecificite() {
 		return this.specificite;
 	}
 
-	public void setSpecificite(String specificite) {
+	public void setSpecificite(Map<String,Integer> specificite) {
 		this.specificite = specificite;
 	}
 
