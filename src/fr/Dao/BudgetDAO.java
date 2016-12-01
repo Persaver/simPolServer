@@ -9,22 +9,23 @@ import java.util.List;
 
 import fr.entities.Backup;
 import fr.entities.Budget;
+import fr.splExceptions.DAOException;
 
 
 
 public class BudgetDAO extends DAO<Budget,Integer>{
 
 	@Override
-	public Budget get(Integer id) {
+	public Budget get(Integer id) throws DAOException {
 		ResultSet result;
 		Budget budget;
 		Backup backup;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * From budget where id = ?");
-			prepare.setInt(1, id);
+			prepare.setInt(1, id.intValue());
 			result = prepare.executeQuery();
 
-			while(result.next()){
+			if(result!= null && result.next()){
 				budget = new Budget();
 				budget.setId(result.getInt("id"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
@@ -33,7 +34,8 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setSalaireStandard(result.getInt("SalaireStandard"));
 				budget.setSalaireCadre(result.getInt("SalaireCadre"));
 				budget.setNbSalaries(result.getInt("nbSalaries"));
-				budget.setNbCadres(result.getInt("nb"));
+				budget.setNbCadres(result.getInt("nbCadres"));
+				budget.setNbj(result.getInt("nbj"));
 				backup = new Backup(result.getInt("backup"));
 				budget.setBackup(backup);
 				return budget;
@@ -41,13 +43,13 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
 
 	@Override
-	public Budget save(Budget element) {
+	public Budget save(Budget budget) throws DAOException {
 		try {
 			String sql = "INSERT INTO Budget ("
 					+"ageTravail,"
@@ -58,34 +60,35 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 					+"salaireCadre,"
 					+"nbSalaries,"
 					+"nbCadres,"
+					+"nbj,"
 					+"backup)"
-					+"VALUES (?,?,?,?,?,?,?,?,?)";
+					+"VALUES (?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, element.getId());
-			statement.setInt(2, element.getAgeTravail());
-			statement.setInt(3, element.getAgeRetraite());
-			statement.setInt(4, element.getChargeSalariale());
-			statement.setInt(5, element.getChargeCadre());
-			statement.setInt(6, element.getSalaireStandard());
-			statement.setInt(6, element.getSalaireCadre());
-			statement.setInt(7, element.getNbSalaries());
-			statement.setInt(8, element.getNbCadres());
-			statement.setInt(9, element.getBackup().getId());
+			statement.setInt(1, budget.getId());
+			statement.setInt(2, budget.getAgeTravail());
+			statement.setInt(3, budget.getAgeRetraite());
+			statement.setInt(4, budget.getChargeSalariale());
+			statement.setInt(5, budget.getChargeCadre());
+			statement.setInt(6, budget.getSalaireStandard());
+			statement.setInt(6, budget.getSalaireCadre());
+			statement.setInt(7, budget.getNbSalaries());
+			statement.setInt(8, budget.getNbCadres());
+			statement.setInt(9, budget.getNbj());
+			statement.setInt(10, budget.getBackup().getId());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
-				element.setId(generatedKeys.getInt(1));
+				budget.setId(generatedKeys.getInt(1));
 			} else {
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
 			generatedKeys.close();
-			return element;
-		} catch (SQLException e1) {
+			return budget;
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -93,12 +96,12 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	}
 
 	@Override
-	public void update(Budget element) {
+	public void update(Budget budget) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public List<Budget> getAll() {
+	public List<Budget> getAll() throws DAOException {
 		ResultSet result;
 		List<Budget> budgets = new ArrayList<Budget>();
 		try {
@@ -113,7 +116,8 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setSalaireStandard(result.getInt("SalaireStandard"));
 				budget.setSalaireCadre(result.getInt("SalaireCadre"));
 				budget.setNbSalaries(result.getInt("nbSalaries"));
-				budget.setNbCadres(result.getInt("nb"));
+				budget.setNbCadres(result.getInt("nbCadres"));
+				budget.setNbj(result.getInt("nbj"));
 				Backup backup = new Backup(result.getInt("backup"));
 				budget.setBackup(backup);
 				budgets.add(budget);
@@ -121,12 +125,11 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			return budgets;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null ;
 	}
 
-	public List<Budget> getAllByBackup(Backup backup) {
+	public List<Budget> getAllByBackup(Backup backup) throws DAOException {
 		ResultSet result;
 		List<Budget> budgetsByBackup = new ArrayList<Budget>();
 		try {
@@ -143,25 +146,15 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setSalaireStandard(result.getInt("SalaireStandard"));
 				budget.setSalaireCadre(result.getInt("SalaireCadre"));
 				budget.setNbSalaries(result.getInt("nbSalaries"));
+				budget.setNbCadres(result.getInt("nbCadres"));
+				budget.setNbj(result.getInt("nbj"));
 				budget.setBackup(backup);
 				budgetsByBackup.add(budget);
 			}
 			return budgetsByBackup;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -7,6 +7,7 @@ public class Sante  extends AbstractEntity<Sante> {
 	private Integer nbAccidents;		// accident li�s au risque des batiments
 	private Integer soins;			// Soins apport� par les hopitaux
 	private Integer echecs = 5;// en % tous les soins ne sont pas fructueux, et parfois des gens meurent
+	private Integer nbj;
 	private Backup backup;
 
 	public Sante (){
@@ -14,16 +15,17 @@ public class Sante  extends AbstractEntity<Sante> {
 	}
 
 	public Sante(Integer id){
-		this(id, null, null, null, null, null, null);
+		this(id, null, null, null, null, null, null, null);
 	}
 
-	public Sante(Integer id, Integer h, Integer nbM, Integer nbA, Integer sn, Integer e, Backup backup){
+	public Sante(Integer id, Integer h, Integer nbM, Integer nbA, Integer sn, Integer e, Integer nbj, Backup backup){
 		super(id);
 		this.setHygiene(h);
 		this.setNbMalades(nbM);
 		this.setNbAccidents(nbA);
 		this.setSoins(sn);
 		this.setEchecs(e);
+		this.setNbj(nbj);
 		this.setBackup(backup);
 	}
 
@@ -67,6 +69,14 @@ public class Sante  extends AbstractEntity<Sante> {
 		this.echecs = echecs;
 	}
 
+	public Integer getNbj() {
+		return nbj;
+	}
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
 	public Backup getBackup() {
 		return this.backup;
 	}
@@ -79,17 +89,25 @@ public class Sante  extends AbstractEntity<Sante> {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Sante [hygiene=");
-		builder.append(this.hygiene);
+		builder.append(hygiene);
 		builder.append(", nbMalades=");
-		builder.append(this.nbMalades);
+		builder.append(nbMalades);
 		builder.append(", nbAccidents=");
-		builder.append(this.nbAccidents);
+		builder.append(nbAccidents);
 		builder.append(", soins=");
-		builder.append(this.soins);
+		builder.append(soins);
 		builder.append(", echecs=");
-		builder.append(this.echecs);
+		builder.append(echecs);
+		builder.append(", nbj=");
+		builder.append(nbj);
+		builder.append(", backup=");
+		builder.append(backup);
+		builder.append(", id=");
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 
 }

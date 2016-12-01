@@ -33,7 +33,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			result = prepare.executeQuery();
 			if(result != null){
 				result.first();
-				gson = new Gson();
 				backupConstruction = new BackupConstruction();
 				backupConstruction.setId(result.getInt("id"));
 				backupConstruction.setX(result.getInt("x"));
@@ -57,7 +56,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
@@ -110,7 +109,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			generatedKeys.close();
 			return element;
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
@@ -152,7 +151,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			return backupConstructions ;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null ;
 	}
@@ -185,12 +184,12 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
 			}
-			
+			return backupConstructionsByBackup;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw new DAOException(e.getMessage());
 		}
-		return backupConstructionsByBackup ;
+		
 	}
 
 }

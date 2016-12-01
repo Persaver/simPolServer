@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.entities.Categorie;
+import fr.splExceptions.DAOException;
 
 public class CategorieDAO extends DAO<Categorie,Integer> {
 
 	@Override
-	public Categorie get(Integer id) {
+	public Categorie get(Integer id) throws DAOException {
 		Categorie categorie= null;
 		ResultSet result;
 		try {
@@ -29,32 +30,31 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
 
 	@Override
-	public Categorie save(Categorie element) {
+	public Categorie save(Categorie categorie) throws DAOException {
 		try {
 			String sql = "INSERT INTO categorie (libelle) VALUES (?)";
 
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
-			statement.setString(1, element.getLibelle());
+			statement.setString(1, categorie.getLibelle());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
-				element.setId(generatedKeys.getInt(1));
+				categorie.setId(generatedKeys.getInt(1));
 			} else {
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
 			generatedKeys.close();
-			return element;
+			return categorie;
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	// TODO Auto-generated method stub
@@ -72,7 +72,7 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 	}
 
 	@Override
-	public List<Categorie> getAll() {
+	public List<Categorie> getAll() throws DAOException {
 		ResultSet result;
 		List<Categorie> categories = new ArrayList<Categorie>();
 		try {
@@ -87,11 +87,8 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 			return categories;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null ;
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 	}
 
 

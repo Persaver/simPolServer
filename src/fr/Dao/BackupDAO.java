@@ -15,7 +15,7 @@ import fr.splExceptions.DAOException;
 public class BackupDAO extends DAO<Backup,Integer> {
 
 	@Override
-	public Backup get(Integer id) {
+	public Backup get(Integer id) throws DAOException {
 		ResultSet result;
 		Backup backup = null;
 		User user= null;
@@ -32,14 +32,16 @@ public class BackupDAO extends DAO<Backup,Integer> {
 				backup.setNbj(result.getInt("nbj"));
 				user = new UserDAO().get(result.getInt("user"));
 				backup.setUser(user);
+				return backup;
 			}
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return backup;
+		return null;
+
 	}
 
-	public List<Backup> getByUser(User user){
+	public List<Backup> getByUser(User user) throws DAOException{
 		ResultSet result;
 		List<Backup> backups = null;
 		Backup backup = null;
@@ -60,35 +62,36 @@ public class BackupDAO extends DAO<Backup,Integer> {
 					backup.setUser(user);
 					backups.add(backup);
 				}
+				return backups;
 			}
 		}catch (SQLException e){
-			backups = null;
+			throw new DAOException(e.getMessage());
 		}
-		return backups;
+		return null;
+		
 	}
 
 	@Override
-	public Backup save(Backup element) {
+	public Backup save(Backup backup) throws DAOException {
 		try {
 			String sql = "INSERT INTO backup (date_creation, nbj, user) VALUES (?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
-			statement.setString(1, element.getDate_creation());
-			statement.setInt(2, element.getNbj());
-			statement.setInt(3, element.getUser().getId());
+			statement.setString(1, backup.getDate_creation());
+			statement.setInt(2, backup.getNbj());
+			statement.setInt(3, backup.getUser().getId());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
-				element.setId(generatedKeys.getInt(1));
+				backup.setId(generatedKeys.getInt(1));
 			} else {
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
 			generatedKeys.close();
-			return element;
+			return backup;
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -104,7 +107,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 	}
 
 	@Override
-	public List<Backup> getAll() {
+	public List<Backup> getAll() throws DAOException {
 		ResultSet result;
 		List<Backup> backups = new ArrayList<Backup>();
 		try {
@@ -122,9 +125,8 @@ public class BackupDAO extends DAO<Backup,Integer> {
 			return backups;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 }

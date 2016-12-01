@@ -9,11 +9,12 @@ import java.util.List;
 
 import fr.entities.Categorie;
 import fr.entities.Construction;
+import fr.splExceptions.DAOException;
 
 public class ConstructionDAO extends DAO<Construction,Integer>{
 
 	@Override
-	public Construction get(Integer id) {
+	public Construction get(Integer id) throws DAOException {
 		ResultSet result;
 		Construction construction = null;
 		Categorie categorie = null;
@@ -43,13 +44,13 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
 
 	@Override
-	public Construction save(Construction element) {
+	public Construction save(Construction element) throws DAOException {
 		try {
 			String sql = "INSERT INTO backup_construction (h,w,basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
@@ -76,9 +77,8 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			generatedKeys.close();
 			return element;
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	}
 
 	@Override
-	public List<Construction> getAll() {
+	public List<Construction> getAll() throws DAOException {
 		ResultSet result;
 		List<Construction> constructions = new ArrayList<Construction>();
 		try {
@@ -121,9 +121,8 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 			return constructions;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 }

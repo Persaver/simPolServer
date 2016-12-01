@@ -10,20 +10,22 @@ public class Population extends AbstractEntity<Population> {
 	private Integer[][] popTab = new Integer[130][12];
 	private Integer fertilite;		// fertilite x 10 pour rester en int
 	private Integer attractivite;
+	private Integer nbj;
 	private Backup backup;
 
 	public Population() {
 	}
 
 	public Population(Integer id) {
-		this(id, null, null, null, null);
+		this(id, null, null, null, null, null);
 	}
 
-	public Population(Integer id, Integer[][] popTab, Integer fertilite, Integer attractivite, Backup backup) {
+	public Population(Integer id, Integer[][] popTab, Integer fertilite, Integer attractivite, Integer nbj, Backup backup) {
 		super(id);
 		this.popTab = popTab;
 		this.fertilite = fertilite;
 		this.attractivite = attractivite;
+		this.nbj = nbj;
 		this.backup = backup;
 	}
 
@@ -51,6 +53,14 @@ public class Population extends AbstractEntity<Population> {
 		this.attractivite = attractivite;
 	}
 
+	public Integer getNbj() {
+		return nbj;
+	}
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
 	public Backup getBackup() {
 		return this.backup;
 	}
@@ -63,17 +73,20 @@ public class Population extends AbstractEntity<Population> {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Population [popTab=");
-		builder.append(Arrays.toString(this.popTab));
+		builder.append(Arrays.toString(popTab));
 		builder.append(", fertilite=");
-		builder.append(this.fertilite);
+		builder.append(fertilite);
 		builder.append(", attractivite=");
-		builder.append(this.attractivite);
+		builder.append(attractivite);
+		builder.append(", nbj=");
+		builder.append(nbj);
 		builder.append(", backup=");
-		builder.append(this.backup);
+		builder.append(backup);
 		builder.append(", id=");
-		builder.append(this.id);
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
 }

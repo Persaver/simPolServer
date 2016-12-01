@@ -13,16 +13,17 @@ public class Criminalite extends AbstractEntity<Criminalite> {
 	private Integer crimeGrave;
 	private Integer indicTerrorisme;
 	private Integer crimeTerroriste;
+	private Integer nbj;
 	private Backup backup;
 
 	public Criminalite() {
 	}
 
 	public Criminalite(Integer id){
-		this(id, null, null, null, null, null, null, null, null, null);
+		this(id, null, null, null, null, null, null, null, null, null, null);
 	}
 	public Criminalite(Integer id, Integer indicMineur, Integer crimeMineur, Integer indicMoyen, Integer crimeMoyen,
-			Integer indicGrave, Integer crimeGrave, Integer indicTerrorisme, Integer crimeTerroriste, Backup backup) {
+			Integer indicGrave, Integer crimeGrave, Integer indicTerrorisme, Integer crimeTerroriste, Integer nbj, Backup backup) {
 		super(id);
 		this.indicMineur = indicMineur;
 		this.crimeMineur = crimeMineur;
@@ -32,6 +33,7 @@ public class Criminalite extends AbstractEntity<Criminalite> {
 		this.crimeGrave = crimeGrave;
 		this.indicTerrorisme = indicTerrorisme;
 		this.crimeTerroriste = crimeTerroriste;
+		this.nbj = nbj;
 		this.backup = backup;
 	}
 
@@ -99,6 +101,14 @@ public class Criminalite extends AbstractEntity<Criminalite> {
 		this.crimeTerroriste = crimeTerroriste;
 	}
 
+	public Integer getNbj() {
+		return nbj;
+	}
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
 	public Backup getBackup() {
 		return this.backup;
 	}
@@ -111,25 +121,27 @@ public class Criminalite extends AbstractEntity<Criminalite> {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Criminalite [indicMineur=");
-		builder.append(this.indicMineur);
+		builder.append(indicMineur);
 		builder.append(", crimeMineur=");
-		builder.append(this.crimeMineur);
+		builder.append(crimeMineur);
 		builder.append(", indicMoyen=");
-		builder.append(this.indicMoyen);
+		builder.append(indicMoyen);
 		builder.append(", crimeMoyen=");
-		builder.append(this.crimeMoyen);
+		builder.append(crimeMoyen);
 		builder.append(", indicGrave=");
-		builder.append(this.indicGrave);
+		builder.append(indicGrave);
 		builder.append(", crimeGrave=");
-		builder.append(this.crimeGrave);
+		builder.append(crimeGrave);
 		builder.append(", indicTerrorisme=");
-		builder.append(this.indicTerrorisme);
+		builder.append(indicTerrorisme);
 		builder.append(", crimeTerroriste=");
-		builder.append(this.crimeTerroriste);
+		builder.append(crimeTerroriste);
+		builder.append(", nbj=");
+		builder.append(nbj);
 		builder.append(", backup=");
-		builder.append(this.backup);
+		builder.append(backup);
 		builder.append(", id=");
-		builder.append(this.id);
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}

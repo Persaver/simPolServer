@@ -11,16 +11,17 @@ public class Education extends AbstractEntity<Education>{
 	private Integer edSante;		// L'education distribuee aux hopitaux
 	private Integer edRecherche;	// L'education distribuee aux recherches
 	private Integer edTourisme;		// L'education distribuee aux batiment touristiques
+	private Integer nbj;
 	private Backup backup;
 
 	public Education (){
 	}
 
 	public Education (Integer id){
-		this(id, null, null, null, null, null, null, null);
+		this(id, null, null, null, null, null, null, null, null);
 	}
 
-	public Education (Integer id, Integer edTotale, Integer edSec, Integer edEnt, Integer edSan, Integer edRec, Integer edTou, Backup backup){
+	public Education (Integer id, Integer edTotale, Integer edSec, Integer edEnt, Integer edSan, Integer edRec, Integer edTou, Integer nbj, Backup backup){
 		super(id);
 		this.setEdTotale(edTotale);
 		this.setEdSecurite(edSec);
@@ -28,6 +29,7 @@ public class Education extends AbstractEntity<Education>{
 		this.setEdSante(edSan);
 		this.setEdRecherche(edRec);
 		this.setEdTourisme(edTou);
+		this.setNbj(nbj);
 		this.setBackup(backup);
 	}
 
@@ -67,6 +69,14 @@ public class Education extends AbstractEntity<Education>{
 	public void setEdTourisme(Integer edTourisme) {
 		this.edTourisme = edTourisme;
 	}
+	public Integer getNbj() {
+		return nbj;
+	}
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
 	public Backup getBackup() {
 		return this.backup;
 	}
@@ -79,21 +89,23 @@ public class Education extends AbstractEntity<Education>{
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Education [edTotale=");
-		builder.append(this.edTotale);
+		builder.append(edTotale);
 		builder.append(", edSecurite=");
-		builder.append(this.edSecurite);
+		builder.append(edSecurite);
 		builder.append(", edEntretien=");
-		builder.append(this.edEntretien);
+		builder.append(edEntretien);
 		builder.append(", edSante=");
-		builder.append(this.edSante);
+		builder.append(edSante);
 		builder.append(", edRecherche=");
-		builder.append(this.edRecherche);
+		builder.append(edRecherche);
 		builder.append(", edTourisme=");
-		builder.append(this.edTourisme);
+		builder.append(edTourisme);
+		builder.append(", nbj=");
+		builder.append(nbj);
 		builder.append(", backup=");
-		builder.append(this.backup);
+		builder.append(backup);
 		builder.append(", id=");
-		builder.append(this.id);
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}

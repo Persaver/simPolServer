@@ -13,18 +13,19 @@ public class Budget extends AbstractEntity<Budget> {
 	private Integer salaireCadre;
 	private Integer nbSalaries;
 	private Integer nbCadres;
+	private Integer nbj;
 	private Backup backup;
 
 	public Budget(){
 	}
 
 	public Budget(Integer id){
-		this(id,null, null, null, null, null, null, null, null, null);
+		this(id,null, null, null, null, null, null, null, null, null, null);
 	}
 
 	public Budget(Integer id, Integer ageTravail, Integer ageRetraite, Integer chargeSalariale,
 			Integer chargeCadre, Integer salaireStandard, Integer salaireCadre, Integer nbSalaries, Integer nbCadres,
-			Backup backup) {
+			Integer nbj, Backup backup) {
 		super(id);
 		this.ageTravail = ageTravail;
 		this.ageRetraite = ageRetraite;
@@ -34,6 +35,7 @@ public class Budget extends AbstractEntity<Budget> {
 		this.salaireCadre = salaireCadre;
 		this.nbSalaries = nbSalaries;
 		this.nbCadres = nbCadres;
+		this.setNbj(nbj);
 		this.backup = backup;
 	}
 
@@ -101,6 +103,14 @@ public class Budget extends AbstractEntity<Budget> {
 		this.nbCadres = nbCadres;
 	}
 
+	public Integer getNbj() {
+		return nbj;
+	}
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
 	public Backup getBackup() {
 		return this.backup;
 	}
@@ -113,25 +123,27 @@ public class Budget extends AbstractEntity<Budget> {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Budget [ageTravail=");
-		builder.append(this.ageTravail);
+		builder.append(ageTravail);
 		builder.append(", ageRetraite=");
-		builder.append(this.ageRetraite);
+		builder.append(ageRetraite);
 		builder.append(", chargeSalariale=");
-		builder.append(this.chargeSalariale);
+		builder.append(chargeSalariale);
 		builder.append(", chargeCadre=");
-		builder.append(this.chargeCadre);
+		builder.append(chargeCadre);
 		builder.append(", salaireStandard=");
-		builder.append(this.salaireStandard);
+		builder.append(salaireStandard);
 		builder.append(", salaireCadre=");
-		builder.append(this.salaireCadre);
+		builder.append(salaireCadre);
 		builder.append(", nbSalaries=");
-		builder.append(this.nbSalaries);
+		builder.append(nbSalaries);
 		builder.append(", nbCadres=");
-		builder.append(this.nbCadres);
+		builder.append(nbCadres);
+		builder.append(", nbj=");
+		builder.append(nbj);
 		builder.append(", backup=");
-		builder.append(this.backup);
+		builder.append(backup);
 		builder.append(", id=");
-		builder.append(this.id);
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}

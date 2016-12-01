@@ -15,7 +15,7 @@ CREATE TABLE backup (
   id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
   date_last DATETIME DEFAULT CURRENT_TIMESTAMP,
-  nbj INT(5) NOT NULL DEFAULT 0,
+  nbj INT NOT NULL DEFAULT 0,
   user INT(3) NOT NULL
 )ENGINE=InnoDB;
 
@@ -73,6 +73,7 @@ CREATE TABLE budget (
   salaireCadre INT,
   nbSalaries INT,
   nbCadres INT,
+  nbj INT,
   backup INT(4)
 )ENGINE=InnoDB;
 
@@ -87,6 +88,7 @@ CREATE TABLE criminalite (
   crimeGrave INT,
   indicTerrorisme INT,
   crimeTerroriste INT,
+  nbj INT,
   backup INT(4)
 )ENGINE=InnoDB;
 
@@ -96,6 +98,7 @@ id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 fertilite INT DEFAULT 29,
 attractivite INT DEFAULT 0,
 popTab TEXT,
+nbj INT,
 backup INT(4)
 )ENGINE=InnoDB;
 
@@ -108,6 +111,7 @@ edEntretien INT,
 edSante INT,
 edRecherche INT,
 edTourisme INT,
+nbj INT,
 backup INT(4)
 )
 
@@ -115,10 +119,11 @@ DROP TABLE IF EXISTS sante;
 CREATE TABLE sante (
 id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 hygiene INT,
-mbMalades INT,
-mbAccidents INT,
+nbMalades INT,
+nbAccidents INT,
 soins INT,
 echecs INT,
+nbj INT,
 backup INT(4)
 )
 

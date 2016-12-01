@@ -10,11 +10,12 @@ import com.google.gson.Gson;
 
 import fr.entities.Backup;
 import fr.entities.Population;
+import fr.splExceptions.DAOException;
 
 public class PopulationDAO extends DAO<Population,Integer> {
 
 	@Override
-	public Population get(Integer id){
+	public Population get(Integer id) throws DAOException{
 		ResultSet result;
 		Population population = null;
 		Backup backup = null;
@@ -39,26 +40,35 @@ public class PopulationDAO extends DAO<Population,Integer> {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
 
 	@Override
-	public Population save(Population element) {
+	public Population save(Population element) throws DAOException {
 		try {
-			String req = "INSERT INTO population (repartitionPop, fertilite, attractivite) VALUES (?, ?, ?)";
+			String req = "INSERT INTO population (repartitionPop, fertilite, attractivite, backup) VALUES (?, ?, ?, ?)";
 			PreparedStatement statement = this.connect.prepareStatement(req);
 			String pop = null;
 			// fonction pour faire passer tab[][] en "repartitionPop"
 			statement.setString(1, pop);
 			statement.setInt(2, element.getFertilite());
 			statement.setInt(3, element.getAttractivite());
+			statement.setInt(4, element.getBackup().getId());
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			if (generatedKeys.first()) {
+				element.setId(generatedKeys.getInt(1));
+			} else {
+				throw new SQLException("Creating message failed, no ID obtained.");
+			}
+			statement.close();
+			generatedKeys.close();
+			return element;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			throw new DAOException(e.getMessage());
 		}
-		return element;
+
 
 	}
 
@@ -75,14 +85,14 @@ public class PopulationDAO extends DAO<Population,Integer> {
 	}
 
 
-	public List<Population> getAllByBackup(Integer backup) {
+	public List<Population> getAllByBackup(Backup backup) throws DAOException{
 		List<Population> populations = new ArrayList<Population>();
 		Gson gson = new Gson();
 		try {
 			//this.connect = AccessDB.seConnecter(); // Connection deja etablie avec le parent?
-			String req = "SELECT repartitionPop, fertilite, attractivite FROM population WHERE backup=?";
+			String req = "SELECT * FROM population WHERE backup=?";
 			PreparedStatement statement = this.connect.prepareStatement(req);
-			statement.setInt(1, backup);
+			statement.setInt(1, backup.getId());
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {
 				Population population = new Population();
@@ -91,17 +101,19 @@ public class PopulationDAO extends DAO<Population,Integer> {
 				population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
 				population.setFertilite(results.getInt("fertilite"));
 				population.setAttractivite(results.getInt("attractivite"));
+				population.setNbj(results.getInt("nbj"));
+				population.setBackup(backup);
 				populations.add(population);
 			}
 			return populations;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		return null;
 	}
 
 	@Override
-	public List<Population> getAll() {
+	public List<Population> getAll() throws DAOException{
 		// TODO Auto-generated method stub
 		return null;
 	}

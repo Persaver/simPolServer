@@ -13,7 +13,7 @@ import fr.splExceptions.DAOException;
 public class UserDAO extends DAO<User,Integer>{
 
 	@Override
-	public User get(Integer id) {
+	public User get(Integer id) throws DAOException{
 		ResultSet result;
 		User user = null;
 		try {
@@ -22,29 +22,31 @@ public class UserDAO extends DAO<User,Integer>{
 			result = prepare.executeQuery();
 			if(result!= null && result.next()){
 				 user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
+				 return user;
 			}
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
+		return null;
 
-		return user;
+		
 	}
 
-	public User checklogin(String login, String password){
-		ResultSet results = null;
+	public User checklogin(String login, String password) throws DAOException{
+		ResultSet result = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("SELECT * FROM user WHERE login LIKE ? and password = ?");
 			prepare.setString(1, login);
 			prepare.setString(2, password);
 
-			results = prepare.executeQuery();
-			if(results.next()){
+			result = prepare.executeQuery();
+			if(result!= null && result.next()){
 
-				User user = new User(results.getInt("id"), results.getString("login"), results.getString("password"));
+				User user = new User(result.getInt("id"), result.getString("login"), result.getString("password"));
 				return user;
 			}
 		}catch (SQLException e){
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
 		// a modifier
 		return null;
@@ -66,10 +68,11 @@ public class UserDAO extends DAO<User,Integer>{
 			}
 			statement.close();
 			generatedKeys.close();
+			return element;
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());
 		}
-		return element;
+
 	}
 
 	@Override
@@ -83,7 +86,7 @@ public class UserDAO extends DAO<User,Integer>{
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<User> getAll() throws DAOException {
 		ResultSet result;
 		List<User> users = new ArrayList<User>();
 		try {
@@ -96,10 +99,11 @@ public class UserDAO extends DAO<User,Integer>{
 				user.setPassword(result.getString("password"));
 				users.add(user);
 			}
+			return users ;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DAOException(e.getMessage());
 		}
-		return users ;
+
 	}
 }

@@ -19,9 +19,9 @@ public abstract class DAO<T,I>{
 		}
 		//		System.out.println("Connecté");
 	};
-	public abstract T get(I id);
+	public abstract T get(I id) throws DAOException;
 	public abstract T save(T element) throws DAOException;
 	public abstract void delete(I id);
 	public abstract void update(T element);
-	public abstract List<T> getAll();
+	public abstract List<T> getAll() throws DAOException;
 }
