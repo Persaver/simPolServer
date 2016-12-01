@@ -6,6 +6,8 @@ import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
 import fr.game.services.indicateurs.BudgetService;
 import fr.game.services.indicateurs.EducationService;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 public class Caserne extends AbstractConstructionService {
 	private int pEntretien;		// Potentiel d'entretien des batiments
@@ -42,8 +44,11 @@ public class Caserne extends AbstractConstructionService {
 	}
 	// Les employes vont effectuer des inspection.
 	// Note : Il faut une liste de batiment en parametre
-	public void entretien(BudgetService b){
-		List<BackupConstruction> liste = this.entityDao.getAll();
+	public void entretien(BudgetService b) throws ServiceException{
+		List<BackupConstruction> liste;
+		try {
+			liste = this.entityDao.getAll();
+		
 		int l = liste.size();
 		int e = (((this.pEntretien*this.potentiel(b))/100)*(300+EducationService.getEdSecurite()))/500;
 		int indice = (int)(Math.random()*l);
@@ -64,15 +69,10 @@ public class Caserne extends AbstractConstructionService {
 			indice = (indice+1)%l;
 			e--;
 		}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
+		}
 	}
-	@Override
-	public void prisePostes() {
-		// TODO Auto-generated method stub
 
-	}
-	@Override
-	public void ajoutPoste() {
-		// TODO Auto-generated method stub
-
-	}
 }

@@ -21,7 +21,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 
 	public AbstractConstructionService(BackupConstruction entity, BackupConstructionDAO entityDao) {
 		super(entity, entityDao);
-		this.prisePostes();
+		//this.prisePostes(null,null);
 	}
 	@Override
 	public void ameliore(){
@@ -44,8 +44,13 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	public int getPostePourvu(){
 		return this.entity.getPostePourvu();
 	}
-	public int getPostesPourvus(){
-		List<BackupConstruction> liste = this.constructionDAO.getAll();
+	public int getPostesPourvus() throws ServiceException{
+		List<BackupConstruction> liste;
+		try {
+			liste = this.constructionDAO.getAll();
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
 		int nbPostes = 0;
 		for (BackupConstruction element : liste){
 			nbPostes += element.getPostePourvu();
@@ -54,7 +59,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	}
 
 	
-	public void prisePostes(PopulationService p, BudgetService b){
+	public void prisePostes(PopulationService p, BudgetService b) throws ServiceException{
 		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
 		if (pEmbauche <= 0) {
 			this.entity.setPostePourvu(0);
@@ -67,7 +72,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 	}
 	
-	public void ajoutPoste(PopulationService p, BudgetService b){
+	public void ajoutPoste(PopulationService p, BudgetService b) throws ServiceException{
 		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
 		if (pEmbauche > ((this.entity.getNbSalarie()+this.entity.getNbCadre())/10)) {
 			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
@@ -103,7 +108,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	public void save() throws ServiceException{
 		try {
 			this.constructionDAO.save(this.entity);
-		} catch (DAOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new ServiceException(e.getMessage());
 		}
