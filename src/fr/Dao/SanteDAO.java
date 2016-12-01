@@ -93,7 +93,7 @@ public class SanteDAO extends DAO<Sante,Integer> {
 	}
 
 	@Override
-	public void update(Sante element) {
+	public Sante update(Sante element) {
 		// TODO Auto-generated method stub
 
 	}

@@ -127,7 +127,8 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	}
 
 	@Override
-	public void update(Budget budget) {
+	public Budget update(Budget budget) {
+		return budget;
 		// TODO Auto-generated method stub
 	}
 

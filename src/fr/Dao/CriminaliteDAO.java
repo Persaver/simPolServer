@@ -111,7 +111,8 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 	}
 
 	@Override
-	public void update(Criminalite element) {
+	public Criminalite update(Criminalite element) {
+		return element;
 	}
 
 

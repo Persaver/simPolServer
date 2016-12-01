@@ -88,7 +88,8 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 	}
 
 	@Override
-	public void update(Construction element) {
+	public Construction update(Construction element) {
+		return element;
 		// TODO Auto-generated method stub
 
 	}

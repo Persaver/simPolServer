@@ -123,11 +123,11 @@ public class BackupDAO extends DAO<Backup,Integer> {
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
 			statement.close();
-
+			return backup;
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());
 		}
-		return backup;
+
 	}
 
 	@Override
