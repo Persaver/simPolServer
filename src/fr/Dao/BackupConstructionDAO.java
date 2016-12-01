@@ -18,6 +18,9 @@ import fr.entities.Construction;
 import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
+	
+	public final static Integer IDECOLE = 1;
+	final static Integer IDHOPITAL = 2;
 
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
@@ -190,4 +193,40 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	}
 
+	public List<BackupConstruction> getAllByBackUpByConstruction(Backup backup, Integer idConstruction) throws DAOException {
+		ResultSet result;
+		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
+		Gson gson = null;
+		try {
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ? and construction=?");
+			prepare.setInt(1, backup.getId());
+			prepare.setInt(2, idConstruction);
+			result = prepare.executeQuery();
+			while(result.next()){
+				BackupConstruction backupConstruction = new BackupConstruction();
+				backupConstruction.setId(result.getInt("id"));
+				backupConstruction.setX(result.getInt("x"));
+				backupConstruction.setY(result.getInt("y"));
+				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
+				backupConstruction.setNbCadre(result.getInt("nbCadres"));
+				backupConstruction.setRisque(result.getInt("risque"));
+				backupConstruction.setBudget(result.getInt("budget"));
+				backupConstruction.setAttractivite(result.getInt("attractive"));
+				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				// gson
+				gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String, String>>(){}.getType();
+				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
+				Construction construction = new Construction(result.getInt("construction"));
+				backupConstruction.setConstruction(construction);
+				backupConstruction.setBackup(backup);
+				backupConstructionsByBackup.add(backupConstruction);
+			}
+			return backupConstructionsByBackup;
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DAOException(e.getMessage());
+		}
+
+	}
 }
