@@ -8,8 +8,6 @@ import java.util.List;
 
 import fr.entities.Backup;
 import fr.entities.Education;
-import fr.entities.Population;
-import fr.entities.Sante;
 import fr.splExceptions.DAOException;
 
 public class EducationDAO extends DAO<Education,Integer>{
@@ -17,7 +15,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 	@Override
 	public Education get(Integer id) throws DAOException{
 		ResultSet result;
-		Education education = null;
+		Education education = new Education();
 		Backup backup = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from education where id = ?");
@@ -35,6 +33,34 @@ public class EducationDAO extends DAO<Education,Integer>{
 				education.setEdTourisme(result.getInt("edTourisme"));
 				education.setNbj(result.getInt("nbj"));
 				backup = new Backup(result.getInt("id"));
+				education.setBackup(backup);
+				return education;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DAOException(e.getMessage());
+		}
+		return null;
+	}
+
+	public Education getByBackup(Backup backup) throws DAOException{
+		ResultSet result;
+		Education education = new Education();
+		try {
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from education where backup = ?");
+			prepare.setInt(1, backup.getId());
+			result = prepare.executeQuery();
+			if(result != null){
+				result.first();
+				education = new Education();
+				education.setId(result.getInt("id"));
+				education.setEdTotale(result.getInt("edTotale"));
+				education.setEdSecurite(result.getInt("edSecurite"));
+				education.setEdEntretien(result.getInt("edEntretien"));
+				education.setEdSante(result.getInt("edSante"));
+				education.setEdRecherche(result.getInt("edRecherche"));
+				education.setEdTourisme(result.getInt("edTourisme"));
+				education.setNbj(result.getInt("nbj"));
 				education.setBackup(backup);
 				return education;
 			}
@@ -83,7 +109,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public List<Education> getAllByBackup(Backup backup) throws DAOException{
 		List<Education> educations = new ArrayList<Education>();
 		try {
@@ -93,7 +119,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 			statement.setInt(1, backup.getId());
 			ResultSet result = statement.executeQuery();
 			while ( result.next() ) {
-				Education education = new Education();		
+				Education education = new Education();
 				education.setId(result.getInt("id"));
 				education.setEdTotale(result.getInt("edTotale"));
 				education.setEdSecurite(result.getInt("edSecurite"));

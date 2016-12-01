@@ -1,18 +1,16 @@
 use simpol;
 
-INSERT INTO user (login,password)
-VALUES ('saver','saver'),
-      ('ludo','ludo'),
-      ('geoffrey','geoffrey'),
-      ('robin','robin');
+INSERT INTO user (`id`,`login`,`password`)
+VALUES (1,'user1','0000');
 	  
-INSERT INTO backup(user)
-VALUES ('1'),('2'),('3'),('4');
+INSERT INTO backup(`id`,`date_creation`,`date_last`,`nbj`,`user`)
+VALUES (1,'2016-12-01','2016-12-02', ???);
 
-INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `backup`) VALUES
-(1, 14, 70, 0, 0, 1000, 1500, 10, 1, 0),
-(2, 18, 65, 0, 0, 1200, 2000, 6, 1, 0),
-(3, 16, 65, 0, 0, 1200, 2250, 15, 2, 0);
+
+INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `nbj`,`backup`) VALUES
+(1, 14, 70, 0, 0, 1000, 1500, ?,?,?,?);
+--(2, 18, 65, 0, 0, 1200, 2000, 6, 1, 1),
+--(3, 16, 65, 0, 0, 1200, 2250, 15, 2, );
 
 INSERT INTO `categorie` (`id`, `libelle`) VALUES
 (1, 'education'),
@@ -21,7 +19,15 @@ INSERT INTO `categorie` (`id`, `libelle`) VALUES
 (4, 'distraction'),
 (5, 'sante');
 
-INSERT INTO `construction` (`id`, `designation`, `w`, `h`, `price`, `baseSalarie`, `baseCadre`, `baseRisque`, `baseAttractivite`, `modSalarie`, `modCadre`, `modRisque`, `modAttractivite`, `specificite`, `categorie`) VALUES
+INSERT INTO `sante` (`id`,`hygiene`,`nbMalades`,`nbAccidents`,`soins`,`echecs`,`nbj`,`backup`) VALUES 
+VALUES ();
+
+
+INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`) VALUES;
+VALUES ();
+
+
+INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadres`, `risque`, `budget`, `attractive`, `postePourvu`, `specificite`) VALUES
 (1, 'maison', 1, 1, '80000.00', 0, 0, 0, 0, 0, 0, 0, 0, '', 3),
 (2, 'musee', 1, 1, '99999.99', 3, 1, 0, 0, 0, 0, 0, 0, '', 4),
 (3, 'restaurant', 1, 1, '99999.99', 3, 1, 0, 0, 0, 0, 0, 0, '', 4),
@@ -43,9 +49,9 @@ INSERT INTO `construction` (`id`, `designation`, `w`, `h`, `price`, `baseSalarie
 (19, 'usine', 1, 1, '75000.00', 2, 20, 0, 0, 0, 0, 0, 0, '', 2),
 (20, 'universite', 1, 1, '99999.99', 2, 20, 0, 0, 0, 0, 0, 0, '', 1);
 
-INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `crimeMoyen`, `indicGrave`, `crimeGrave`, `indicTerrorisme`, `crimeTerroriste`, `backup`) VALUES
-(1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
-(2, 2, 2, 2, 2, 2, 2, 2, 2, 0),
+INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `crimeMoyen`, `indicGrave`, `crimeGrave`, `indicTerrorisme`, `crimeTerroriste`, `nbj`, `backup`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+/**(2, 2, 2, 2, 2, 2, 2, 2, 2, 0),
 (3, 3, 3, 3, 3, 3, 3, 3, 3, 0),
 (4, 4, 4, 4, 4, 4, 4, 4, 4, 0),
 (5, 5, 5, 5, 5, 5, 5, 5, 5, 0),
@@ -53,17 +59,15 @@ INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `cr
 (7, 7, 7, 7, 7, 7, 7, 7, 7, 0),
 (8, 8, 8, 8, 8, 8, 8, 8, 8, 0),
 (9, 9, 9, 9, 9, 9, 9, 9, 9, 0),
-(10, 10, 10, 10, 10, 10, 10, 10, 10, 0);
+(10, 10, 10, 10, 10, 10, 10, 10, 10, 0)****/;
 
-INSERT INTO `population` (`id`, `fertilite`, `attractivite`, `popTab`, `backup`) VALUES
-(1, 1, 1, '1000', 0),
-(2, 2, 2, '15000', 0),
+INSERT INTO `population` (`id`, `fertilite`, `attractivite`,`popTab`,`nbj`,`backup`) VALUES
+(1, 1, 1, '1000', 1),
+/*(2, 2, 2, '15000', 0),
 (3, 3, 3, '25000', 0),
 (4, 4, 4, '40000', 0),
-(5, 5, 5, '50000', 0);
+(5, 5, 5, '50000', 0)*/;
 
 INSERT INTO `user` (`id`, `login`, `password`) VALUES
-(1, 'Geoffrey', '0000'),
-(2, 'Saverio', '0000'),
-(3, 'Robin', '0000'),
-(4, 'Ludovic', '0000');
+(1, 'user1', '0000'),
+);

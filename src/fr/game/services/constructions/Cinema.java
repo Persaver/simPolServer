@@ -17,7 +17,6 @@ public class Cinema  extends AbstractConstructionService {
 		this.entity.setRisque(2);
 		this.entity.setAttractivite(5);
 		this.setNbPlaces(120);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Cinema(int niv, BackupConstruction entity, BackupConstructionDAO entityDao){
@@ -26,19 +25,12 @@ public class Cinema  extends AbstractConstructionService {
 			this.ameliore();
 	}
 
+	@Override
 	public void ameliore(){
 		super.ameliore();
 		this.setNbPlaces(this.getNbPlaces()*15/10);
 	}
-	@Override
-	public void prisePostes() {
-		// TODO Auto-generated method stub
-	}
 
-	@Override
-	public void ajoutPoste() {
-		// TODO Auto-generated method stub
-	}
 /* Le cinema est, en cas optimal, occupe entre 80 et 100%
  * La pauvrete diminue l'efficacite des Cinema
  * L'education favorise la communication et influe donc sur les recettes

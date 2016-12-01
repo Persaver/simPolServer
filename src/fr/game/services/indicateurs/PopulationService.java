@@ -13,8 +13,6 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 
 	private Population entity;
 
-
-
 	// Entree	: nombre total de la population
 	// Fonction : reparti aleatoirement la population dans les differentes tranches d'age
 	// Remarque : /
@@ -32,7 +30,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-		//	this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
+			//	this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
 		}
 	}
 	public void retraitPopulation (int a, int agemin, int agemax){
@@ -41,10 +39,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin+1)*12); // permet de retirer al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-//			if (this.entity.getPopTab(col,lig) > 0){
-//				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
-//				a--;
-//			}
+			//			if (this.entity.getPopTab(col,lig) > 0){
+			//				this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)-1);
+			//				a--;
+			//			}
 		}
 	}
 
@@ -110,7 +108,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		int i, j, nb = 0;
 		for (i = min; i <= max; i++){
 			for (j=0; j < 12; j++) {
-			//	nb += this.entity.getPopTab(i, j);
+				//	nb += this.entity.getPopTab(i, j);
 			}
 		}
 		return nb;
@@ -129,12 +127,12 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = 129; i >= 0; i--){
 			for (j = 11; j >= 0; j--){
 				if (i == 0 && j == 0){
-			//		this.entity.setPopTab(i, j, nbN);
+					//		this.entity.setPopTab(i, j, nbN);
 				} else {
 					if (j == 0){
-				//		this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
+						//		this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
 					} else {
-			//			this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
+						//			this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
 					}
 				}
 			}
