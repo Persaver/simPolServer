@@ -18,7 +18,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	@Override
 	public Budget get(Integer id) throws DAOException {
 		ResultSet result;
-		Budget budget;
+		Budget budget = new Budget();
 		Backup backup;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * From budget where id = ?");
@@ -37,6 +37,36 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbCadres(result.getInt("nbCadres"));
 				budget.setNbj(result.getInt("nbj"));
 				backup = new Backup(result.getInt("backup"));
+				budget.setBackup(backup);
+				return budget;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DAOException(e.getMessage());
+		}
+		return null;
+	}
+
+	public Budget getByBackup(Backup backup) throws DAOException {
+		ResultSet result;
+		Budget budget = new Budget();
+		try {
+			PreparedStatement prepare = this.connect.prepareStatement("Select * From budget where backup = ?");
+			prepare.setInt(1, backup.getId());
+			result = prepare.executeQuery();
+
+			if(result!= null && result.next()){
+				budget = new Budget();
+				budget.setId(result.getInt("id"));
+				budget.setAgeRetraite(result.getInt("ageRetraite"));
+				budget.setChargeSalariale(result.getInt("chargeSalariale"));
+				budget.setChargeCadre(result.getInt("chargeCadre"));
+				budget.setSalaireStandard(result.getInt("SalaireStandard"));
+				budget.setSalaireCadre(result.getInt("SalaireCadre"));
+				budget.setNbSalaries(result.getInt("nbSalaries"));
+				budget.setNbCadres(result.getInt("nbCadres"));
+				budget.setNbj(result.getInt("nbj"));
 				budget.setBackup(backup);
 				return budget;
 			}

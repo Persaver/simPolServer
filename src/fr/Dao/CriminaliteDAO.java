@@ -47,6 +47,34 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 		return null;
 	}
 
+	public Criminalite getByBackup(Backup backup) throws DAOException {
+		ResultSet results;
+		Criminalite criminalite = new Criminalite();
+		try{
+			String req = "SELECT * FROM criminalite WHERE backup"
+					+ "=?";
+			PreparedStatement statement = this.connect.prepareStatement(req);
+			statement.setInt(1, backup.getId());
+			results = statement.executeQuery();
+			if(results != null){
+				criminalite.setIndicMineur(results.getInt("indicMineur"));
+				criminalite.setCrimeMineur(results.getInt("crimeMineur"));
+				criminalite.setIndicMoyen(results.getInt("indicMoyen"));
+				criminalite.setCrimeMoyen(results.getInt("crimeMoyen"));
+				criminalite.setIndicGrave(results.getInt("indicGrave"));
+				criminalite.setCrimeGrave(results.getInt("crimeGrave"));
+				criminalite.setIndicTerrorisme(results.getInt("indicTerrorisme"));
+				criminalite.setCrimeTerroriste(results.getInt("crimeTerroriste"));
+				criminalite.setNbj(results.getInt("nbj"));
+				criminalite.setBackup(backup);
+				return criminalite;
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return null;
+	}
 	@Override
 	public Criminalite save(Criminalite element) throws DAOException {
 		try {
@@ -86,7 +114,7 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 	}
 
 
-	public List<Criminalite> getByBackup(Backup backup) throws DAOException {
+	public List<Criminalite> getAllByBackup(Backup backup) throws DAOException {
 		List<Criminalite> criminalites = new ArrayList<Criminalite>();
 		try{
 			String req = "SELECT * FROM criminalite WHERE backup=? ";
@@ -111,7 +139,7 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
-		
+
 	}
 
 	@Override

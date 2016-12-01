@@ -42,6 +42,32 @@ public class SanteDAO extends DAO<Sante,Integer> {
 		return null;
 	}
 
+	public Sante getByBackup(Backup backup) throws DAOException{
+		ResultSet result;
+		Sante sante = null;
+		try {
+			PreparedStatement prepare = this.connect.prepareStatement("Select * from sante where backup = ?");
+			prepare.setInt(1, backup.getId());
+			result = prepare.executeQuery();
+			if(result != null){
+				result.first();
+				sante = new Sante();
+				sante.setId(result.getInt("id"));
+				sante.setHygiene(result.getInt("hygiene"));
+				sante.setNbMalades(result.getInt("nbMalades"));
+				sante.setNbAccidents(result.getInt("nbAccidents"));
+				sante.setSoins(result.getInt("Soins"));
+				sante.setEchecs(result.getInt("echecs"));
+				sante.setNbj(result.getInt("nbj"));
+				sante.setBackup(backup);
+				return sante;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DAOException(e.getMessage());
+		}
+		return null;
+	}
 	@Override
 	public Sante save(Sante element) throws DAOException {
 		try {
@@ -63,13 +89,13 @@ public class SanteDAO extends DAO<Sante,Integer> {
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Sante element) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public List<Sante> getAllByBackup(Integer backup) throws DAOException{
@@ -81,7 +107,7 @@ public class SanteDAO extends DAO<Sante,Integer> {
 			statement.setInt(1, backup);
 			ResultSet result = statement.executeQuery();
 			while ( result.next() ) {
-				Sante sante = new Sante();		
+				Sante sante = new Sante();
 				sante.setId(result.getInt("id"));
 				sante.setHygiene(result.getInt("hygiene"));
 				sante.setNbMalades(result.getInt("nbMalades"));
@@ -96,7 +122,7 @@ public class SanteDAO extends DAO<Sante,Integer> {
 			throw new DAOException(e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public List<Sante> getAll() throws DAOException {
 		// TODO Auto-generated method stub
