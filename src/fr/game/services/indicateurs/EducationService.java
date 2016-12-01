@@ -2,11 +2,15 @@ package fr.game.services.indicateurs;
 
 import java.util.List;
 
+import fr.Dao.BackupConstructionDAO;
 import fr.Dao.EducationDAO;
+import fr.entities.Backup;
 import fr.entities.BackupConstruction;
 import fr.entities.Budget;
 import fr.entities.Education;
 import fr.game.services.gameControllers.AbstractGameEntity;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 public class EducationService extends AbstractGameEntity<Education, EducationDAO> {
 
@@ -14,11 +18,19 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 		super(entity, entityDao);
 	}
 		//Fonction a appeler quotidiennement
-	public void actuEducationTot (List <BackupConstruction> liste){
+	public void actuEducationTot (Backup backup) throws ServiceException{
+		List<BackupConstruction> backupConstructions = null;
 		int edT = 0;
-		for (BackupConstruction element : liste){
-			edT += element.getSpecificite().get("education");	// La clef des map Ecoles doit etre 'education'
+		try {
+			backupConstructions = new BackupConstructionDAO().getAllByBackUpByConstruction(backup, BackupConstructionDAO.getIDECOLE());
+			for (BackupConstruction element : backupConstructions){
+				edT += element.getSpecificite().get("education");	// La clef des map Ecoles doit etre 'education'
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
 		}
+
 		this.entity.setEdTotale(edT);
 	}
 	

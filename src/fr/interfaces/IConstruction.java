@@ -7,11 +7,11 @@ public interface IConstruction extends IGameEntity{
 	public int getPostePourvu();
 
 		//Fonctions identiques pour tous les batiments, presentes dans l'abstractConstruction
-//	public void prisePostes();
-//
-//	public void ajoutPoste();
+/*	public void prisePostes();
+
+*	public void ajoutPoste();
 
 	public static void usures() {
-	}
+	}*/
 
 }

@@ -33,17 +33,22 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 //		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
 		//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
 	}
-
 	// fonction utilitaires
 	// Le potentiel sera utilise pour chaque batiment et evaluer son rendement.
-	public int potentiel(BudgetService b) {		// Le budget influe directement sur les capacites du batiment a 30% du budget necessaire le batiment n'a plus de potentiel
-		int potentiel =  (this.entity.getBudget()*100)/(((this.entity.getNbSalarie()/10)*b.getSalaireStandard())+((this.entity.getNbCadre()/10)*b.getSalaireCadre()));
-		potentiel = (int)Math.max(((potentiel*100)-3000)/70., 0.);
-		return potentiel;
+	public int potentiel() {		// Le budget influe directement sur les capacites du batiment a 30% du budget necessaire le batiment n'a plus de potentiel
+		int ratioC = this.entity.getNbCadre()*100/this.getEntity().getNbCadre(); // en %
+		int ratioS = this.entity.getNbSalarie()*100/this.getEntity().getNbSalarie();
+		int ratio = this.getEntity().getNbSalarie() *100/(this.getEntity().getNbCadre()+this.getEntity().getNbSalarie());
+		return ratioC*(100-ratio)/100+ratioS*(ratio)/100;
 	}
 	public void modifierRisque(int mod){
 		this.entity.setRisque(this.entity.getRisque() + mod);
 	}
+	public void usure(){
+		this.entity.setRisque(this.entity.getRisque()+this.construction.getModRisque());
+	}
+	
+		// Tout ce qui concerne les employes
 	@Override
 	public int getPostePourvu(){
 		return this.entity.getPostePourvu();
@@ -61,8 +66,6 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 		return nbPostes;
 	}
-
-	
 	public void prisePostes(PopulationService p, BudgetService b) throws ServiceException{
 			// On verifie que les demandeurs d'emploi sont assez nombreux
 		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
@@ -106,14 +109,14 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 	}
 	public void retirerCadre(BudgetService b){
-		if (this.entity.getNbCadre() > 9){// >9 car les postes sont comptabilise en fonction des dizaines
+		if (this.entity.getNbCadre() > 9){			// >9 car les postes sont comptabilise en fonction des dizaines
 			this.entity.setNbCadre(this.entity.getNbCadre()-10);
 			this.entity.setBudget(this.entity.getBudget()-b.getSalaireCadre());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
 		}
 	}
 	public void retirerSalarie(BudgetService b){
-		if (this.entity.getNbSalarie() > 9){
+		if (this.entity.getNbSalarie() > 9){		// >9 car les postes sont comptabilise en fonction des dizaines
 			this.entity.setNbSalarie(this.entity.getNbSalarie()-10);
 			this.entity.setBudget(this.entity.getBudget()-b.getSalaireStandard());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
@@ -133,8 +136,41 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);
 		}
 	}
-
-
+		// Recupere le nombre total de cadres
+	public int nbTotCadres () throws ServiceException{
+		int nbC = 0;
+		try {
+			List<BackupConstruction> liste = this.constructionDAO.getAll();
+			for (BackupConstruction element : liste){
+				nbC += element.getNbCadre();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
+		}
+		return nbC;
+	}
+		// Recupere le nombre total de salarie
+	public int nbtoSalaries () throws ServiceException{
+		int nbS = 0;
+		try {
+			List<BackupConstruction> liste = this.constructionDAO.getAll();
+			for (BackupConstruction element : liste){
+				nbS += element.getNbSalarie();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage());
+		}
+		return nbS;
+	}
+		// transfert les nombres de cadres et de salaries a la page du budget
+	public void communicationInfosBudget (BudgetService b) throws ServiceException{
+		b.setNbCadre(this.nbTotCadres());
+		b.setNbSalaries(this.nbtoSalaries());
+	}
+		
+	
 	public void save() throws ServiceException{
 		try {
 			this.constructionDAO.save(this.entity);
@@ -143,7 +179,6 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 			throw new ServiceException(e.getMessage());
 		}
 	}
-
 	@Override
 	public String getName(){
 		return this.getEntity().getConstruction().getDesignation() +"_" + this.getEntity().getConstruction();

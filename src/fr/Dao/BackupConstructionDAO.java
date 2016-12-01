@@ -19,8 +19,8 @@ import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	
-	public final static Integer IDECOLE = 1;
-	final static Integer IDHOPITAL = 2;
+	private final static Integer IDECOLE = 1;
+	private final static Integer IDHOPITAL = 2;
 
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
@@ -62,6 +62,16 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			throw new DAOException(e.getMessage());
 		}
 		return null;
+	}
+
+
+	public static Integer getIDHOPITAL() {
+		return IDHOPITAL;
+	}
+
+
+	public static Integer getIDECOLE() {
+		return IDECOLE;
 	}
 
 
