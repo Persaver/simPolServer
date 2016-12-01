@@ -53,7 +53,7 @@ CREATE TABLE backup_construction(
   x INT(5) NOT NULL,
   y INT(5) NOT NULL,
   nbSalarie INT(5),
-  nbCadres INT(5),
+  nbCadre INT(5),
   risque INT(5),
   budget INT(5),
   attractive INT(5),
