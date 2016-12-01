@@ -42,22 +42,23 @@ public class Caserne extends AbstractConstructionService {
 	}
 	// Les employes vont effectuer des inspection.
 	// Note : Il faut une liste de batiment en parametre
-	public void entretien(List <AbstractConstructionService> liste, BudgetService b){
+	public void entretien(BudgetService b){
+		List<BackupConstruction> liste = this.entityDao.getAll();
 		int l = liste.size();
 		int e = (((this.pEntretien*this.potentiel(b))/100)*(300+EducationService.getEdSecurite()))/500;
 		int indice = (int)(Math.random()*l);
 		while (e>0){		// Si un batiment est bien endommage, les ouvriers vont se concentrer dessus
-			if (liste.get(indice).getEntity().getRisque()>=10){
+			if (liste.get(indice).getRisque()>=10){
 				if (e>=10){
-					liste.get(indice).modifierRisque(10);
+					liste.get(indice).setRisque(liste.get(indice).getRisque()-10);
 					e -= 10;
 				} else {
-					liste.get(indice).modifierRisque(e);
+					liste.get(indice).setRisque(liste.get(indice).getRisque()-e);
 					e = 0;
 				}				// Des qu'ils verront des defauts, les ouvriers vont apporter des reparation
 			} else
-				if (liste.get(indice).getEntity().getRisque()>0){
-					liste.get(indice).modifierRisque(1); // entre deux batiment, le deplacement leur prend du temps (et ca assure d'arriver a 'e=0'
+				if (liste.get(indice).getRisque()>0){
+					liste.get(indice).setRisque(liste.get(indice).getRisque()-1); // entre deux batiment, le deplacement leur prend du temps (et ca assure d'arriver a 'e=0'
 					e--;
 				} // Si tout va bien, on recommence jusqu'a ce qu'il soit l'heure d'arreter
 			indice = (indice+1)%l;
