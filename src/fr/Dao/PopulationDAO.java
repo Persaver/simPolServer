@@ -56,7 +56,7 @@ public class PopulationDAO extends DAO<Population,Integer> {
 			result = prepare.executeQuery();
 			if(result != null){
 				gson = new Gson();
-				result.first();
+				result.last();
 				population = new Population();
 				population.setId(result.getInt("id"));
 				population.setFertilite(result.getInt("fertilite"));

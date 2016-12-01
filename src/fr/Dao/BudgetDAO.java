@@ -57,6 +57,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			result = prepare.executeQuery();
 
 			if(result!= null && result.next()){
+				result.last();
 				budget = new Budget();
 				budget.setId(result.getInt("id"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
