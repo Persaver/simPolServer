@@ -50,7 +50,7 @@ public class SanteDAO extends DAO<Sante,Integer> {
 			prepare.setInt(1, backup.getId());
 			result = prepare.executeQuery();
 			if(result != null){
-				result.first();
+				result.last();
 				sante = new Sante();
 				sante.setId(result.getInt("id"));
 				sante.setHygiene(result.getInt("hygiene"));
@@ -93,18 +93,18 @@ public class SanteDAO extends DAO<Sante,Integer> {
 	}
 
 	@Override
-	public void update(Sante element) {
+	public Sante update(Sante element) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
-	public List<Sante> getAllByBackup(Integer backup) throws DAOException{
+	public List<Sante> getAllByBackup(Backup backup) throws DAOException{
 		List<Sante> santes = new ArrayList<Sante>();
 		try {
 			//this.connect = AccessDB.seConnecter(); // Connection deja etablie avec le parent?
 			String req = "SELECT * FROM sante WHERE backup=?";
 			PreparedStatement statement = this.connect.prepareStatement(req);
-			statement.setInt(1, backup);
+			statement.setInt(1, backup.getId());
 			ResultSet result = statement.executeQuery();
 			while ( result.next() ) {
 				Sante sante = new Sante();

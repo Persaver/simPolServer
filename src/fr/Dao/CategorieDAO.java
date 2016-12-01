@@ -66,9 +66,9 @@ public class CategorieDAO extends DAO<Categorie,Integer> {
 	}
 
 	@Override
-	public void update(Categorie element) {
+	public Categorie update(Categorie element) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override

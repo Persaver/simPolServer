@@ -13,19 +13,18 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		super(entity, entityDao);
 	}
 
-	public void journeeMedicale(PopulationService p, BudgetService b){
-		this.tombeMalades(p);		// On comptabilise les nouveaux malades
-			// a revoir avec liste
+	public void journeeMedicale(PopulationService p, BudgetService b, List <BackupConstruction> liste){
+		this.tombeMalades(p);				// On comptabilise les nouveaux malades
 		System.out.println(this.entity.getNbMalades() + " gens sont malades");
-		//this.accidente(p, b);		// de meme pour les accidentes
+		this.accidente(p, b, liste);		// de meme pour les accidentes
 		System.out.println(this.entity.getNbAccidents() + " gens ont eu un accident");
-		this.mortalite(p, b);		// Parmi ces victimes, certaines ne se reveilleront jamais
+		this.mortalite(p, b);				// Parmi ces victimes, certaines ne se reveilleront jamais
 		System.out.println(this.entity.getNbMalades()+this.entity.getNbAccidents() + " ne sont pas encore morts");
-		this.recupSoins();			// Heureusement, les medecins sont la avec leurs competences
+		this.recupSoins(liste);				// Heureusement, les medecins sont la avec leurs competences
 		System.out.println(this.entity.getSoins() + " patients vont �tre secourus");
-		this.apportMedicaux();		// Ces chevaliers de la sante sauvent autant de vies que possible
+		this.apportMedicaux();				// Ces chevaliers de la sante sauvent autant de vies que possible
 		System.out.println("il reste " + this.entity.getNbMalades() + " malades et " + this.entity.getNbAccidents() + " accidentes");
-		this.guerison();			// Et puis, il y a ceux qui se soignent en mangeant bio
+		this.guerison();					// Et puis, il y a ceux qui se soignent en mangeant bio
 		System.out.println(this.entity.getNbMalades() + this.entity.getNbAccidents() + " patients sont encore dans les hopitaux en fin de soiree");
 	}
 
@@ -53,8 +52,14 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		p.retraitPopulation(mort, 0, 129);
 		this.entity.setNbMalades(this.entity.getNbMalades() - mort);
 	}
-	public void recupSoins (){
-		//		soins = Hopital.soinsTotal();
+	
+		//Fonction a appeler quotidiennement
+	public void recupSoins (List <BackupConstruction> liste){
+		int soinsT = 0;
+		for (BackupConstruction element : liste){
+			soinsT += element.getSpecificite().get("soins");	// La clef des map Ecoles doit etre 'soins'
+		}
+		this.entity.setSoins(soinsT);
 	}
 
 	public void apportMedicaux(){

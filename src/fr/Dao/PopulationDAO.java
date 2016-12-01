@@ -56,7 +56,7 @@ public class PopulationDAO extends DAO<Population,Integer> {
 			result = prepare.executeQuery();
 			if(result != null){
 				gson = new Gson();
-				result.first();
+				result.last();
 				population = new Population();
 				population.setId(result.getInt("id"));
 				population.setFertilite(result.getInt("fertilite"));
@@ -106,9 +106,9 @@ public class PopulationDAO extends DAO<Population,Integer> {
 	}
 
 	@Override
-	public void update(Population element) {
+	public Population update(Population element) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 

@@ -1,6 +1,9 @@
 package fr.game.services.indicateurs;
 
+import java.util.List;
+
 import fr.Dao.EducationDAO;
+import fr.entities.BackupConstruction;
 import fr.entities.Budget;
 import fr.entities.Education;
 import fr.game.services.gameControllers.AbstractGameEntity;
@@ -10,7 +13,15 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 	public EducationService(Education entity, EducationDAO entityDao) {
 		super(entity, entityDao);
 	}
-
+		//Fonction a appeler quotidiennement
+	public void actuEducationTot (List <BackupConstruction> liste){
+		int edT = 0;
+		for (BackupConstruction element : liste){
+			edT += element.getSpecificite().get("education");	// La clef des map Ecoles doit etre 'education'
+		}
+		this.entity.setEdTotale(edT);
+	}
+	
 	public void recupEducation(PopulationService p, Budget b){
 		int place = this.entity.getEdTotale();
 		int etudiant = p.nbIndiv(0, b.getAgeTravail());

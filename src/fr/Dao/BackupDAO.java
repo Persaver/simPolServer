@@ -24,7 +24,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 			PreparedStatement prepare = this.connect.prepareStatement(sql);
 			prepare.setInt(1, id.intValue());
 			result = prepare.executeQuery();
-			if(result!= null && result.next()){
+			if((result!= null) && result.next()){
 				backup = new Backup();
 				backup.setId(result.getInt("id"));
 				backup.setDate_creation(result.getString("date_creation"));
@@ -68,7 +68,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 			throw new DAOException(e.getMessage());
 		}
 		return null;
-		
+
 	}
 
 	@Override
@@ -101,9 +101,33 @@ public class BackupDAO extends DAO<Backup,Integer> {
 	}
 
 	@Override
-	public void update(Backup element) {
-		// TODO Auto-generated method stub
+	public Backup update(Backup element) throws DAOException{
+		Backup backup = null;
+		// pour verifie si modifie
+		Integer cptRow = null;
+		try {
+			String sql = "UPDATE backup "
+					+ "SET"
+					+"date_creation = ?,"
+					+ "nbj = ?, "
+					+ "user = ?"
+					+ "WHERE id = ?";
+			PreparedStatement statement = this.connect.prepareStatement( sql);
+			statement.setString(1, backup.getDate_creation());
+			statement.setInt(2, backup.getNbj());
+			statement.setInt(3, backup.getUser().getId());
+			statement.setInt(4, element.getId());
+			cptRow = statement.executeUpdate();
+			// si plus petit que 1 pas de modif effectué
+			if ((cptRow == null) || (cptRow < 1)){
+				throw new SQLException("Creating message failed, no ID obtained.");
+			}
+			statement.close();
 
+		}catch (SQLException e){
+			throw new DAOException(e.getMessage());
+		}
+		return backup;
 	}
 
 	@Override

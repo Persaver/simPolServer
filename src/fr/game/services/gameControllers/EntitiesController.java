@@ -42,7 +42,7 @@ public class EntitiesController {
 	}
 
 	// ajoute a gameEntities
-	public void addGameEntity(IEntity entity) throws ServiceException{
+	public IEntity addGameEntity(IEntity entity) throws ServiceException{
 		BackupConstruction bckCons = null;
 		try{
 
@@ -59,6 +59,7 @@ public class EntitiesController {
 		}catch(NullPointerException e ){
 			throw new ServiceException(e.getMessage());
 		}
+		return bckCons;
 	}
 
 	// supprime de gameEntities
@@ -70,6 +71,28 @@ public class EntitiesController {
 		}
 
 	}
+
+	// ajoute a gameEntities
+	public IEntity saveGameEntity(IEntity entity) throws ServiceException{
+		BackupConstruction bckCons = null;
+		try{
+
+			if( entity instanceof BackupConstruction){
+				bckCons=(BackupConstruction)entity;
+				try {
+					this.backupConstructionDAO.save(bckCons);
+				} catch (DAOException e) {
+					throw new ServiceException(e.getMessage());
+				}
+			}
+
+			this.gameEntities.put(bckCons.getClass().getName()+bckCons.getId(), entity);
+		}catch(NullPointerException e ){
+			throw new ServiceException(e.getMessage());
+		}
+		return bckCons;
+	}
+
 
 	// recupere un entite par sa clef
 	// clef = class de l'entité+id ex: user1
@@ -87,10 +110,6 @@ public class EntitiesController {
 			this.gameEntities.put(entity.getClass().getName()+id, entity);
 
 		}
-
-
-
-
 		return entity;
 
 	}
@@ -129,6 +148,21 @@ public class EntitiesController {
 		}
 	}
 
+	public IEntity updategGameEntity(IEntity upEntity) throws ServiceException{
+		IEntity entity = null;
+
+		if(upEntity == null){
+			throw new ServiceException("upEntity == null");
+		}
+		try{
+			entity = new BackupConstructionDAO().update((BackupConstruction)upEntity);
+
+		}catch(DAOException e){
+			throw new ServiceException(e.getMessage());
+		}
+
+		return entity;
+	}
 	// lance la recuperation de toutes les entitées
 	public List<IEntity> getGameEntitiesFromDao(Integer idBackup) throws ServiceException{
 		List<IEntity> gameEntities = null;
