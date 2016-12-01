@@ -1,34 +1,34 @@
 package fr.entities;
 
-
-import java.io.Serializable;
-import java.sql.Date;
-
-public class Budget {
-
-	private int id;
-	private int age;
-	private int ageTravail;
-	private int ageRetraite;
-	private int chargeSalariale;
-	private int chargeCadre;
-	private int salaireStandard;
-	private int salaireCadre;
-	private int nbSalaries;
-	private int nbCadres;
-	private int backup;
-	private Date date;
-
+public class Budget extends AbstractEntity<Budget> {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer ageTravail;
+	private Integer ageRetraite;
+	private Integer chargeSalariale;
+	private Integer chargeCadre;
+	private Integer salaireStandard;
+	private Integer salaireCadre;
+	private Integer nbSalaries;
+	private Integer nbCadres;
+	private Integer nbj;
+	private Backup backup;
+	private Integer budget;
 
 	public Budget(){
-
 	}
 
-	public Budget(int id, int age, int ageRetraite, int chargeSalariale, int chargeCadre, int salaireStandard,
-			int salaireCadre, int nbSalaries, int nbCadres, int backup, Date date) {
-		super();
-		this.id = id;
-		this.age = age;
+	public Budget(Integer id){
+		this(id,null, null, null, null, null, null, null, null, null, null,null);
+	}
+
+	public Budget(Integer id, Integer ageTravail, Integer ageRetraite, Integer chargeSalariale,
+			Integer chargeCadre, Integer salaireStandard, Integer salaireCadre, Integer nbSalaries, Integer nbCadres,
+			Integer nbj, Backup backup, Integer budget) {
+		super(id);
+		this.ageTravail = ageTravail;
 		this.ageRetraite = ageRetraite;
 		this.chargeSalariale = chargeSalariale;
 		this.chargeCadre = chargeCadre;
@@ -36,85 +36,126 @@ public class Budget {
 		this.salaireCadre = salaireCadre;
 		this.nbSalaries = nbSalaries;
 		this.nbCadres = nbCadres;
+		this.setNbj(nbj);
 		this.backup = backup;
-		this.date = date;
-	}
-	
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	
-	public int getAgeTravail() {
-		return ageTravail;
+		this.budget=budget;
 	}
 
-	public void setAgeTravail(int ageTravail) {
+	public Integer getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Integer budget) {
+		this.budget = budget;
+	}
+
+	public Integer getAgeTravail() {
+		return this.ageTravail;
+	}
+
+	public void setAgeTravail(Integer ageTravail) {
 		this.ageTravail = ageTravail;
 	}
-	
-	public int getAgeRetraite() {
-		return ageRetraite;
+
+	public Integer getAgeRetraite() {
+		return this.ageRetraite;
 	}
-	public void setAgeRetraite(int ageRetraite) {
+
+	public void setAgeRetraite(Integer ageRetraite) {
 		this.ageRetraite = ageRetraite;
 	}
-	public int getChargeSalariale() {
-		return chargeSalariale;
+
+	public Integer getChargeSalariale() {
+		return this.chargeSalariale;
 	}
-	public void setChargeSalariale(int chargeSalariale) {
+
+	public void setChargeSalariale(Integer chargeSalariale) {
 		this.chargeSalariale = chargeSalariale;
 	}
-	public int getChargeCadre() {
-		return chargeCadre;
+
+	public Integer getChargeCadre() {
+		return this.chargeCadre;
 	}
-	public void setChargeCadre(int chargeCadre) {
+
+	public void setChargeCadre(Integer chargeCadre) {
 		this.chargeCadre = chargeCadre;
 	}
-	public int getSalaireStandard() {
-		return salaireStandard;
+
+	public Integer getSalaireStandard() {
+		return this.salaireStandard;
 	}
-	public void setSalaireStandard(int salaireStandard) {
+
+	public void setSalaireStandard(Integer salaireStandard) {
 		this.salaireStandard = salaireStandard;
 	}
-	public int getSalaireCadre() {
-		return salaireCadre;
+
+	public Integer getSalaireCadre() {
+		return this.salaireCadre;
 	}
-	public void setSalaireCadre(int salaireCadre) {
+
+	public void setSalaireCadre(Integer salaireCadre) {
 		this.salaireCadre = salaireCadre;
 	}
-	public int getNbSalaries() {
-		return nbSalaries;
+
+	public Integer getNbSalaries() {
+		return this.nbSalaries;
 	}
-	public void setNbSalaries(int nbSalaries) {
+
+	public void setNbSalaries(Integer nbSalaries) {
 		this.nbSalaries = nbSalaries;
 	}
-	public int getNbCadres() {
-		return nbCadres;
+
+	public Integer getNbCadres() {
+		return this.nbCadres;
 	}
-	public void setNbCadres(int nbCadres) {
+
+	public void setNbCadres(Integer nbCadres) {
 		this.nbCadres = nbCadres;
 	}
-	public int getBackup() {
-		return backup;
+
+	public Integer getNbj() {
+		return nbj;
 	}
-	public void setBackup(int backup) {
+
+	public void setNbj(Integer nbj) {
+		this.nbj = nbj;
+	}
+
+	public Backup getBackup() {
+		return this.backup;
+	}
+
+	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Budget [ageTravail=");
+		builder.append(ageTravail);
+		builder.append(", ageRetraite=");
+		builder.append(ageRetraite);
+		builder.append(", chargeSalariale=");
+		builder.append(chargeSalariale);
+		builder.append(", chargeCadre=");
+		builder.append(chargeCadre);
+		builder.append(", salaireStandard=");
+		builder.append(salaireStandard);
+		builder.append(", salaireCadre=");
+		builder.append(salaireCadre);
+		builder.append(", nbSalaries=");
+		builder.append(nbSalaries);
+		builder.append(", nbCadres=");
+		builder.append(nbCadres);
+		builder.append(", nbj=");
+		builder.append(nbj);
+		builder.append(", backup=");
+		builder.append(backup);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

@@ -8,12 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
+import fr.Dao.BackupConstructionDAO;
+import fr.Dao.BackupDAO;
+import fr.entities.Backup;
 import fr.entities.User;
-import fr.gameControlor.GameInstance;
-import fr.gameControlor.GameInstanceControlor;
+import fr.game.services.gameControllers.EntitiesController;
+import fr.game.services.gameControllers.GameInstance;
+import fr.game.services.gameControllers.GameInstanceControlor;
 import fr.interfaces.IGameInstance;
+import fr.splExceptions.BackupException;
+import fr.splExceptions.GameInstanceException;
+import fr.splExceptions.ServiceException;
 import fr.splExceptions.SplException;
+import fr.tools.LoginTools;
 import fr.tools.RestTools;
 
 
@@ -27,42 +38,35 @@ public class ConnexionSrv extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		
 		User user = null;
-		RestTools.getId(request);
+		Backup backup = null;
 		IGameInstance gameInstance = null;
-
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		if(request.getAttribute("id") != null){
-			out.append("id" + request.getAttribute("id") +"Served at: &0àà@").append(request.getContextPath());
-			// si les filtres retourn un user
-			if(request.getAttribute("user") != null){
-				user = (User) request.getAttribute("user");
-				// on teste si deja une instance en court
-				if(GameInstanceControlor.hasGameInstance(user)){
-					try{
-					GameInstanceControlor.removeGameInstance(user);
-					out.append(" a une'instance");
-					}catch(SplException e){
-						// on fait quoi?
-					}
-				}
-				
-				// on cree est on enregistre l'instance
-				gameInstance = GameInstanceControlor.createGameInstance(user);
-				out.append(" instance crée");
 
-				
-				out.append(" user "+ user.getPseudo() );
-			}
-			out.close();
-
-		}else{
-			//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
-			response.getWriter().append("id"  +"Served at: ").append(request.getContextPath()).close();
-
+		RestTools.getId(request);
+		try {
+			LoginTools.checkBackup(request);
+			user = (User) session.getAttribute("user");
+			backup = (Backup) session.getAttribute("backup");
+			
+		} catch (BackupException e) {
+			out.append("\"error\":"+e.getMessage());
+		}
+		
+		gameInstance = new GameInstance(user, new BackupDAO(),new BackupConstructionDAO(), backup.getId());
+		
+		try {
+			out.append(new Gson().toJson(gameInstance.getEntities()));
+		} catch (ServiceException e) {
+			e.printStackTrace();
 		}
 
+		out.close();
+
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

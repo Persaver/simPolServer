@@ -20,7 +20,7 @@ public class AccessDB {
 //		return new AccessDB();
 //	}
 	private static Connection cxt;
-	private static String aUrl = "jdbc:mysql://localhost/SimPol";
+	private static String aUrl = "jdbc:mysql://localhost/simpol";
 	private static String aLogin = "root";
 	private static String aPassword = "root";
 	
