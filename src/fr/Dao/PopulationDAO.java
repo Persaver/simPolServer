@@ -107,9 +107,8 @@ public class PopulationDAO extends DAO<Population,Integer> {
 
 	@Override
 	public Population update(Population element) {
-		return element;
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 

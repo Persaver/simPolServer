@@ -49,15 +49,13 @@ public class EducationSrv extends HttpServlet {
 		EducationDAO educationDao = new EducationDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(session.getAttribute("backup")!= null){
-				if(request.getQueryString() != null){
-					education = educationDao.getByBackup(backup);
-					out.append(RestTools.getReturn( education, education == null));
-				}
-				else{
-					educations = educationDao.getAllByBackup(backup);
-					out.append(RestTools.getReturn( educations, educations == null));
-				}
+			if(request.getQueryString() != null){
+				education = educationDao.getByBackup(backup);
+				out.append(RestTools.getReturn( education, education == null));
+			}
+			else{
+				educations = educationDao.getAllByBackup(backup);
+				out.append(RestTools.getReturn( educations, educations == null));
 			}
 		} catch (DAOException | BackupException e) {
 			// TODO Auto-generated catch block
