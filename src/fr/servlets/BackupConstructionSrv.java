@@ -17,7 +17,6 @@ import fr.entities.BackupConstruction;
 import fr.game.services.gameControllers.EntitiesController;
 import fr.interfaces.IEntity;
 import fr.splExceptions.BackupException;
-import fr.splExceptions.EntityException;
 import fr.splExceptions.ServiceException;
 import fr.tools.LoginTools;
 import fr.tools.RestTools;
@@ -39,6 +38,7 @@ public class BackupConstructionSrv extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<IEntity> bcs = null;
 		BackupConstruction bc = null;
@@ -58,16 +58,16 @@ public class BackupConstructionSrv extends HttpServlet {
 		if(backup != null){
 			if(request.getAttribute("id") != null){
 				try {
-					bc=(BackupConstruction) new EntitiesController().getGameEntity((Integer) Integer.parseInt(request.getAttribute("id").toString()));
-				} catch (EntityException e) {
+					bc=(BackupConstruction) new EntitiesController().getGameEntity(Integer.parseInt(request.getAttribute("id").toString()));
+				} catch (NumberFormatException | ServiceException e) {
 					// TODO Auto-generated catch block
 					out.append(RestTools.getReturn(e.getMessage(), true));
 				}
-				
+
 				out.append(RestTools.getReturn(bc, bc == null));
 
 			}else{
-				//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null); 
+				//fr.entities.BackupConstruction bc = new fr.entities.BackupConstruction(null, 0, 0, null, null);
 				try {
 					bcs=new EntitiesController().getGameEntitiesFromDao(backup.getId());
 				} catch (ServiceException e) {
@@ -77,7 +77,7 @@ public class BackupConstructionSrv extends HttpServlet {
 				out.append(new Gson().toJson(bcs));
 
 			}
-			
+
 		}
 		out.close();
 	}
@@ -85,14 +85,16 @@ public class BackupConstructionSrv extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		this.doGet(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
+	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
@@ -100,6 +102,7 @@ public class BackupConstructionSrv extends HttpServlet {
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
+	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

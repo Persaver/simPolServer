@@ -109,7 +109,6 @@ public class PopulationDAO extends DAO<Population,Integer> {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override

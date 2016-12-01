@@ -10,15 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import fr.Dao.UserDAO;
 import fr.entities.User;
 import fr.game.services.user.UserService;
+import fr.splExceptions.DAOException;
 import fr.splExceptions.LoginException;
 import fr.splExceptions.ServiceException;
 import fr.tools.RestTools;
-import javafx.scene.control.TreeTableRow;
 
 /**
  * Servlet implementation class UserSrv
@@ -59,7 +57,7 @@ public class UserSrv extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * Verifie le login && token ;)
-	 * 
+	 *
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,7 +72,11 @@ public class UserSrv extends HttpServlet {
 		if((request.getParameter("login") != null) && (request.getParameter("token") != null)){
 			login = request.getParameter("login");
 			token = request.getParameter("token");
-			user = new UserDAO().checklogin(login, token);
+			try {
+				user = new UserDAO().checklogin(login, token);
+			} catch (DAOException e) {
+				out.append(RestTools.getReturn(e.getMessage(), true));
+			}
 			//System.out.println(user);
 
 		}
@@ -90,7 +92,7 @@ public class UserSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 * Ajouter un utilisateur 
+	 * Ajouter un utilisateur
 	 * requiere login and token
 	 */
 	@Override
@@ -107,10 +109,10 @@ public class UserSrv extends HttpServlet {
 
 		// verifie les param dans un try catch pour recuperer les erreurs les erreurs
 		try{
-			if(login == null || login.equals("")){
+			if((login == null) || login.equals("")){
 				throw new LoginException("login obligatoire");
 			}
-			if(password == null || password.equals("")){
+			if((password == null) || password.equals("")){
 				throw new LoginException("password obligatoire");
 			}
 			// insere en bdd

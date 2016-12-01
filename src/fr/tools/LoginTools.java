@@ -9,24 +9,30 @@ import fr.entities.Backup;
 import fr.entities.User;
 import fr.game.services.backup.BackupService;
 import fr.splExceptions.BackupException;
+import fr.splExceptions.DAOException;
 import fr.splExceptions.LoginException;
 import fr.splExceptions.ServiceException;
 
 public final class LoginTools {
-	
+
 	// verifie le login
 	public static final User checkLogin(HttpServletRequest HttpReq) throws LoginException{
 		HttpSession session = HttpReq.getSession(true);
 		String login = null;
 		String token = null;
 		User user = null;
-		
+
 		// teste deans la session si deja enregistré
 		if(session.getAttribute("user") == null){
-			if(HttpReq.getParameter("login") != null && HttpReq.getParameter("token") != null){
+			if((HttpReq.getParameter("login") != null) && (HttpReq.getParameter("token") != null)){
 				login = HttpReq.getParameter("login");
 				token = HttpReq.getParameter("token");
-				user = new UserDAO().checklogin(login, token);
+				try {
+					user = new UserDAO().checklogin(login, token);
+				} catch (DAOException e) {
+					// TODO Auto-generated catch block
+					throw new LoginException(e.getMessage());
+				}
 				session.setAttribute("user", user);
 				HttpReq.setAttribute("user", user);
 				System.out.println(user);
@@ -39,7 +45,7 @@ public final class LoginTools {
 			}
 		}else{
 			try{
-			user = (User) session.getAttribute("user");
+				user = (User) session.getAttribute("user");
 			}catch(Exception e){
 				throw new LoginException(e.getMessage());
 			}
@@ -48,11 +54,11 @@ public final class LoginTools {
 
 		return user;
 	}
-	
+
 	public static final Backup checkBackup(HttpServletRequest HttpReq) throws BackupException{
 		HttpSession session = HttpReq.getSession(true);
 		Backup backup = null;
-		
+
 		User user;
 		// on verifie le user
 		try {
@@ -60,12 +66,12 @@ public final class LoginTools {
 		} catch (LoginException e) {
 			throw new BackupException(e.getMessage());
 		}
-		
+
 		// si user on test le backup
 		if(user != null){
 			if(session.getAttribute("backup") != null){
 				try{
-				backup = (Backup) session.getAttribute("backup");
+					backup = (Backup) session.getAttribute("backup");
 				}catch(Exception e){
 					throw new BackupException(e.getMessage());
 				}
@@ -91,7 +97,7 @@ public final class LoginTools {
 		else{
 			throw new BackupException("pas de backup");
 		}
-		
+
 		return backup;
 	}
 }
