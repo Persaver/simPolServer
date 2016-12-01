@@ -83,15 +83,6 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 			}
 		}
 	}
-	
-//	public void ajoutPoste(PopulationService p, BudgetService b) throws ServiceException{
-//		int pEmbauche = p.nbIndiv(b.getAgeTravail(), b.getAgeRetraite())-getPostesPourvus();
-//		if (pEmbauche > ((this.entity.getNbSalarie()+this.entity.getNbCadre())/10)) {
-//			this.entity.setPostePourvu((this.entity.getNbSalarie()+this.entity.getNbCadre())/10);
-//		} else {
-//			this.entity.setPostePourvu(this.entity.getPostePourvu() + pEmbauche);
-//		}
-//	}
 	public void modifierCadre(BudgetService b, int n){
 		if (n < 0){
 			for (int i = 0; i > n; i--){
@@ -115,14 +106,14 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 	}
 	public void retirerCadre(BudgetService b){
-		if (this.entity.getNbCadre() > 0){
+		if (this.entity.getNbCadre() > 9){// >9 car les postes sont comptabilise en fonction des dizaines
 			this.entity.setNbCadre(this.entity.getNbCadre()-10);
 			this.entity.setBudget(this.entity.getBudget()-b.getSalaireCadre());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
 		}
 	}
 	public void retirerSalarie(BudgetService b){
-		if (this.entity.getNbSalarie() > 0){
+		if (this.entity.getNbSalarie() > 9){
 			this.entity.setNbSalarie(this.entity.getNbSalarie()-10);
 			this.entity.setBudget(this.entity.getBudget()-b.getSalaireStandard());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()-10);
@@ -142,31 +133,7 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);
 		}
 	}
-	
-	public int retirerPersonnel(BudgetService b){
-		int nbEmploye = this.entity.getNbSalarie()+this.entity.getNbCadre();
-		int budgetMax = ((this.entity.getNbSalarie()/10)*b.getSalaireStandard())+((this.entity.getNbCadre()/10)*b.getSalaireCadre());
-		if (this.entity.getBudget() > (budgetMax/nbEmploye)){
-			this.entity.setBudget(this.entity.getBudget() - (budgetMax/nbEmploye));
-			return 1;	// Une personne a bien ete viree
-		}
-		else {
-			return 0;	// Personne n'a ete vire
-		}
-	}
-	public int retirerPersonnel(BudgetService b, int n){
-		boolean possible = true;
-		int verif;
-		while ((n > 0) && possible){
-			verif = this.retirerPersonnel(b);
-			if (verif == 1) {
-				n--;
-			} else {
-				possible = false;
-			}
-		}
-		return n;
-	}
+
 
 	public void save() throws ServiceException{
 		try {
