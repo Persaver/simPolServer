@@ -1,11 +1,16 @@
 package fr.Dao;
 
+import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import fr.entities.Categorie;
 import fr.entities.Construction;
@@ -18,6 +23,7 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 		ResultSet result;
 		Construction construction = null;
 		Categorie categorie = null;
+		Gson gson = null;
 		try
 		{
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from construction where id = ?");
@@ -30,6 +36,7 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 				construction.setDesignation(result.getString("designation"));
 				construction.setH(result.getInt("h"));
 				construction.setW(result.getInt("w"));
+				construction.setPrice(result.getInt("price"));
 				construction.setBaseSalarie(result.getInt("baseSalarie"));
 				construction.setBaseCadre(result.getInt("baseCadre"));
 				construction.setBaseRisque(result.getInt("baseRisque"));
@@ -37,7 +44,10 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 				construction.setModSalarie(result.getInt("modSalarie"));
 				construction.setModCadre(result.getInt("modCadre"));
 				construction.setModAttractivite(result.getInt("modAttractivite"));
-				construction.setSpecificite(result.getString("specificites"));
+				// gson
+				gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
+				construction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
 				categorie = new Categorie(result.getInt("id"));
 				construction.setCategorie(categorie);
 				return construction;
@@ -51,21 +61,23 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 
 	@Override
 	public Construction save(Construction element) throws DAOException {
+		Gson gson = new Gson();
 		try {
-			String sql = "INSERT INTO backup_construction (h,w,basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO backup_construction (h,w,price, basSalarie, baseCadre, baseRisque, baseAttractivite, modSalarie, modCadre, modRisque, modAttractivite, specificite, categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setInt(1, element.getH());
 			statement.setInt(2, element.getW());
-			statement.setInt(3, element.getBaseSalarie());
-			statement.setInt(4, element.getBaseCadre());
-			statement.setInt(5, element.getBaseRisque());
-			statement.setInt(6, element.getBaseAttractivite());
-			statement.setInt(7, element.getModSalarie());
-			statement.setInt(8, element.getModCadre());
-			statement.setInt(9, element.getModRisque());
-			statement.setInt(10, element.getModAttractivite());
-			statement.setString(11, element.getSpecificite());
-			statement.setInt(12, element.getCategorie().getId());
+			statement.setInt(3, element.getPrice());
+			statement.setInt(4, element.getBaseSalarie());
+			statement.setInt(5, element.getBaseCadre());
+			statement.setInt(6, element.getBaseRisque());
+			statement.setInt(7, element.getBaseAttractivite());
+			statement.setInt(8, element.getModSalarie());
+			statement.setInt(9, element.getModCadre());
+			statement.setInt(10, element.getModRisque());
+			statement.setInt(11, element.getModAttractivite());
+			statement.setString(12, gson.toJson(element.getSpecificite()));
+			statement.setInt(13, element.getCategorie().getId());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
@@ -107,6 +119,7 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 				construction.setDesignation(result.getString("designation"));
 				construction.setH(result.getInt("h"));
 				construction.setW(result.getInt("w"));
+				construction.setPrice(result.getInt("price"));
 				construction.setBaseSalarie(result.getInt("baseSalarie"));
 				construction.setBaseCadre(result.getInt("baseCadre"));
 				construction.setBaseRisque(result.getInt("baseRisque"));
@@ -114,7 +127,10 @@ public class ConstructionDAO extends DAO<Construction,Integer>{
 				construction.setModSalarie(result.getInt("modSalarie"));
 				construction.setModCadre(result.getInt("modCadre"));
 				construction.setModAttractivite(result.getInt("modAttractivite"));
-				construction.setSpecificite(result.getString("specificites"));
+				// gson
+				Gson gson = new Gson();
+				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
+				construction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
 				Categorie categorie = new Categorie(result.getInt("id"));
 				construction.setCategorie(categorie);
 				constructions.add(construction);

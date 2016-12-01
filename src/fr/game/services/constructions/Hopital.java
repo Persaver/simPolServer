@@ -1,8 +1,9 @@
 package fr.game.services.constructions;
 
+import java.util.Map;
+
 import fr.Dao.BackupConstructionDAO;
 import fr.entities.BackupConstruction;
-import fr.game.services.indicateurs.BudgetService;
 import fr.game.services.indicateurs.EducationService;
 
 public class Hopital extends AbstractConstructionService {
@@ -34,8 +35,10 @@ public class Hopital extends AbstractConstructionService {
 //			hopitaux.get(i).indiceH --;
 	}
 	
-	public int soins (EducationService e, BudgetService b){
-		return this.pSoin*this.potentiel(b)/100*(300+e.getEntity().getEdSante())/500;	// N'est qu'a 60% si l'education est nulle
+	public void soins (EducationService e){
+		Map <String, Integer> soins = null;
+		soins.put("soins", this.pSoin*this.potentiel()/100*(300+e.getEntity().getEdSante())/500); // N'est qu'a 60% si l'education est nulle
+		this.entity.setSpecificite(soins);
 	}
 	
 //	public static int soinsTotal(){

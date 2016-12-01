@@ -97,7 +97,6 @@ public class BackupDAO extends DAO<Backup,Integer> {
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
