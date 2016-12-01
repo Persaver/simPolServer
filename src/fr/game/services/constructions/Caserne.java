@@ -23,6 +23,7 @@ public class Caserne extends AbstractConstructionService {
 		for(int i = 0; i<niv; i++) {
 			this.ameliorer();
 		}
+
 	}
 	public void ameliorer(){
 		super.ameliore(); //(0.3, 0.1, 0, 1);

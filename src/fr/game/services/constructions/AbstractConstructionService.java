@@ -16,8 +16,8 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	// on cree une varible construction
 	// => this.entity = BackupConstruction
 	//    this.construction = Construction
-	private Construction construction;
-	private BackupConstructionDAO constructionDAO;
+	protected Construction construction;
+	protected BackupConstructionDAO constructionDAO;
 
 	public AbstractConstructionService(BackupConstruction entity, BackupConstructionDAO entityDao) {
 		super(entity, entityDao);

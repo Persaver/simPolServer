@@ -37,6 +37,10 @@ public class BackupConstructionSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 *
+	 * renvois le backupConstuction si id sinon liste des backupConstuctions du backup
+	 * /backupconstructions","/backupconstructions/{id}
+	 *
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,6 +61,7 @@ public class BackupConstructionSrv extends HttpServlet {
 
 		if(backup != null){
 			if(request.getAttribute("id") != null){
+
 				try {
 					bc=(BackupConstruction) new EntitiesController().getGameEntity(Integer.parseInt(request.getAttribute("id").toString()));
 				} catch (NumberFormatException | ServiceException e) {
@@ -74,10 +79,12 @@ public class BackupConstructionSrv extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				out.append(new Gson().toJson(bcs));
+				out.append(RestTools.getReturn(bcs, bcs == null));
 
 			}
 
+		}else{
+			out.append(RestTools.getReturn(new BackupException("Pas de pas correspondant"), true));
 		}
 		out.close();
 	}
@@ -87,8 +94,35 @@ public class BackupConstructionSrv extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		this.doGet(request, response);
+		BackupConstruction bc = null;
+		Backup backup = null;
+		// test si id	 ou all
+		RestTools.getId(request);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		try {
+			backup = LoginTools.checkBackup(request);
+
+			if(backup == null){
+				out.append(RestTools.getReturn(new BackupException("Pas de pas correspondant"), true));
+			}
+			else{
+				if(request.getAttribute("backupConstruction") != null){
+					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+				}
+				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
+
+			}
+		} catch (BackupException | ServiceException e) {
+			// TODO Auto-generated catch block
+			RestTools.getReturn(e.getMessage(), true);
+		}
+
+		out.append(RestTools.getReturn(bc, bc == null));
+		out.close();
+
+
 	}
 
 	/**
@@ -96,8 +130,33 @@ public class BackupConstructionSrv extends HttpServlet {
 	 */
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+		BackupConstruction bc = null;
+		Backup backup = null;
+		// test si id	 ou all
+		RestTools.getId(request);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		try {
+			backup = LoginTools.checkBackup(request);
+
+			if(backup == null){
+				out.append(RestTools.getReturn(new BackupException("Pas de pas correspondant"), true));
+			}
+			else{
+				if(request.getAttribute("backupConstruction") != null){
+					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+				}
+				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
+
+			}
+		} catch (BackupException | ServiceException e) {
+			// TODO Auto-generated catch block
+			RestTools.getReturn(e.getMessage(), true);
+		}
+
+		out.append(RestTools.getReturn(bc, bc == null));
+		out.close();	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
