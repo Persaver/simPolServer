@@ -15,17 +15,18 @@ public class Budget extends AbstractEntity<Budget> {
 	private Integer nbCadres;
 	private Integer nbj;
 	private Backup backup;
+	private Integer budget;
 
 	public Budget(){
 	}
 
 	public Budget(Integer id){
-		this(id,null, null, null, null, null, null, null, null, null, null);
+		this(id,null, null, null, null, null, null, null, null, null, null,null);
 	}
 
 	public Budget(Integer id, Integer ageTravail, Integer ageRetraite, Integer chargeSalariale,
 			Integer chargeCadre, Integer salaireStandard, Integer salaireCadre, Integer nbSalaries, Integer nbCadres,
-			Integer nbj, Backup backup) {
+			Integer nbj, Backup backup, Integer budget) {
 		super(id);
 		this.ageTravail = ageTravail;
 		this.ageRetraite = ageRetraite;
@@ -37,6 +38,15 @@ public class Budget extends AbstractEntity<Budget> {
 		this.nbCadres = nbCadres;
 		this.setNbj(nbj);
 		this.backup = backup;
+		this.budget=budget;
+	}
+
+	public Integer getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Integer budget) {
+		this.budget = budget;
 	}
 
 	public Integer getAgeTravail() {

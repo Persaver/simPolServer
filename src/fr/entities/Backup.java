@@ -9,20 +9,30 @@ public class Backup extends AbstractEntity<Backup> {
 	private String date_last;
 	private Integer nbj;
 	private User user;
+	private Integer budget;
 
 	public Backup() {
 	}
 
 	public Backup(Integer id) {
-		this(id, null, null, null, null);
+		this(id, null, null, null, null,null);
 	}
 
-	public Backup(Integer id, String date_creation, String date_last, Integer nbj, User user) {
+	public Backup(Integer id, String date_creation, String date_last, Integer nbj, User user, Integer budget) {
 		super(id);
 		this.date_creation = date_creation;
 		this.date_last = date_last;
 		this.nbj = nbj;
 		this.user = user;
+		this.budget=budget;
+	}
+
+	public Integer getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Integer budget) {
+		this.budget = budget;
 	}
 
 	public String getDate_creation() {

@@ -3,11 +3,11 @@ use simpol;
 INSERT INTO user (`id`,`login`,`password`)
 VALUES (1,'user1','0000');
 	  
-INSERT INTO backup(`id`,`date_creation`,`date_last`,`nbj`,`user`)
-VALUES (1,'2016-12-01','2016-12-02',1,1);
+INSERT INTO backup(`id`,`date_creation`,`date_last`,`nbj`,`user`,budget,)
+VALUES (1,'2016-12-01','2016-12-02',1,1,1000);
 
-INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `nbj`,`backup`) VALUES
-(1, 14, 70, 0, 0, 1000, 1500, 100, 20,1,1);
+INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `nbj`,`backup`,`budget`) VALUES
+(1, 14, 70, 0, 0, 1000, 1500, 100, 20,1,1,1000);
 
 INSERT INTO `categorie` (`id`, `libelle`) VALUES
 (1, 'education'),

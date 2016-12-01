@@ -36,6 +36,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbSalaries(result.getInt("nbSalaries"));
 				budget.setNbCadres(result.getInt("nbCadres"));
 				budget.setNbj(result.getInt("nbj"));
+				budget.setBudget(result.getInt("budget"));
 				backup = new Backup(result.getInt("backup"));
 				budget.setBackup(backup);
 				return budget;
@@ -68,6 +69,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbSalaries(result.getInt("nbSalaries"));
 				budget.setNbCadres(result.getInt("nbCadres"));
 				budget.setNbj(result.getInt("nbj"));
+				budget.setBudget(result.getInt("budget"));
 				budget.setBackup(backup);
 				return budget;
 			}
@@ -92,8 +94,9 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 					+"nbSalaries,"
 					+"nbCadres,"
 					+"nbj,"
-					+"backup)"
-					+"VALUES (?,?,?,?,?,?,?,?,?,?)";
+					+"backup,"
+					+"budget)"
+					+"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, budget.getId());
 			statement.setInt(2, budget.getAgeTravail());
@@ -106,6 +109,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			statement.setInt(8, budget.getNbCadres());
 			statement.setInt(9, budget.getNbj());
 			statement.setInt(10, budget.getBackup().getId());
+			statement.setInt(11, budget.getBudget());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
@@ -150,6 +154,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbSalaries(result.getInt("nbSalaries"));
 				budget.setNbCadres(result.getInt("nbCadres"));
 				budget.setNbj(result.getInt("nbj"));
+				budget.setBudget(result.getInt("budget"));
 				Backup backup = new Backup(result.getInt("backup"));
 				budget.setBackup(backup);
 				budgets.add(budget);
@@ -180,6 +185,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				budget.setNbSalaries(result.getInt("nbSalaries"));
 				budget.setNbCadres(result.getInt("nbCadres"));
 				budget.setNbj(result.getInt("nbj"));
+				budget.setBudget(result.getInt("budget"));
 				budget.setBackup(backup);
 				budgetsByBackup.add(budget);
 			}
