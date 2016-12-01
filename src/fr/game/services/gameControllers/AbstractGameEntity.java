@@ -1,5 +1,8 @@
 package fr.game.services.gameControllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.Dao.DAO;
 import fr.interfaces.IEntity;
 import fr.interfaces.IGameEntity;
@@ -14,10 +17,12 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	protected D entityDao = null;
 	protected boolean isModify = false;
 	
+	private static final Logger LOG = LogManager.getLogger();
 
 	public AbstractGameEntity(T entity,D entityDao){
 		this.entity = entity;
 		this.entityDao = entityDao;
+		LOG.debug(" Creation {} entity {} ",this.getClass().getName(), this.getEntity().getClass());
 	}
 
 	@Override
@@ -46,6 +51,7 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 
 	@Override
 	public void saveEntity() throws ServiceException{
+		LOG.debug(" Sauvergarde {} entity {} ",this.getClass().getName(),this.getEntity().getClass());
 		try {
 			this.entityDao.save(this.entity);
 		} catch (DAOException e) {

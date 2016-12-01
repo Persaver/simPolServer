@@ -92,6 +92,8 @@ public class BackupConstructionSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * Mettre a jour une construction
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -112,7 +114,7 @@ public class BackupConstructionSrv extends HttpServlet {
 				if(request.getAttribute("backupConstruction") != null){
 					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
 				}
-				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
+				bc = (BackupConstruction) new EntitiesController().saveGameEntity(bc);
 
 			}
 		} catch (BackupException | ServiceException e) {
@@ -128,6 +130,8 @@ public class BackupConstructionSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 * 
+	 * creer une construction
 	 */
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -146,6 +150,7 @@ public class BackupConstructionSrv extends HttpServlet {
 			}
 			else{
 				if(request.getAttribute("backupConstruction") != null){
+					
 					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
 				}
 				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);

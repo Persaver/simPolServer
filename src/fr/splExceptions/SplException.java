@@ -3,6 +3,8 @@ package fr.splExceptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import sun.rmi.runtime.Log;
+
 public class SplException extends Exception{
 	/**
 	 *

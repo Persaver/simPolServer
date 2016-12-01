@@ -1,6 +1,8 @@
 package fr.entities;
 
 import java.io.Serializable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
@@ -12,10 +14,17 @@ public abstract class AbstractEntity<T> implements Serializable, IJsonEntity, IE
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	protected Integer id;
 
+	private static final Logger LOG = LogManager.getLogger();
 
+	{
+		LOG.debug(" Creation entity {} ",this.getClass().getName());
+
+	}
 	public AbstractEntity(){
+		
 	}
 
 	public AbstractEntity(Integer id){

@@ -1,5 +1,9 @@
 package fr.Dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,12 +12,16 @@ import fr.db.AccessDB;
 import fr.splExceptions.DAOException;
 
 public abstract class DAO<T,I>{
+	private static final Logger LOG = LogManager.getLogger();
+	
 	public Connection connect = null;
 
 
 	public DAO(){
 		try {
 			this.connect = AccessDB.seConnecter();
+			LOG.debug(" connect db {} ",this.getClass().getName());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -2,6 +2,8 @@ package fr.tools;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.Dao.BackupDAO;
 import fr.Dao.UserDAO;
@@ -14,6 +16,7 @@ import fr.splExceptions.LoginException;
 import fr.splExceptions.ServiceException;
 
 public final class LoginTools {
+	private static final Logger LOG = LogManager.getLogger();
 
 	// verifie le login
 	public static final User checkLogin(HttpServletRequest HttpReq) throws LoginException{
@@ -35,7 +38,7 @@ public final class LoginTools {
 				}
 				session.setAttribute("user", user);
 				HttpReq.setAttribute("user", user);
-				System.out.println(user);
+				LOG.debug(" checkLogin by parameter  user = {} ",user != null ? user.getId() : null);
 
 			}
 
@@ -49,6 +52,8 @@ public final class LoginTools {
 			}catch(Exception e){
 				throw new LoginException(e.getMessage());
 			}
+			LOG.debug(" checkLogin by session  user = {} ",user != null ? user.getId() : null);
+
 		}
 		System.out.println(user);
 
@@ -63,6 +68,7 @@ public final class LoginTools {
 		// on verifie le user
 		try {
 			user = LoginTools.checkLogin(HttpReq);
+			
 		} catch (LoginException e) {
 			throw new BackupException(e.getMessage());
 		}
@@ -72,6 +78,8 @@ public final class LoginTools {
 			if(session.getAttribute("backup") != null){
 				try{
 					backup = (Backup) session.getAttribute("backup");
+					LOG.debug(" checkBackup by session  backup = {} ",backup != null ? backup.getId() : null);
+
 				}catch(Exception e){
 					throw new BackupException(e.getMessage());
 				}
@@ -82,6 +90,8 @@ public final class LoginTools {
 					try {
 						BackupService backupService = new BackupService(backup, new BackupDAO());
 						backup = backupService.getBackupByUserIdBackup(user, idbackup);
+						LOG.debug(" checkBackup by params  backup = {} ",backup != null ? backup.getId() : null);
+
 					} catch (ServiceException e) {
 						throw new BackupException(e.getMessage());
 					}
