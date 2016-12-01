@@ -12,10 +12,8 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	}
 
 
-	// Entree	: nombre total de la population
-	// Fonction : reparti aleatoirement la population dans les differentes tranches d'age
-	// Remarque : /
-	// Verifiee : oui
+
+		// Reparti aleatoirement la population dans les differentes tranches d'age
 	public PopulationService (Population entity, PopulationDAO entityDao,Integer a){
 		super(entity, entityDao);
 		int adulte = a/5*2;
@@ -44,15 +42,11 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 				}
 		}
 	}
-
-	// Entree	: le nombre d'individus a evaluer. L'age des sujets
-	// Fonction	: determine le nombre de personnes qui ne survivront pas
-	// Remarque	: 1 Les variables devront pouvoir etre influencee par differents facteurs (hygiene, avancee biologique, etc...)
-	//			  2 Formule basique, a voir pour la rendre plus precise (actuellement, 24 personnes arrivent a 130 ans sur une population de 10M)
-	//			  3 Le nombre de mort comprends une legere variable aleatoire pour eviter le systematisme
-	//	  		  4 La fonction est public, peut-etre la rendre private
-	//			  5 implementer comme facteur de mortalite : la quantite de population (et le taux de criminalite)
-	// Verifiee	: Oui
+	/* Entree	: le nombre d'individus a evaluer. L'age des sujets
+	* Fonction	: determine le nombre de personnes qui ne survivront pas
+	* Remarque	: 1 Les variables devront pouvoir etre influencee par differents facteurs (hygiene, avancee biologique, etc...)
+	*			  2 Formule basique, a voir pour la rendre plus precise (actuellement, 24 personnes arrivent a 130 ans sur une population de 10M)
+	 Verifiee	: Oui*/
 	public int morts(int nbIndiv, int age){
 		int nbMort;
 		if (age < 3){
@@ -70,17 +64,16 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		}
 		return nbMort;
 	}
-
 	public  void fertilite(){
 		this.entity.setFertilite((int)(30+Math.sqrt(this.entity.getAttractivite()/4)-20));
 	}
-	// Entree	: / - La fonction regroupe toutes les naissances de la population et les regroupe dans la case des nouveaux nes
-	// Fonction : Definit le nombre de naissance en fonction du nombre de personne en age de reproduction de la cite et du taux de fertilite
-	// Remarque : 1 - Le taux de fertilite est multiple par 10 pour rester en INT
-	//			  2 - La fonction calcul les naissances mensuelle, peut facilement calculer pour differentes echelles de temps
-	//			  3 - La fonction renvoie un entier, utile pour le developpement, possibilite de ne rien renvoyer
-	//			  4 - La fonction est public, peut-etre la rendre private
-	// Verifiee :
+	/* Entree	: / - La fonction regroupe toutes les naissances de la population et les regroupe dans la case des nouveaux nes
+	* Fonction : Definit le nombre de naissance en fonction du nombre de personne en age de reproduction de la cite et du taux de fertilite
+	* Remarque : 1 - Le taux de fertilite est multiple par 10 pour rester en INT
+	*			  2 - La fonction calcul les naissances mensuelle, peut facilement calculer pour differentes echelles de temps
+	*			  3 - La fonction renvoie un entier, utile pour le developpement, possibilite de ne rien renvoyer
+	*			  4 - La fonction est public, peut-etre la rendre private
+	 Verifiee :*/
 	public int naissances (){
 		int x, y, n = 0;
 		int num = this.nbIndiv(17, 42) * this.entity.getFertilite();
@@ -96,11 +89,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		}
 		return n;
 	}
-
-	// Entree	: les ages limitant de la tranche d'age desiree
-	// Fonction : Renvoie le nombre d'individu de la tranche d'age demandee
-	// Remarque :
-	// Verifiee : Oui
+	/* Entree	: les ages limitant de la tranche d'age desiree
+	* Fonction : Renvoie le nombre d'individu de la tranche d'age demandee
+	* Remarque :
+	 Verifiee : Oui*/
 	public int nbIndiv (int min, int max){
 		int i, j, nb = 0;
 		for (i = min; i <= max; i++){
@@ -113,11 +105,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	public int nbIndiv(){
 		return this.nbIndiv(0, 129);
 	}
-
-	// Entree	: / Agit directement sur toute la population
-	// Fonction	: Effectue les differentes operations de naissance, de mort et de vieillissement de la population (fait appel aux fonctions 'naissance' et 'mort'
-	// Remarque	: Fonction centrale de l'evolution de la population.
-	// Verifiee	: Oui
+	/* Entree	: / Agit directement sur toute la population
+	* Fonction	: Effectue les differentes operations de naissance, de mort et de vieillissement de la population (fait appel aux fonctions 'naissance' et 'mort'
+	* Remarque	: Fonction centrale de l'evolution de la population.
+	 Verifiee	: Oui*/
 	public int vieillissementM (){
 		int i, j, nbN;
 		nbN = this.naissances();
@@ -137,10 +128,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		return nbN;
 	}
 
-	// Entree	: /
-	// Fonction : Affiche tout le tableau
-	// Remarque : L'affichage se fait a l'echelle annuelle
-	// Verifiee : Oui
+	/* Entree	: /
+	* Fonction : Affiche tout le tableau
+	* Remarque : L'affichage se fait a l'echelle annuelle
+	 Verifiee : Oui*/
 	public  void affichePop (){
 		int i, j, nb;
 		for (i = 0; i < 130; i++){

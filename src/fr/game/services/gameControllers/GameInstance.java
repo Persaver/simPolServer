@@ -5,10 +5,8 @@ import java.util.List;
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
 import fr.entities.Backup;
-import fr.entities.BackupConstruction;
 import fr.entities.User;
 import fr.interfaces.IEntity;
-import fr.interfaces.IGameEntity;
 import fr.interfaces.IGameInstance;
 import fr.splExceptions.ServiceException;
 
@@ -60,9 +58,14 @@ public class GameInstance implements IGameInstance{
 	public void setBackup(Backup backup) {
 		this.backup = backup;
 	}
+	// recup ttout les batiments
+	@Override
 	public List<IEntity> getEntities() throws ServiceException {
 		return this.entityController.getGameEntitiesFromDao(backup.getId());
 	}
+	
+	
+	
 
 
 	private void start(){

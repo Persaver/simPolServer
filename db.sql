@@ -57,7 +57,8 @@ CREATE TABLE backup_construction(
   budget INT(5),
   attractive INT(5),
   postePourvu INT(5), /*** string representant les spe en format json */
-  specificite TEXT
+  specificite TEXT,
+  niveau INT(2)
   )ENGINE=InnoDB;
 
 /******ADD BY GEOFFREY*******/

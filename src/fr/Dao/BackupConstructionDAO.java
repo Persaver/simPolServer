@@ -47,6 +47,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
 				gson = new Gson();
 				// on recupere le type de la Map pour Gson
