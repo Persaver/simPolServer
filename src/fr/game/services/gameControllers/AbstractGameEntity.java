@@ -16,19 +16,19 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	protected T entity = null;
 	protected D entityDao = null;
 	protected boolean isModify = false;
-	
+
 	private static final Logger LOG = LogManager.getLogger();
 
 	public AbstractGameEntity(T entity,D entityDao){
 		this.entity = entity;
 		this.entityDao = entityDao;
-		LOG.debug(" Creation {} entity {} ",this.getClass().getName(), this.getEntity().getClass());
+		AbstractGameEntity.LOG.debug(" Creation {} entity {} ",this.getClass().getName(), this.getEntity() != null ? this.getEntity().getClass().getName() : "null");
 	}
 
 	@Override
 	public void setEntity(IEntity entity) throws ServiceException{
 		try {
-			this.entity =  entityDao.save((T)entity);
+			this.entity =  this.entityDao.save((T)entity);
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -51,7 +51,7 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 
 	@Override
 	public void saveEntity() throws ServiceException{
-		LOG.debug(" Sauvergarde {} entity {} ",this.getClass().getName(),this.getEntity().getClass());
+		AbstractGameEntity.LOG.debug(" Sauvergarde {} entity {} ",this.getClass().getName(),this.getEntity().getClass());
 		try {
 			this.entityDao.save(this.entity);
 		} catch (DAOException e) {

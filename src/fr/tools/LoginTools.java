@@ -65,6 +65,8 @@ public final class LoginTools {
 	public static final Backup checkBackup(HttpServletRequest HttpReq) throws BackupException{
 		HttpSession session = HttpReq.getSession(true);
 		Backup backup = null;
+		LoginTools.LOG.debug(" checkBackup ",backup != null ? backup.getId() : null);
+
 
 		User user;
 		// on verifie le user
@@ -88,6 +90,8 @@ public final class LoginTools {
 			}
 			else if(HttpReq.getParameter("backup") != null ){
 				Integer idbackup = Integer.parseInt(HttpReq.getParameter("backup"));
+				LoginTools.LOG.debug(" checkBackup by params  idBackup = {} ",idbackup != null ? idbackup : "null");
+
 				if(idbackup != null){
 					try {
 						BackupService backupService = new BackupService(backup, new BackupDAO());
