@@ -22,13 +22,33 @@ import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
+<<<<<<< HEAD
+=======
 	private static final Logger LOG = LogManager.getLogger();
 
 
+>>>>>>> 14404b3f3eea16e371231d73f14dbcd88ffde72c
 	private final static Integer IDECOLE = 1;
 	private final static Integer IDHOPITAL = 2;
+	private final static Integer IDCOMMISSARIAT = 3;
+	private final static Integer IDCASERNE = 4;
 
 
+	public static Integer getIdcommissariat() {
+		return IDCOMMISSARIAT;
+	}
+
+	public static Integer getIdcaserne() {
+		return IDCASERNE;
+	}
+
+	public static Integer getIDHOPITAL() {
+		return IDHOPITAL;
+	}
+
+	public static Integer getIDECOLE() {
+		return IDECOLE;
+	}
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
 		BackupConstructionDAO.LOG.debug("BackupConstructionDAO get(Integer id) {} ",id);
@@ -75,6 +95,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		return null;
 	}
 
+<<<<<<< HEAD
+=======
 
 	public static Integer getIDHOPITAL() {
 		return BackupConstructionDAO.IDHOPITAL;
@@ -86,6 +108,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	}
 
 
+>>>>>>> 14404b3f3eea16e371231d73f14dbcd88ffde72c
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
