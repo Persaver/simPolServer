@@ -1,10 +1,8 @@
 package fr.Dao;
 
 import java.lang.reflect.Type;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,20 +12,21 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
-import fr.entities.Backup;
-import fr.entities.BackupConstruction;
-import fr.entities.Construction;
-import fr.splExceptions.DAOException;
+import src.fr.Dao.DAO;
+import src.fr.entities.Backup;
+import src.fr.entities.BackupConstruction;
+import src.fr.entities.Construction;
+import src.fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
-<<<<<<< HEAD
-=======
 	private static final Logger LOG = LogManager.getLogger();
 
 
->>>>>>> 14404b3f3eea16e371231d73f14dbcd88ffde72c
+
 	private final static Integer IDECOLE = 1;
 	private final static Integer IDHOPITAL = 2;
 	private final static Integer IDCOMMISSARIAT = 3;
@@ -95,9 +94,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 		return null;
 	}
 
-<<<<<<< HEAD
-=======
-
 	public static Integer getIDHOPITAL() {
 		return BackupConstructionDAO.IDHOPITAL;
 	}
@@ -108,7 +104,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	}
 
 
->>>>>>> 14404b3f3eea16e371231d73f14dbcd88ffde72c
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
