@@ -2,6 +2,9 @@ package fr.game.services.indicateurs;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.PopulationDAO;
 import fr.entities.Backup;
@@ -11,7 +14,8 @@ import fr.game.services.gameControllers.AbstractGameEntity;
 import fr.splExceptions.DAOException;
 import fr.splExceptions.ServiceException;
 
-public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
+public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {	
+	private static final Logger LOG = LogManager.getLogger();
 	private Population entity;
 
 	public PopulationService(Population entity, PopulationDAO entityDao) {
@@ -22,6 +26,8 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	// Reparti aleatoirement la population dans les differentes tranches d'age
 	public PopulationService (Population entity, PopulationDAO entityDao,Integer a){
 		super(entity, entityDao);
+		LOG.debug("PopulationService entity {} ",this.entity != null ? this.entity.getClass().getName() : "null");
+
 		int adulte = a/5*2;
 		int b = a-adulte;
 		this.ajoutPopulation(adulte, 18, 42);
@@ -106,6 +112,9 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		return (int)((Math.random()*this.nbIndiv()/5+this.entity.getAttractivite())-this.nbIndiv()/10);
 	}
 	public void ajoutPopulation (int a, int agemin, int agemax){
+		LOG.debug("ajoutPopulation");
+		LOG.debug("ajoutPopulation entity {} ",this.entity != null ? this.entity.getClass().getName() : "null");
+
 		int i, col, lig;
 		for (i=a; i>0; i--){
 			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre aleatoirement la population dans la tranche d'age choisie.

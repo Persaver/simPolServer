@@ -21,6 +21,7 @@ import fr.game.services.indicateurs.PopulationService;
 import fr.game.services.indicateurs.SanteService;
 import fr.interfaces.IEntity;
 import fr.interfaces.IGameInstance;
+import fr.splExceptions.DAOException;
 import fr.splExceptions.ServiceException;
 
 public class GameInstance implements IGameInstance{
@@ -37,11 +38,17 @@ public class GameInstance implements IGameInstance{
 	private SanteDAO santeDAO = null;
 	private EducationDAO educationDAO = null;
 	private BudgetDAO budgetDAO = null;
+	
+	public GameInstance(User user,Backup backup){
+		this(user,new BackupDAO(), new BackupConstructionDAO(),backup);
+		LOG.debug("GameInstance ");
+	}
 
-	public GameInstance(User user, BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO,Integer IdBackup){
+	public GameInstance(User user, BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO,Backup backup){
 		if(user != null){
 			this.user = user;
 		}
+		this.backup = backup;
 		this.entityController = new EntitiesController();
 	}
 
@@ -81,23 +88,30 @@ public class GameInstance implements IGameInstance{
 	public List<IEntity> getEntities() throws ServiceException {
 		return this.entityController.getGameEntitiesFromDao(backup.getId());
 	}
-	
-	
-	
 
-
-	private void start() throws ServiceException{
-		PopulationService p = new PopulationService(new Population(), this.populationDAO, 200);
-		SanteService s = new SanteService(new Sante(), this.santeDAO);
-		BudgetService b = new BudgetService(new Budget(), this.budgetDAO);
+	public void start() throws ServiceException{
+		LOG.debug("GameInstance start");
+		Population pop = null;
+		Sante sante = null;
+		Budget budget = null;
+		LOG.debug("GameInstance Backup id : {}", this.backup != null ? this.backup.getId() : "null");
 		try {
+			pop = new PopulationDAO().getByBackup(this.backup);
+			PopulationService p = new PopulationService(pop, this.populationDAO, 200);
+			LOG.debug("GameInstance pop {} ",p != null ? p.getClass().getName() : "null");
+			sante = new SanteDAO().getByBackup(this.backup);
+			SanteService s = new SanteService(sante, this.santeDAO);
+			budget = new BudgetDAO().getByBackup(this.backup);
+			BudgetService b = new BudgetService(budget, this.budgetDAO);
+			LOG.debug("GameInstance pop {} sante {} budget {} ",p != null ? p.getClass().getName() : "null", s != null ? s.getClass().getName() : "null", b != null ? b.getClass().getName() : "null");
 			p.quotidien(this.backup);
-			LOG.info("une population a bien ete cree");
-		} catch (ServiceException e) {
+			s.journeeMedicale(p, b, this.backup);
+
+			LOG.debug("une population a bien ete cree");
+		} catch (ServiceException | DAOException e) {
 			// TODO Auto-generated catch block
 			throw new ServiceException(e.getMessage());
 		}
-		s.journeeMedicale(p, b, this.backup);
-		LOG.info("l'equipe medicale est en place");		
+		LOG.debug("l'equipe medicale est en place");
 	}
 }
