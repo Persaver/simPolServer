@@ -291,8 +291,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUpByConstruction(Backup backup, Integer idConstruction) {}  {} return {}",backup.getId(),idConstruction, backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
 			return backupConstructionsByBackup;
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			throw new DAOException(e.getMessage());
+			-			throw new DAOException(e.getMessage());
 		}
 
 	}
