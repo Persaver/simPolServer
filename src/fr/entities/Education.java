@@ -17,7 +17,7 @@ public class Education extends AbstractEntity<Education>{
 	private Integer ratioEntretien;
 	private Integer ratioSante;
 	private Integer ratioRecherche;
-	private Integer ratioToursime;
+	private Integer ratioTourisme;
 
 	public Education (){
 	}
@@ -122,12 +122,12 @@ public class Education extends AbstractEntity<Education>{
 		this.ratioRecherche = ratioRecherche;
 	}
 
-	public Integer getRatioToursime() {
-		return ratioToursime;
+	public Integer getRatioTourisme() {
+		return ratioTourisme;
 	}
 
-	public void setRatioToursime(Integer ratioToursime) {
-		this.ratioToursime = ratioToursime;
+	public void setRatioTourisme(Integer ratioTourisme) {
+		this.ratioTourisme = ratioTourisme;
 	}
 
 	@Override
