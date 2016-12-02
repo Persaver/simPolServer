@@ -15,7 +15,6 @@ import com.google.gson.reflect.TypeToken;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import src.fr.Dao.DAO;
 import src.fr.entities.Backup;
 import src.fr.entities.BackupConstruction;
 import src.fr.entities.Construction;
@@ -24,9 +23,6 @@ import src.fr.splExceptions.DAOException;
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	private static final Logger LOG = LogManager.getLogger();
-
-
-
 	private final static Integer IDECOLE = 1;
 	private final static Integer IDHOPITAL = 2;
 	private final static Integer IDCOMMISSARIAT = 3;
@@ -34,20 +30,14 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 
 	public static Integer getIdcommissariat() {
-		return IDCOMMISSARIAT;
+		return BackupConstructionDAO.IDCOMMISSARIAT;
 	}
 
 	public static Integer getIdcaserne() {
-		return IDCASERNE;
+		return BackupConstructionDAO.IDCASERNE;
 	}
 
-	public static Integer getIDHOPITAL() {
-		return IDHOPITAL;
-	}
 
-	public static Integer getIDECOLE() {
-		return IDECOLE;
-	}
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
 		BackupConstructionDAO.LOG.debug("BackupConstructionDAO get(Integer id) {} ",id);
@@ -102,7 +92,6 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public static Integer getIDECOLE() {
 		return BackupConstructionDAO.IDECOLE;
 	}
-
 
 	@Override
 	public void delete(Integer id) {
