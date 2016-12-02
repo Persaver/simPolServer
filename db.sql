@@ -16,7 +16,8 @@ CREATE TABLE backup (
   date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
   date_last DATETIME DEFAULT CURRENT_TIMESTAMP,
   nbj INT NOT NULL DEFAULT 0,
-  user INT(3) NOT NULL
+  user INT(3) NOT NULL,
+  budget INT
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS categorie;
@@ -52,7 +53,7 @@ CREATE TABLE backup_construction(
   x INT(5) NOT NULL,
   y INT(5) NOT NULL,
   nbSalarie INT(5),
-  nbCadres INT(5),
+  nbCadre INT(5),
   risque INT(5),
   budget INT(5),
   attractive INT(5),
@@ -75,7 +76,8 @@ CREATE TABLE budget (
   nbSalaries INT,
   nbCadres INT,
   nbj INT,
-  backup INT(4)
+  backup INT(4),
+  budget INT
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS criminalite;

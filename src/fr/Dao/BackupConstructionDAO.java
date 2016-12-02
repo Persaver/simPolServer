@@ -222,7 +222,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setX(result.getInt("x"));
 				backupConstruction.setY(result.getInt("y"));
 				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
-				backupConstruction.setNbCadre(result.getInt("nbCadres"));
+				backupConstruction.setNbCadre(result.getInt("nbCadre"));
 				backupConstruction.setRisque(result.getInt("risque"));
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractive"));
@@ -259,7 +259,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setX(result.getInt("x"));
 				backupConstruction.setY(result.getInt("y"));
 				backupConstruction.setNbSalarie(result.getInt("nbSalarie"));
-				backupConstruction.setNbCadre(result.getInt("nbCadres"));
+				backupConstruction.setNbCadre(result.getInt("nbCadre"));
 				backupConstruction.setRisque(result.getInt("risque"));
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractive"));

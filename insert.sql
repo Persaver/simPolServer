@@ -3,11 +3,11 @@ use simpol;
 INSERT INTO user (`id`,`login`,`password`)
 VALUES (1,'user1','0000');
 	  
-INSERT INTO backup(`id`,`date_creation`,`date_last`,`nbj`,`user`)
-VALUES (1,'2016-12-01','2016-12-02',1,1);
+INSERT INTO backup(`id`,`date_creation`,`date_last`,`nbj`,`user`,budget)
+VALUES (1,'2016-12-01','2016-12-02',1,1,1000);
 
-INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `nbj`,`backup`) VALUES
-(1, 14, 70, 0, 0, 1000, 1500, 100, 20,1,1);
+INSERT INTO `budget` (`id`, `ageTravail`, `ageRetraite`, `chargeSalariale`, `chargeCadre`, `salaireStandard`, `salaireCadre`, `nbSalaries`, `nbCadres`, `nbj`,`backup`,`budget`) VALUES
+(1, 14, 70, 0, 0, 1000, 1500, 100, 20,1,1,1000);
 
 INSERT INTO `categorie` (`id`, `libelle`) VALUES
 (1, 'education'),
@@ -46,7 +46,7 @@ VALUES
 INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`, ratioSecurite, ratioEntretien, ratioSante, ratioRecherche, ratioTourisme) 
 VALUES (1,10,10,10,10,10,10,1,1, 100, 100, 100, 100, 100);
 
-INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadres`, `risque`, `budget`, `attractive`, `postePourvu`, `specificite`, niveau) VALUES
+INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractive`, `postePourvu`, `specificite`,`niveau`) VALUES
 (1,1,1, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (2,1,6, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (3,1,17, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
@@ -62,6 +62,7 @@ INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSal
 (13,1,1, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (14,1,1, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (15,1,1, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1);
+
 
 
 INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `crimeMoyen`, `indicGrave`, `crimeGrave`, `indicTerrorisme`, `crimeTerroriste`, `nbj`, `backup`) VALUES

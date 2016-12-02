@@ -30,6 +30,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 				backup.setDate_creation(result.getString("date_creation"));
 				backup.setDate_last(result.getString("date_last"));
 				backup.setNbj(result.getInt("nbj"));
+				backup.setBudget(result.getInt("budget"));
 				user = new UserDAO().get(result.getInt("user"));
 				backup.setUser(user);
 				return backup;
@@ -59,6 +60,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 					backup.setDate_creation(result.getString("date_creation"));
 					backup.setDate_last(result.getString("date_last"));
 					backup.setNbj(result.getInt("nbj"));
+					backup.setBudget(result.getInt("budget"));
 					backup.setUser(user);
 					backups.add(backup);
 				}
@@ -74,11 +76,12 @@ public class BackupDAO extends DAO<Backup,Integer> {
 	@Override
 	public Backup save(Backup backup) throws DAOException {
 		try {
-			String sql = "INSERT INTO backup (date_creation, nbj, user) VALUES (?,?,?)";
+			String sql = "INSERT INTO backup (date_creation, nbj, user,budget) VALUES (?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setString(1, backup.getDate_creation());
 			statement.setInt(2, backup.getNbj());
 			statement.setInt(3, backup.getUser().getId());
+			statement.setInt(4, backup.getBudget());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
@@ -110,12 +113,14 @@ public class BackupDAO extends DAO<Backup,Integer> {
 					+"date_creation = ?,"
 					+ "nbj = ?, "
 					+ "user = ?"
+					+ "budget = ?"
 					+ "WHERE id = ?";
 			PreparedStatement statement = this.connect.prepareStatement( sql);
 			statement.setString(1, backup.getDate_creation());
 			statement.setInt(2, backup.getNbj());
 			statement.setInt(3, backup.getUser().getId());
-			statement.setInt(4, element.getId());
+			statement.setInt(4, backup.getBudget());
+			statement.setInt(5, element.getId());
 			cptRow = statement.executeUpdate();
 			// si plus petit que 1 pas de modif effectué
 			if ((cptRow == null) || (cptRow < 1)){
@@ -141,6 +146,7 @@ public class BackupDAO extends DAO<Backup,Integer> {
 				backup.setDate_creation(result.getString("date_creation"));
 				backup.setDate_last(result.getString("date_last"));
 				backup.setNbj(result.getInt("nbj"));
+				backup.setBudget(result.getInt("budget"));
 				User user = new User(result.getInt("user"));
 				backup.setUser(user);
 				backups.add(backup);
