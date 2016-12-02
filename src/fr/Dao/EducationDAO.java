@@ -84,7 +84,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 	@Override
 	public Education save(Education element) throws DAOException {
 		try {
-			String req = "INSERT INTO sante (edTotale, edSecurite, edEntretien, edSante, edRecherche, edTourisme, nbj, backup, ratioSecurite, ratioEntretien, ratioSante, ratioRecherche, ratioTourisme) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+			String req = "INSERT INTO sante (edTotale, edSecurite, edEntretien, edSante, edRecherche, edTourisme, nbj, backup, ratioSecurite, ratioEntretien, ratioSante, ratioRecherche, ratioTourisme) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?; ?; ?; ?)";
 			PreparedStatement statement = this.connect.prepareStatement(req);
 			statement.setInt(1, element.getEdTotale());
 			statement.setInt(2, element.getEdSecurite());
