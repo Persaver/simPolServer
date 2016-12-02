@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,13 +21,18 @@ import fr.entities.Construction;
 import fr.splExceptions.DAOException;
 
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
-	
+
+	private static final Logger LOG = LogManager.getLogger();
+
+
 	private final static Integer IDECOLE = 1;
 	private final static Integer IDHOPITAL = 2;
 
 
 	@Override
 	public BackupConstruction get(Integer id) throws DAOException {
+		BackupConstructionDAO.LOG.debug("BackupConstructionDAO get(Integer id) {} ",id);
+
 		ResultSet result;
 		BackupConstruction backupConstruction;
 		Construction construction;
@@ -56,6 +64,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backup = new Backup(result.getInt("backup"));
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO get(Integer id {} return {}",id,backupConstruction != null ? backupConstruction.getId() : "null");
 				return backupConstruction;
 			}
 		} catch (SQLException e) {
@@ -67,12 +76,12 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 
 	public static Integer getIDHOPITAL() {
-		return IDHOPITAL;
+		return BackupConstructionDAO.IDHOPITAL;
 	}
 
 
 	public static Integer getIDECOLE() {
-		return IDECOLE;
+		return BackupConstructionDAO.IDECOLE;
 	}
 
 
@@ -84,6 +93,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	@Override
 	public BackupConstruction save(BackupConstruction element) throws DAOException {
+		BackupConstructionDAO.LOG.debug("BackupConstructionDAO save(Integer id) {} ",element.getId());
 		Gson gson = new Gson();
 		try {
 			String sql = "INSERT INTO backup_construction ("
@@ -120,6 +130,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			}
 			statement.close();
 			generatedKeys.close();
+			BackupConstructionDAO.LOG.debug("BackupConstructionDAO save(Integer id) {} return {}",element != null ? element.getId() : "null");
+
 			return element;
 		}catch (SQLException e){
 			throw new DAOException(e.getMessage());
@@ -128,6 +140,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	@Override
 	public BackupConstruction update(BackupConstruction element) throws DAOException {
+		BackupConstructionDAO.LOG.debug("BackupConstructionDAO update(Integer id) {} ",element.getId());
+
 		Gson gson = null;
 		Integer cptRow = null;
 		try {
@@ -163,6 +177,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			if ((cptRow == null) || (cptRow < 1)){
 				throw new SQLException("Creating message failed, no ID obtained.");
 			}
+			BackupConstructionDAO.LOG.debug("BackupConstructionDAO update(Integer id) {} return {}",element != null ? element.getId() : "null");
 			statement.close();
 			return element;
 		}catch (SQLException e){
@@ -197,6 +212,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBackup(backup);
 				backupConstructions.add(backupConstruction);
 			}
+
 			return backupConstructions ;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -207,6 +223,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public List<BackupConstruction> getAllByBackUp(Backup backup) throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
+		BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUp(Backup backup) {} ",backup.getId());
+
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ?");
 			prepare.setInt(1, backup.getId());
@@ -231,6 +249,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
 			}
+			BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUp(Backup backup) {} return {}",backup.getId(), backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
 			return backupConstructionsByBackup;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -242,6 +261,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 	public List<BackupConstruction> getAllByBackUpByConstruction(Backup backup, Integer idConstruction) throws DAOException {
 		ResultSet result;
 		List<BackupConstruction> backupConstructionsByBackup = new ArrayList<BackupConstruction>();
+		BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUpByConstruction(Backup backup, Integer idConstruction) {}  {} ",backup.getId(),idConstruction);
+
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * from backup_construction where backup = ? and construction=?");
 			prepare.setInt(1, backup.getId());
@@ -267,6 +288,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
 			}
+			BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUpByConstruction(Backup backup, Integer idConstruction) {}  {} return {}",backup.getId(),idConstruction, backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
 			return backupConstructionsByBackup;
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
