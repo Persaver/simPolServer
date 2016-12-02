@@ -1,17 +1,22 @@
 package fr.game.services.indicateurs;
 
-public class BudgetService extends AbstractIndicateursService{
+import fr.Dao.BudgetDAO;
+import fr.entities.Budget;
+import fr.game.services.gameControllers.AbstractGameEntity;
+
+public class BudgetService extends AbstractGameEntity<Budget, BudgetDAO>{
 	private int ageTravail = 19;				// L'age a partir duquel les citoyens travaillent
 	private int ageRetraite = 62;				// Age de la retraite
 	private int chargeSalariale = 20;			// En pourcentage
 	private int chargeCadre = 40;
 	private int salaireStandard = 1250;
 	private int salaireCadre = 2350;
-
-	// Ces attributs doivent etre obtenus avec une fonction getSalaries et getCadres des constructions (avant, ils etaients incrementes lors de chaque construction ou evolution, maintenant, ce n'est plus le cas)
 	private int nbSalaries = 0;
 	private int nbCadres = 0;
 
+	public BudgetService (Budget entity, BudgetDAO entityDao) {
+		super(entity, entityDao);
+	}
 	public int pauvrete(PopulationService p){
 		int a = p.nbIndiv(this.ageTravail, this.ageRetraite);										// On recupere tous les citoyens en age de travailler
 		double postEfficience = Math.min((double)(this.nbCadres + this.nbSalaries)/a, (double)a/(this.nbCadres + this.nbSalaries));			// On compare ce nombre au nombre de postes de la ville
@@ -69,5 +74,10 @@ public class BudgetService extends AbstractIndicateursService{
 	}
 	public void setNbSalaries(int nbSalaries) {
 		this.nbSalaries += nbSalaries;
+	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

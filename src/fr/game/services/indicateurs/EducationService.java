@@ -32,7 +32,12 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 
 		this.entity.setEdTotale(edT);
 	}
-	
+
+	public void journeeScolaire (PopulationService p, BudgetService b, Backup backup) throws ServiceException {
+		this.actuEducationTot(backup);
+		this.recupEducation(p, b);
+		this.distibution();
+	}
 	public void recupEducation(PopulationService p, BudgetService b){
 		int place = this.entity.getEdTotale();
 		int etudiant = p.nbIndiv(0, b.getAgeTravail());
@@ -42,7 +47,6 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 			this.entity.setEdTotale(((100+(place-etudiant)/4)*5)*((int)(Math.sqrt(b.getAgeTravail())/4)));
 		}
 	}
-	
 	public void init(){
 		this.entity.setRatioSecurite(100);
 		this.entity.setRatioEntretien(100);
@@ -50,7 +54,6 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 		this.entity.setRatioRecherche(100);
 		this.entity.setRatioTourisme(100);
 	}
-
 	public void modifierSecurite(int mod){
 		int a = 1;
 		int sec = this.entity.getRatioSecurite();
@@ -129,7 +132,6 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 			--mod;
 		}
 	}
-	
 	public void modifierSante(int mod){
 		int a = 1;
 		int sec = this.entity.getRatioSecurite();

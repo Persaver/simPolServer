@@ -1,8 +1,15 @@
 package fr.game.services.indicateurs;
 
+import java.util.List;
+
+import fr.Dao.BackupConstructionDAO;
 import fr.Dao.PopulationDAO;
+import fr.entities.Backup;
+import fr.entities.BackupConstruction;
 import fr.entities.Population;
 import fr.game.services.gameControllers.AbstractGameEntity;
+import fr.splExceptions.DAOException;
+import fr.splExceptions.ServiceException;
 
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {
 	private Population entity;
@@ -11,15 +18,92 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		this(entity, entityDao, null);
 	}
 
-
-
-		// Reparti aleatoirement la population dans les differentes tranches d'age
+		//	Fonction Init  //
+	// Reparti aleatoirement la population dans les differentes tranches d'age
 	public PopulationService (Population entity, PopulationDAO entityDao,Integer a){
 		super(entity, entityDao);
 		int adulte = a/5*2;
 		int b = a-adulte;
 		this.ajoutPopulation(adulte, 18, 42);
 		this.ajoutPopulation(b, 0, 80);
+	}
+		// Fonctions Quotidiennes //
+			// Resume //
+	public void quotidien (Backup backup) throws ServiceException{
+		this.actuAttract(backup);
+		this.fertilite();
+		this.vieillissementM();
+		this.flux();
+	}
+	
+	public void actuAttract (Backup backup) throws ServiceException{
+		List<BackupConstruction> backupConstructions = null;
+		int attract = 0;
+		try {
+			backupConstructions = new BackupConstructionDAO().getAll();
+			for (BackupConstruction element : backupConstructions){
+				attract += element.getAttractivite();
+			}
+		}catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		this.entity.setAttractivite(attract);
+	}
+	public  void fertilite(){
+		this.entity.setFertilite((int)(30+Math.sqrt(this.entity.getAttractivite()/4)-20));
+	}
+	/* Entree	: / Agit directement sur toute la population
+	* Fonction	: Effectue les differentes operations de naissance, de mort et de vieillissement de la population (fait appel aux fonctions 'naissance' et 'mort')
+	* Remarque	: Fonction centrale de l'evolution de la population.
+	 Verifiee	: Oui*/
+	public void vieillissementM (){
+		int i, j, nbN;
+		nbN = this.naissances();
+		for (i = 129; i >= 0; i--){
+			for (j = 11; j >= 0; j--){
+				if (i == 0 && j == 0){
+					this.entity.setPopTab(i, j, nbN);	// Ici, on ajoute les naissances
+				} else {
+					if (j == 0){
+						this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));	//vieillissement annuel
+					} else {
+						this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i));	//vieillissement mensuel
+					}
+				}
+			}
+		}
+	}
+	/* Entree 	: /
+	* Fonction	: reparti les migrants dans des tranches d'age coherentes et appelle les fonction pour modifier le tableau de population
+	* Remarque	:
+	 Verifiee	: Oui*/
+	public void flux (){
+		int a = this.migration();
+		if (a>=0){
+			int adulte = a/5*2;	// oblige les nouveaux arrivant a etre coherent
+			int b = a-adulte;
+			this.ajoutPopulation(adulte, 18, 42);
+			this.ajoutPopulation(b, 0, 80);
+		} else {
+			//System.out.println(this.nbIndiv(18, 42));
+			if (-a > this.nbIndiv(0, 80)){
+				a = -this.nbIndiv(0, 80);
+			}
+			int adulte = a/5*2;	// Les departs ne se font avec des adultes
+			if (-adulte > this.nbIndiv(18, 42)) {
+				adulte = this.nbIndiv(18, 42);
+			}
+			int b = a+adulte;
+			this.retraitPopulation(-adulte, 18, 42);
+			this.retraitPopulation(-b, 0, 80);
+		}
+	}
+
+	
+	
+		// Fonction Annexes	//
+	public int migration(){
+		return (int)((Math.random()*this.nbIndiv()/5+this.entity.getAttractivite())-this.nbIndiv()/10);
 	}
 	public void ajoutPopulation (int a, int agemin, int agemax){
 		int i, col, lig;
@@ -32,6 +116,9 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	}
 	public void retraitPopulation (int a, int agemin, int agemax){
 		int col, lig;
+		if (a > this.nbIndiv(agemin, agemax)){
+			a = this.nbIndiv(agemin, agemax);
+		}
 		while(a > 0){
 			int random = (int)(Math.random() * (agemax-agemin+1)*12); // permet de retirer al�atoirement la population dans la tranche d'age choisie.
 			col = random/12;
@@ -42,6 +129,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 				}
 		}
 	}
+	
 	/* Entree	: le nombre d'individus a evaluer. L'age des sujets
 	* Fonction	: determine le nombre de personnes qui ne survivront pas
 	* Remarque	: 1 Les variables devront pouvoir etre influencee par differents facteurs (hygiene, avancee biologique, etc...)
@@ -64,9 +152,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		}
 		return nbMort;
 	}
-	public  void fertilite(){
-		this.entity.setFertilite((int)(30+Math.sqrt(this.entity.getAttractivite()/4)-20));
-	}
+	
 	/* Entree	: / - La fonction regroupe toutes les naissances de la population et les regroupe dans la case des nouveaux nes
 	* Fonction : Definit le nombre de naissance en fonction du nombre de personne en age de reproduction de la cite et du taux de fertilite
 	* Remarque : 1 - Le taux de fertilite est multiple par 10 pour rester en INT
@@ -77,7 +163,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 	public int naissances (){
 		int x, y, n = 0;
 		int num = this.nbIndiv(17, 42) * this.entity.getFertilite();
-		int denom = 2*12*25*10;							// Nb indiviu par couple * nb mois * nb annee * equilibrateur fertilite
+		int denom = 2*12*25*10;							// Nb individu par couple * nb mois * nb annee * equilibrateur fertilite
 		while (num > denom){
 			num -= denom;
 			n++;
@@ -89,6 +175,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		}
 		return n;
 	}
+	
 	/* Entree	: les ages limitant de la tranche d'age desiree
 	* Fonction : Renvoie le nombre d'individu de la tranche d'age demandee
 	* Remarque :
@@ -97,35 +184,13 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		int i, j, nb = 0;
 		for (i = min; i <= max; i++){
 			for (j=0; j < 12; j++) {
-				//	nb += this.entity.getPopTab(i, j);
+				nb += this.entity.getPopTab(i, j);
 			}
 		}
 		return nb;
 	}
 	public int nbIndiv(){
 		return this.nbIndiv(0, 129);
-	}
-	/* Entree	: / Agit directement sur toute la population
-	* Fonction	: Effectue les differentes operations de naissance, de mort et de vieillissement de la population (fait appel aux fonctions 'naissance' et 'mort'
-	* Remarque	: Fonction centrale de l'evolution de la population.
-	 Verifiee	: Oui*/
-	public int vieillissementM (){
-		int i, j, nbN;
-		nbN = this.naissances();
-		for (i = 129; i >= 0; i--){
-			for (j = 11; j >= 0; j--){
-				if (i == 0 && j == 0){
-					//		this.entity.setPopTab(i, j, nbN);
-				} else {
-					if (j == 0){
-						//		this.entity.setPopTab(i, j, this.entity.getPopTab(i-1, 11)-this.morts(this.entity.getPopTab(i-1, 11), i));//vieillissement
-					} else {
-						//			this.entity.setPopTab(i, j, this.entity.getPopTab(i, j-1)-this.morts(this.entity.getPopTab(i, j-1), i)); //vieillissement
-					}
-				}
-			}
-		}
-		return nbN;
 	}
 
 	/* Entree	: /
@@ -137,7 +202,7 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = 0; i < 130; i++){
 			nb=0;
 			for (j=0; j < 12; j++) {
-				//nb += this.entity.getPopTab(i, j);
+				nb += this.entity.getPopTab(i, j);
 			}
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}
@@ -161,42 +226,10 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 		for (i = min; i <= max; i++){
 			nb=0;
 			for (j=0; j < 12; j++) {
-				//nb += this.entity.getPopTab(i, j);
+				nb += this.entity.getPopTab(i, j);
 			}
 			System.out.println("Il y a " + nb + " individus de " + i + " an(s)");
 		}
-	}
-
-	// Entree 	: Le nombre d'entree ou sortie de la
-	// Fonction	: reparti les migrants dans des tranches d'age coherentes et appelle les fonction pour modifier le tableau de population
-	// Remarque	:
-	// Verifiee	: Oui
-	public int flux (int a){
-		if (a>=0){
-			int adulte = a/5*2;	// oblige les nouveaux arrivant a etre coherent
-			int b = a-adulte;
-			this.ajoutPopulation(adulte, 18, 42);
-			this.ajoutPopulation(b, 0, 80);
-		} else {
-			//System.out.println(this.nbIndiv(18, 42));
-			if (-a > this.nbIndiv(0, 80)){
-				a = -this.nbIndiv(0, 80);
-			}
-			int adulte = a/5*2;	// Les departs ne se font avec des adultes
-			if (-adulte > this.nbIndiv(18, 42)) {
-				adulte = this.nbIndiv(18, 42);
-			}
-			int b = a+adulte;
-			this.retraitPopulation(-adulte, 18, 42);
-			this.retraitPopulation(-b, 0, 80);
-		}
-		return a;
-	}
-	public int migration(){
-		return (int)((Math.random()*this.nbIndiv()/5+this.entity.getAttractivite())-this.nbIndiv()/10);
-	}
-	public void modAttraction(int mod){
-		this.entity.setAttractivite(this.entity.getAttractivite() + mod);
 	}
 
 	@Override
