@@ -6,7 +6,6 @@ import fr.Dao.BackupConstructionDAO;
 import fr.Dao.EducationDAO;
 import fr.entities.Backup;
 import fr.entities.BackupConstruction;
-import fr.entities.Budget;
 import fr.entities.Education;
 import fr.game.services.gameControllers.AbstractGameEntity;
 import fr.splExceptions.DAOException;
@@ -34,7 +33,7 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 		this.entity.setEdTotale(edT);
 	}
 	
-	public void recupEducation(PopulationService p, Budget b){
+	public void recupEducation(PopulationService p, BudgetService b){
 		int place = this.entity.getEdTotale();
 		int etudiant = p.nbIndiv(0, b.getAgeTravail());
 		if (place-etudiant < 0) {
@@ -43,349 +42,217 @@ public class EducationService extends AbstractGameEntity<Education, EducationDAO
 			this.entity.setEdTotale(((100+(place-etudiant)/4)*5)*((int)(Math.sqrt(b.getAgeTravail())/4)));
 		}
 	}
+	
+	public void init(){
+		this.entity.setRatioSecurite(100);
+		this.entity.setRatioEntretien(100);
+		this.entity.setRatioSante(100);
+		this.entity.setRatioRecherche(100);
+		this.entity.setRatioTourisme(100);
+	}
 
+	public void modifierSecurite(int mod){
+		int a = 1;
+		int sec = this.entity.getRatioSecurite();
+		int ent = this.entity.getRatioEntretien();
+		int san = this.entity.getRatioSante();
+		int rech = this.entity.getRatioRecherche();
+		int tour = this.entity.getRatioTourisme();
+		int choix;
+		if (mod < 0){	// Si on decide de retirer des valeurs
+			a = -1;
+			mod = (-mod > tour) ? tour : -mod;	// Ici, on verifie que le retrait ne peut pas mettre l'indicateur en negatif
+		}
+		while (mod > 0){
+			choix = (int)Math.random()*400;
+			if (choix < ent){
+				this.entity.setRatioEntretien(ent - a);
+				this.entity.setRatioSecurite(sec +a);
+			} else {
+				choix -= ent;
+				if (choix < san){
+					this.entity.setRatioSante(san-a);
+					this.entity.setRatioSecurite(sec +a);
+				} else {
+					choix -= san;
+					if (choix < rech){
+						this.entity.setRatioRecherche(rech-a);
+						this.entity.setRatioSecurite(sec +a);
+					} else {
+						choix -= rech;
+						if (choix < tour){
+							this.entity.setRatioTourisme(tour-a);
+							this.entity.setRatioSecurite(sec +a);
+						}
+					}
+				}
+			}
+			--mod;
+		}
+	}
+	public void modifierEntretien(int mod){
+		int a = 1;
+		int sec = this.entity.getRatioSecurite();
+		int ent = this.entity.getRatioEntretien();
+		int san = this.entity.getRatioSante();
+		int rech = this.entity.getRatioRecherche();
+		int tour = this.entity.getRatioTourisme();
+		int choix;
+		if (mod < 0){	// Si on decide de retirer des valeurs
+			a = -1;
+			mod = (-mod > tour) ? tour : -mod;	// Ici, on verifie que le retrait ne peut pas mettre l'indicateur en negatif
+		}
+		while (mod > 0){
+			choix = (int)Math.random()*400;
+			if (choix < sec){
+				this.entity.setRatioSecurite(sec - a);
+				this.entity.setRatioEntretien(ent +a);
+			} else {
+				choix -= sec;
+				if (choix < san){
+					this.entity.setRatioSante(san-a);
+					this.entity.setRatioEntretien(ent +a);
+				} else {
+					choix -= san;
+					if (choix < rech){
+						this.entity.setRatioRecherche(rech-a);
+						this.entity.setRatioEntretien(ent +a);
+					} else {
+						choix -= rech;
+						if (choix < tour){
+							this.entity.setRatioTourisme(tour-a);
+							this.entity.setRatioEntretien(ent +a);
+						}
+					}
+				}
+			}
+			--mod;
+		}
+	}
+	
+	public void modifierSante(int mod){
+		int a = 1;
+		int sec = this.entity.getRatioSecurite();
+		int ent = this.entity.getRatioEntretien();
+		int san = this.entity.getRatioSante();
+		int rech = this.entity.getRatioRecherche();
+		int tour = this.entity.getRatioTourisme();
+		int choix;
+		if (mod < 0){	// Si on decide de retirer des valeurs
+			a = -1;
+			mod = (-mod > tour) ? tour : -mod;	// Ici, on verifie que le retrait ne peut pas mettre l'indicateur en negatif
+		}
+		while (mod > 0){
+			choix = (int)Math.random()*400;
+			if (choix < sec){
+				this.entity.setRatioSecurite(sec - a);
+				this.entity.setRatioSante(san +a);
+			} else {
+				choix -= sec;
+				if (choix < ent){
+					this.entity.setRatioEntretien(ent-a);
+					this.entity.setRatioSante(san +a);
+				} else {
+					choix -= ent;
+					if (choix < rech){
+						this.entity.setRatioRecherche(rech-a);
+						this.entity.setRatioSante(san +a);
+					} else {
+						choix -= rech;
+						if (choix < tour){
+							this.entity.setRatioTourisme(tour-a);
+							this.entity.setRatioSante(san +a);
+						}
+					}
+				}
+			}
+			--mod;
+		}
+	}
+	public void modifierRecherche(int mod){
+		int a = 1;
+		int sec = this.entity.getRatioSecurite();
+		int ent = this.entity.getRatioEntretien();
+		int san = this.entity.getRatioSante();
+		int rech = this.entity.getRatioRecherche();
+		int tour = this.entity.getRatioTourisme();
+		int choix;
+		if (mod < 0){	// Si on decide de retirer des valeurs
+			a = -1;
+			mod = (-mod > tour) ? tour : -mod;	// Ici, on verifie que le retrait ne peut pas mettre l'indicateur en negatif
+		}
+		while (mod > 0){
+			choix = (int)Math.random()*400;
+			if (choix < sec){
+				this.entity.setRatioSecurite(sec - a);
+				this.entity.setRatioRecherche(rech + a);
+			} else {
+				choix -= sec;
+				if (choix < ent){
+					this.entity.setRatioEntretien(ent - a);
+					this.entity.setRatioRecherche(rech + a);
+				} else {
+					choix -= ent;
+					if (choix < san){
+						this.entity.setRatioSante(san - a);
+						this.entity.setRatioRecherche(rech + a);
+					} else {
+						choix -= san;
+						if (choix < tour){
+							this.entity.setRatioTourisme(tour - a);
+							this.entity.setRatioRecherche(rech + a);
+						}
+					}
+				}
+			}
+			--mod;
+		}
+	}
+	public void modifierTourisme(int mod){
+		int a = 1;
+		int sec = this.entity.getRatioSecurite();
+		int ent = this.entity.getRatioEntretien();
+		int san = this.entity.getRatioSante();
+		int rech = this.entity.getRatioRecherche();
+		int tour = this.entity.getRatioTourisme();
+		int choix;
+		if (mod < 0){	// Si on decide de retirer des valeurs
+			a = -1;
+			mod = (-mod > tour) ? tour : -mod;	// Ici, on verifie que le retrait ne peut pas mettre l'indicateur en negatif
+		}
+		while (mod > 0){	// Avec cette methode, on garde vaguement les meme ratios
+			choix = (int)Math.random()*400;
+			if (choix < sec){
+				this.entity.setRatioSecurite(sec - a);
+				this.entity.setRatioTourisme(tour + a);
+			} else {
+				choix -= sec;
+				if (choix < ent){
+					this.entity.setRatioEntretien(ent - a);
+					this.entity.setRatioTourisme(tour + a);
+				} else {
+					choix -= ent;
+					if (choix < san){
+						this.entity.setRatioSante(san - a);
+						this.entity.setRatioTourisme(tour + a);
+					} else {
+						choix -= san;
+						if (choix < tour){
+							this.entity.setRatioRecherche(rech - a);
+							this.entity.setRatioTourisme(tour + a);
+						}
+					}
+				}
+			}
+			--mod;
+		}
+	}
 	public void distibution (){
-		this.entity.setEdSecurite(this.entity.getEdTotale()%5 > 0 ? this.entity.getEdTotale()/5+1 : this.entity.getEdTotale()/5);
-		this.entity.setEdEntretien(this.entity.getEdTotale()%5 > 1 ? this.entity.getEdTotale()/5+1 : this.entity.getEdTotale()/5);
-		this.entity.setEdSante(this.entity.getEdTotale()%5 > 2 ? this.entity.getEdTotale()/5+1 : this.entity.getEdTotale()/5);
-		this.entity.setEdRecherche(this.entity.getEdTotale()%5 > 3 ? this.entity.getEdTotale()/5+1 : this.entity.getEdTotale()/5);
-		this.entity.setEdTourisme(this.entity.getEdTotale()%5 > 4 ? this.entity.getEdTotale()/5+1 : this.entity.getEdTotale()/5);
-	}
-
-	public void monterSecurite (int mod){
-		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
-		while (mod > 0 && possible > 0){
-			if (this.entity.getEdEntretien() > 0 && mod > 0){		// On verifie pour chaque domaine si on peut prendre des points d'education
-				this.entity.setEdEntretien(this.entity.getEdEntretien()-1);
-				this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSante() > 0 && mod > 0){
-				this.entity.setEdSante(this.entity.getEdSante()-1);
-				this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdRecherche() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdTourisme() > 0 && mod > 0){
-				this.entity.setEdTourisme(this.entity.getEdTourisme()-1);
-				this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-		}
-	}
-	public void descendreSecurite (int mod){
-		if (mod > this.entity.getEdSecurite()) {
-			mod = this.entity.getEdSecurite();
-		}
-		this.entity.setEdSecurite(this.entity.getEdSecurite()-mod);
-		this.entity.setEdEntretien(this.entity.getEdEntretien()+mod/4);
-		this.entity.setEdSante(this.entity.getEdSante()+mod/4);
-		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4);
-		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
-		mod = mod%4;
-		if (mod > 0){
-			this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSante(this.entity.getEdSante()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-			mod --;
-		}
-		if (mod > 0) {
-			this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-		}
-	}
-	public void modifierSecurite (int mod){
-		if (mod > 0) {
-			this.monterSecurite(mod);
-		} else {
-			this.descendreSecurite(-mod);
-		}
-	}
-	public void monterEntretien (int mod){
-		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
-		while (mod > 0 && possible > 0){
-			if (this.entity.getEdSante() > 0 && mod > 0){		// On verifie pour chaque domaine si on peut prendre des points d'education
-				this.entity.setEdSante(this.entity.getEdSante()-1);
-				this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdRecherche() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdTourisme() > 0 && mod > 0){
-				this.entity.setEdTourisme(this.entity.getEdTourisme()-1);
-				this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSecurite() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-
-		}
-	}
-	public void descendreEntretien (int mod){
-		if (mod > this.entity.getEdEntretien()) {
-			mod = this.entity.getEdEntretien();
-		}
-		this.entity.setEdEntretien(this.entity.getEdEntretien()-mod);
-		this.entity.setEdSante(this.entity.getEdSante()+mod/4);
-		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4);
-		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
-		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
-		mod = mod%4;
-		if (mod > 0){
-			this.entity.setEdSante(this.entity.getEdSante()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-			mod --;
-		}
-	}
-	public void modifierEntretien (int mod){
-		if (mod > 0) {
-			this.monterEntretien(mod);
-		} else {
-			this.descendreEntretien(-mod);
-		}
-	}
-	public void monterSante (int mod){
-		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
-		while (mod > 0 && possible > 0){
-			if (this.entity.getEdRecherche() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdSante(this.entity.getEdSante()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdTourisme() > 0 && mod > 0){
-				this.entity.setEdTourisme(this.entity.getEdTourisme()-1);
-				this.entity.setEdSante(this.entity.getEdSante()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSecurite() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdSante(this.entity.getEdSante()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdEntretien() > 0 && mod > 0){
-				this.entity.setEdEntretien(this.entity.getEdEntretien()-1);
-				this.entity.setEdSante(this.entity.getEdSante()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-		}
-	}
-	public  void descendreSante (int mod){
-		if (mod > this.entity.getEdSante()) {
-			mod = this.entity.getEdSante();
-		}
-		this.entity.setEdSante(this.entity.getEdSante() - mod);
-		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4);
-		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
-		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
-		this.entity.setEdEntretien(this.entity.getEdEntretien()+mod/4);
-		mod = mod%4;
-		if (mod > 0){
-			this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-			mod --;
-		}
-	}
-	public  void modifierSante (int mod){
-		if(mod > 0) {
-			this.monterSante(mod);
-		} else {
-			this.descendreSante(-mod);
-		}
-	}
-	public  void monterRecherche (int mod){
-		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
-		while (mod > 0 && possible > 0){
-			if (this.entity.getEdTourisme() > 0 && mod > 0){
-				this.entity.setEdTourisme(this.entity.getEdTourisme()-1);
-				this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSecurite() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdEntretien() > 0 && mod > 0){
-				this.entity.setEdEntretien(this.entity.getEdEntretien()-1);
-				this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSante() > 0 && mod > 0){
-				this.entity.setEdSante(this.entity.getEdSante()-1);
-				this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-		}
-	}
-	public  void descendreRecherche (int mod){
-		if (mod > this.entity.getEdRecherche()) {
-			mod = this.entity.getEdRecherche();
-		}
-		this.entity.setEdRecherche(this.entity.getEdRecherche()-mod);
-		this.entity.setEdTourisme(this.entity.getEdTourisme()+mod/4);
-		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
-		this.entity.setEdEntretien(this.entity.getEdEntretien()+mod/4);
-		this.entity.setEdSante(this.entity.getEdSante()+mod/4);
-		mod = mod%4;
-		if (mod > 0){
-			this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSante(this.entity.getEdSante()+1);
-			mod --;
-		}
-	}
-	public  void modifierRecherche (int mod){
-		if(mod > 0) {
-			this.monterRecherche(mod);
-		} else {
-			this.descendreRecherche(-mod);
-		}
-	}
-	public void monterTourisme (int mod){
-		int possible = 4;					// S'il n'est plus possible de prendre des points d'education dans les autres secteurs, on arrete
-		while (mod > 0 && possible > 0){
-			if (this.entity.getEdSecurite() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdEntretien() > 0 && mod > 0){
-				this.entity.setEdEntretien(this.entity.getEdEntretien()-1);
-				this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdSante() > 0 && mod > 0){
-				this.entity.setEdSante(this.entity.getEdSante()-1);
-				this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-			if (this.entity.getEdRecherche() > 0 && mod > 0){
-				this.entity.setEdRecherche(this.entity.getEdRecherche()-1);
-				this.entity.setEdTourisme(this.entity.getEdTourisme()+1);
-				mod --;
-			} else {
-				possible --;
-			}
-		}
-	}
-	public  void descendreTourisme (int mod){
-		if (mod > this.entity.getEdTourisme()) {
-			mod = this.entity.getEdTourisme();
-		}
-		this.entity.setEdTourisme(this.entity.getEdTourisme()-mod);
-		this.entity.setEdSecurite(this.entity.getEdSecurite()+mod/4);
-		this.entity.setEdEntretien(this.entity.getEdEntretien()+mod/4);
-		this.entity.setEdSante(this.entity.getEdSante()+mod/4);
-		this.entity.setEdRecherche(this.entity.getEdRecherche()+mod/4);
-		mod = mod%4;
-		if (mod > 0){
-			this.entity.setEdSecurite(this.entity.getEdSecurite()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdEntretien(this.entity.getEdEntretien()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdSante(this.entity.getEdSante()+1);
-			mod --;
-		}
-		if (mod > 0){
-			this.entity.setEdRecherche(this.entity.getEdRecherche()+1);
-			mod --;
-		}
-	}
-	public  void modifierTourisme (int mod){
-		if(mod > 0) {
-			this.monterTourisme(mod);
-		} else {
-			this.descendreTourisme(-mod);
-		}
+		this.entity.setEdSecurite(this.entity.getEdTotale()*this.entity.getRatioSecurite()/100);
+		this.entity.setEdEntretien(this.entity.getEdTotale()*this.entity.getRatioEntretien()/100);
+		this.entity.setEdSante(this.entity.getEdTotale()*this.entity.getRatioSante()/100);
+		this.entity.setEdRecherche(this.entity.getEdTotale()*this.entity.getRatioRecherche()/100);
+		this.entity.setEdTourisme(this.entity.getEdTotale()*this.entity.getRatioTourisme()/100);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ VALUES
 (20,'universite',1,1,1000.0,40,10,3,1,0.5,0.2,2,1,'ras',1)
 ;
 
-INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`, ratioSecurite, ratioEntretien, ratioSante, ratioRecherche, ratioTourisme) 
+INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`, `ratioSecurite`, `ratioEntretien`, `ratioSante`, `ratioRecherche`, `ratioTourisme`) 
 VALUES (1,10,10,10,10,10,10,1,1, 100, 100, 100, 100, 100);
 
 INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractive`, `postePourvu`, `specificite`,`niveau`) VALUES
