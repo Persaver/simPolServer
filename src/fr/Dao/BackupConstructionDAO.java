@@ -55,6 +55,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
 				gson = new Gson();
 				// on recupere le type de la Map pour Gson
@@ -107,7 +108,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 					+"postePourvu,"
 					+"specificite,"
 					+"construction,"
-					+"backup) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+					+"backup) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -117,6 +118,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setInt(6, element.getBudget());
 			statement.setInt(7, element.getAttractivite());
 			statement.setInt(8, element.getPostePourvu());
+			statement.setInt(9,  element.getNiveau());
 			// gson au boulot on json tt ca
 			statement.setString(9, gson.toJson(element.getSpecificite()));
 			statement.setInt(10, element.getConstruction().getId());
@@ -157,8 +159,9 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 					+"postePourvu=?, "
 					+"specificite=?, "
 					+"construction=?, "
-					+"backup =? "
-					+ "WHERE id= ?";
+					+"backup = ? ,"
+					+"niveau = ?"
+					+"WHERE id= ?";
 			PreparedStatement statement = this.connect.prepareStatement( sql);
 			statement.setInt(1, element.getX());
 			statement.setInt(2, element.getY());
@@ -168,6 +171,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			statement.setInt(6, element.getBudget());
 			statement.setInt(7, element.getAttractivite());
 			statement.setInt(8, element.getPostePourvu());
+			statement.setInt(9,  element.getNiveau());
 			// gson au boulot on json tt ca
 			gson = new Gson();
 			statement.setString(9, gson.toJson(element.getSpecificite()));
@@ -202,6 +206,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
@@ -240,6 +245,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractive"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
@@ -279,6 +285,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBudget(result.getInt("budget"));
 				backupConstruction.setAttractivite(result.getInt("attractive"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
+				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
@@ -291,7 +298,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 			BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUpByConstruction(Backup backup, Integer idConstruction) {}  {} return {}",backup.getId(),idConstruction, backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
 			return backupConstructionsByBackup;
 		}catch (SQLException e) {
-			-			throw new DAOException(e.getMessage());
+			throw new DAOException(e.getMessage());
 		}
 
 	}
