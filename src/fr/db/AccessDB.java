@@ -6,35 +6,52 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AccessDB {
-//	private static AccessDB adb;
-//	private static final int MAXCNX = 10;
-//	private ArrayList<Connection> cnx= new ArrayList<>();
-//	
-//	private AccessDB(){
-//
-//	}
-//	public static AccessDB getInstance(){
-//		if(adb != null){
-//			adb = new AccessDB();
-//		}
-//		return new AccessDB();
-//	}
-	private static Connection cxt;
+	private static AccessDB adb;
+	private  final Integer MAXCNX = 50;
+	private  Integer currentCon = 0;
+	
 	private static String aUrl = "jdbc:mysql://localhost/simpol";
 	private static String aLogin = "root";
 	private static String aPassword = "root";
 	
-	public static Connection seConnecter() throws SQLException{
-		if(cxt == null){
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				cxt= DriverManager.getConnection(aUrl, aLogin, aPassword);
-			}catch (SQLException e){
-				e.printStackTrace();
-			} catch (Throwable e) {
-				throw new SQLException("Problem de driver");
-			}	
+
+	private  ArrayList<Connection> cnx= null;
+	
+	private AccessDB(){
+		this.cnx = new ArrayList<>();
+	}
+	public static AccessDB getInstance(){
+		if(AccessDB.adb == null){
+			AccessDB.adb = new AccessDB();
 		}
-		return cxt;
+		return AccessDB.adb;
+	}
+	// POOL de cnx 
+	private  Connection getConnection() throws SQLException{
+		Connection connection = null;
+		Connection storeCon = null;
+		if(this.cnx.size() == this.currentCon + 1){
+			storeCon = this.cnx.get(this.currentCon);
+		}
+		if(storeCon != null){
+			if(!storeCon.isClosed()){
+				storeCon.close();
+			}
+		}
+		else{
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					connection= DriverManager.getConnection(aUrl, aLogin, aPassword);
+					this.cnx.add(connection);
+				}catch (SQLException | ClassNotFoundException e){
+					throw new SQLException("Problem de connection" + e.getMessage());
+				}	
+		}
+		this.currentCon = this.cnx.size()%this.MAXCNX;
+		return connection;
+	}
+
+	public  Connection seConnecter() throws SQLException{
+		return getConnection();
 	};
 }

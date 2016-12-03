@@ -34,7 +34,7 @@ public final class LoginTools {
 				try {
 					user = new UserDAO().checklogin(login, token);
 				} catch (DAOException e) {
-					// TODO Auto-generated catch block
+					LoginTools.LOG.debug(" checkLogin by parameter  error ",e.getMessage());
 					throw new LoginException(e.getMessage());
 				}
 				session.setAttribute("user", user);

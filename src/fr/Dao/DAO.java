@@ -18,11 +18,19 @@ public abstract class DAO<T,I>{
 
 
 	public DAO(){
+		AccessDB adb = AccessDB.getInstance();
 		try {
-			this.connect = AccessDB.seConnecter();
-			LOG.debug(" connect db {} ",this.getClass().getName());
+			if(adb != null){
+				this.connect = adb.seConnecter();
+				LOG.debug(" connect db {} ",this.getClass().getName());
+			}
+			else{
+				LOG.debug(" connect db pas de AccessDB");
+				throw new DAOException(" connect db pas de AccessDB");
+			}
+			
 
-		} catch (SQLException e) {
+		} catch (SQLException | DAOException e) {
 			e.printStackTrace();
 		}
 		//		System.out.println("Connecté");
@@ -32,4 +40,10 @@ public abstract class DAO<T,I>{
 	public abstract void delete(I id);
 	public abstract T update(T element) throws DAOException;
 	public abstract List<T> getAll() throws DAOException;
+	
+	@Override
+	public void finalize() throws SQLException{
+		LOG.debug("DAO close connection");
+		this.connect.close();
+	}
 }

@@ -252,7 +252,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setNbCadre(result.getInt("nbCadre"));
 				backupConstruction.setRisque(result.getInt("risque"));
 				backupConstruction.setBudget(result.getInt("budget"));
-				backupConstruction.setAttractivite(result.getInt("attractive"));
+				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson
@@ -264,10 +264,9 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setBackup(backup);
 				backupConstructionsByBackup.add(backupConstruction);
 			}
-			BackupConstructionDAO.LOG.debug("BackupConstructionDAO getAllByBackUp(Backup backup) {} return {}",backup.getId(), backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
+			LOG.debug("BackupConstructionDAO getAllByBackUp(Backup backup) {} return {}",backup.getId(), backupConstructionsByBackup != null ? backupConstructionsByBackup.size() : "null");
 			return backupConstructionsByBackup;
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			throw new DAOException(e.getMessage());
 		}
 
@@ -292,7 +291,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				backupConstruction.setNbCadre(result.getInt("nbCadre"));
 				backupConstruction.setRisque(result.getInt("risque"));
 				backupConstruction.setBudget(result.getInt("budget"));
-				backupConstruction.setAttractivite(result.getInt("attractive"));
+				backupConstruction.setAttractivite(result.getInt("attractivite"));
 				backupConstruction.setPostePourvu(result.getInt("postePourvu"));
 				backupConstruction.setNiveau(result.getInt("niveau"));
 				// gson

@@ -46,7 +46,7 @@ VALUES
 INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`, `ratioSecurite`, `ratioEntretien`, `ratioSante`, `ratioRecherche`, `ratioTourisme`)
 VALUES (1,10,10,10,10,10,10,1,1, 100, 100, 100, 100, 100);
 
-INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractive`, `postePourvu`, `specificite`,`niveau`) VALUES
+INSERT INTO `backup_construction` (`id`, backup,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractivite`, `postePourvu`, `specificite`,`niveau`) VALUES
 (1,1,1, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (2,1,6, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),
 (3,1,17, 1, 1, 0,0,1,1,1,0,'{"truc":1}', 1),

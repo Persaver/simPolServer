@@ -15,9 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import fr.entities.User;
+import fr.splExceptions.BackupException;
 import fr.splExceptions.LoginException;
 import fr.tools.LoginTools;
+import fr.tools.RestTools;
 
 /**
  * Servlet Filter implementation class LoginFilter
@@ -51,19 +55,21 @@ public class LoginFilter implements Filter {
 		User user = null;
 		try {
 			user = LoginTools.checkLogin((HttpServletRequest) request);
-		} catch (LoginException e) {
-			e.printStackTrace();
-		}
+		
 		LOG.debug(" Login filter user = {} ",user != null ? user.getId() : null);
 		if (user != null){
 			request.setAttribute("user", user);
+			LoginTools.checkBackup((HttpServletRequest)request);
 			chain.doFilter(request, response);
 
 		}
-		else {
+		else{
+			throw new LoginException("Verif user imposible user");
+		}
+		} catch (LoginException | BackupException e) {
 			HttpServletResponse resp = (HttpServletResponse) response;
 			resp.setContentType("application/json");
-			resp.getWriter().append("not log").close();
+			resp.getWriter().append(RestTools.getReturn(e.getMessage(), true)).close();		
 		}
 		
 	}
