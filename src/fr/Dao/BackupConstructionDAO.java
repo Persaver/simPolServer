@@ -25,10 +25,10 @@ import fr.splExceptions.DAOException;
 public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 
 	private static final Logger LOG = LogManager.getLogger();
-	private final static Integer IDECOLE = 1;
-	private final static Integer IDHOPITAL = 2;
-	private final static Integer IDCOMMISSARIAT = 3;
-	private final static Integer IDCASERNE = 4;
+	private final static Integer IDECOLE = 17;
+	private final static Integer IDHOPITAL = 6;
+	private final static Integer IDCOMMISSARIAT = 5;
+	private final static Integer IDCASERNE = 20;
 
 
 	public static Integer getIdcommissariat() {
@@ -72,6 +72,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				// on recupere le type de la Map pour Gson
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO setSpecificite  {} ",result.getString("specificite"));
 				construction = new Construction(result.getInt("construction"));
 				backup = new Backup(result.getInt("backup"));
 				backupConstruction.setConstruction(construction);
@@ -220,6 +221,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO setSpecificite  {} ",result.getString("specificite"));
 				Construction construction = new Construction(result.getInt("construction"));
 				Backup backup = new Backup(result.getInt("backup"));
 				backupConstruction.setConstruction(construction);
@@ -259,6 +261,7 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO setSpecificite  {} ",result.getString("specificite"));
 				Construction construction = new Construction(result.getInt("construction"));
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);
@@ -298,6 +301,8 @@ public class BackupConstructionDAO extends DAO<BackupConstruction,Integer> {
 				Gson gson = new Gson();
 				Type stringIntegerMap = new TypeToken<Map<String,Integer>>(){}.getType();
 				backupConstruction.setSpecificite(gson.fromJson(result.getString("specificite"), stringIntegerMap));
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO id {} result.getString(\"specificite\")  {} ",backupConstruction.getId(), result.getString("specificite"));
+				BackupConstructionDAO.LOG.debug("BackupConstructionDAO id {} getSpecificite  {} ",backupConstruction.getId(), backupConstruction.getSpecificite());
 				Construction construction = new Construction(result.getInt("construction"));
 				backupConstruction.setConstruction(construction);
 				backupConstruction.setBackup(backup);

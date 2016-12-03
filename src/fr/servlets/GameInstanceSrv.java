@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import fr.entities.Backup;
 import fr.entities.User;
 import fr.game.services.gameControllers.GameInstance;
@@ -67,13 +69,13 @@ public class GameInstanceSrv extends HttpServlet {
 			
 			instance.start();
 //			Integer[][] tab = {{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4},{2,1,1,2,1,3,5,8,4,9,7,4}};
-//			out.append(new Gson().toJson(tab));
+			out.append(RestTools.getReturn(instance.getBackup(), instance == null ));
 			
 			
 
 		} catch (BackupException | ServiceException e) {
 			// TODO Auto-generated catch block
-			RestTools.getReturn(e.getMessage(), true);
+			out.append(RestTools.getReturn(e.getMessage(), true));
 		}
 
 		//out.append(RestTools.getReturn(bc, bc == null));

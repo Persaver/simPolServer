@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class AccessDB {
 	private static AccessDB adb;
-	private  final Integer MAXCNX = 50;
+	private  final Integer MAXCNX = 500;
 	private  Integer currentCon = 0;
 	
 	private static String aUrl = "jdbc:mysql://localhost/simpol";

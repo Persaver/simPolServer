@@ -1,7 +1,8 @@
 package fr.game.services.indicateurs;
 
 import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.SanteDAO;
 import fr.entities.Backup;
@@ -12,6 +13,7 @@ import fr.splExceptions.DAOException;
 import fr.splExceptions.ServiceException;
 
 public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
+	private static final Logger LOG = LogManager.getLogger();
 
 	public SanteService(Sante entity, SanteDAO entityDao) {
 		super(entity, entityDao);
@@ -19,17 +21,22 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 
 	public void journeeMedicale(PopulationService p, BudgetService b, Backup backup) throws ServiceException{
 		this.tombeMalades(p);				// On comptabilise les nouveaux malades
-		System.out.println(this.entity.getNbMalades() + " gens sont malades");
+		LOG.debug("{} gens sont malades",this.entity != null ? this.entity.getNbMalades() : "null");
 		this.accidente(p, b, backup);		// de meme pour les accidentes
-		System.out.println(this.entity.getNbAccidents() + " gens ont eu un accident");
+		LOG.debug("{} gens ont eu un accident",this.entity != null ? this.entity.getNbAccidents() : "null");
 		this.mortalite(p, b);				// Parmi ces victimes, certaines ne se reveilleront jamais
-		System.out.println(this.entity.getNbMalades()+this.entity.getNbAccidents() + " ne sont pas encore morts");
+		LOG.debug("{} ne sont pas encore morts",this.entity != null ? (this.entity.getNbAccidents() + this.entity.getNbMalades()): "null");
+		//System.out.println(this.entity.getNbMalades()+this.entity.getNbAccidents() + " ne sont pas encore morts");
 		this.recupSoins(backup);				// Heureusement, les medecins sont la avec leurs competences
-		System.out.println(this.entity.getSoins() + " patients vont �tre secourus");
+		LOG.debug("{} patients vont �tre secourus",this.entity != null ? (this.entity.getNbAccidents() + this.entity.getNbMalades()): "null");
+		//System.out.println(this.entity.getSoins() + " patients vont �tre secourus");
 		this.apportMedicaux();				// Ces chevaliers de la sante sauvent autant de vies que possible
-		System.out.println("il reste " + this.entity.getNbMalades() + " malades et " + this.entity.getNbAccidents() + " accidentes");
+		LOG.debug("il reste {} malades et {} accidentes",this.entity != null ?  this.entity.getNbMalades(): "null",
+														this.entity != null ? this.entity.getNbAccidents() : "null");	
+		//System.out.println("il reste " + this.entity.getNbMalades() + " malades et " + this.entity.getNbAccidents() + " accidentes");
 		this.guerison();					// Et puis, il y a ceux qui se soignent en mangeant bio
-		System.out.println(this.entity.getNbMalades() + this.entity.getNbAccidents() + " patients sont encore dans les hopitaux en fin de soiree");
+		LOG.debug("{} patients sont encore dans les hopitaux en fin de soiree",this.entity != null ? (this.entity.getNbAccidents() + this.entity.getNbMalades()): "null");
+		//System.out.println(this.entity.getNbMalades() + this.entity.getNbAccidents() + " patients sont encore dans les hopitaux en fin de soiree");
 	}
 
 	public void tombeMalades (PopulationService p){
@@ -71,6 +78,7 @@ public class SanteService extends AbstractGameEntity<Sante, SanteDAO> {
 		try {
 			backupConstructions = new BackupConstructionDAO().getAllByBackUpByConstruction(backup, BackupConstructionDAO.getIDHOPITAL());
 			for (BackupConstruction element : backupConstructions){
+				LOG.debug("SANTESREVICE recupSoins element.getSpecificite() {}", element.getSpecificite() != null ? element.getSpecificite() : "null" );
 				soinsT += element.getSpecificite().get("soins");	// La clef des map Ecoles doit etre 'soins'
 			}
 		} catch (DAOException e) {
