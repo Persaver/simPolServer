@@ -88,7 +88,7 @@ public final class LoginTools {
 				Integer idbackup = Integer.parseInt(HttpReq.getParameter("backup"));
 				if(idbackup != null){
 					try {
-						BackupService backupService = new BackupService(backup, new BackupDAO());
+						BackupService backupService = new BackupService();
 						backup = backupService.getBackupByUserIdBackup(user, idbackup);
 						LOG.debug(" checkBackup by params  backup = {} ",backup != null ? backup.getId() : null);
 
