@@ -53,29 +53,20 @@ public class PopulationSrv extends HttpServlet {
 		RestTools.getId(request);
 		PrintWriter out = response.getWriter();
 		PopulationDAO populationDao = new PopulationDAO();
-//		try {
-//			backup= LoginTools.checkBackup(request);
-//			if(request.getQueryString() != null){
-//				population = populationDao.getByBackup(backup);
-//				out.append(RestTools.getReturn( population, population == null));
-//			}
-//			else{
-//				populations = populationDao.getAllByBackup(backup);
-//				out.append(RestTools.getReturn( populations, populations == null));
-//			}
-//		} catch (DAOException | BackupException e) {
-//			// TODO Auto-generated catch block
-//			out.append(RestTools.getReturn(e.getMessage(), true));
-//		}
-		
-		int[][] tab = {{1,2,3,4,5,7},{1,2,3,4,5,7}};
-		LOG.debug("PolutaionSrv tab {} type {}",tab,tab.getClass().getName());
-		String tabGson = new Gson().toJson(tab);	
-		LOG.debug("PolutaionSrv tabGson {} type {}",tabGson,tabGson.getClass().getName());
-		int[][] tabFromGson = new Gson().fromJson(tabGson, int[][].class);
-		LOG.debug("PolutaionSrv tabFromGson {} type {}",tabFromGson, tabFromGson.getClass().getName());
-
-
+		try {
+			backup= LoginTools.checkBackup(request);
+			if(request.getQueryString() != null){
+				population = populationDao.getByBackup(backup);
+				out.append(RestTools.getReturn( population, population == null));
+			}
+			else{
+				populations = populationDao.getAllByBackup(backup);
+				out.append(RestTools.getReturn( populations, populations == null));
+			}
+		} catch (DAOException | BackupException e) {
+			// TODO Auto-generated catch block
+			out.append(RestTools.getReturn(e.getMessage(), true));
+		}
 		
 		// si user == null return {error:{msg} }
 		out.close();

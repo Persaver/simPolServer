@@ -17,6 +17,6 @@ public class SplException extends Exception{
 	}
 	public SplException(String message){
 		super(message);
-		SplException.LOG.debug(message);
+		SplException.LOG.debug("class {} message {}",this.getClass().getName(),message);
 	}
 }

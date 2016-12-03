@@ -42,6 +42,7 @@ public class GameInstance implements IGameInstance{
 	public GameInstance(User user,Backup backup){
 		this(user,new BackupDAO(), new BackupConstructionDAO(),backup);
 		LOG.debug("GameInstance ");
+		
 	}
 
 	public GameInstance(User user, BackupDAO backupDAO,BackupConstructionDAO backupConstructionDAO,Backup backup){
@@ -49,6 +50,8 @@ public class GameInstance implements IGameInstance{
 			this.user = user;
 		}
 		this.backup = backup;
+		this.backupDAO = backupDAO;
+		this.backupConstructionDAO = backupConstructionDAO;
 		this.entityController = new EntitiesController();
 	}
 
@@ -91,25 +94,34 @@ public class GameInstance implements IGameInstance{
 
 	public void start() throws ServiceException{
 		LOG.debug("GameInstance start");
+		PopulationDAO populationDAO= new PopulationDAO();
+		SanteDAO santeDAO = new SanteDAO();
+		BudgetDAO budgetDAO = new BudgetDAO();
 		Population pop = null;
 		Sante sante = null;
 		Budget budget = null;
 		LOG.debug("GameInstance Backup id : {}", this.backup != null ? this.backup.getId() : "null");
 		try {
-			pop = new PopulationDAO().getByBackup(this.backup);
+			pop = populationDAO.getByBackup(this.backup);
 			LOG.debug("GameInstance pop {} class {}",pop != null ? pop.getPopTab() : "null",pop != null ? pop.getClass().getName() : "null");
 
-			PopulationService p = new PopulationService(pop, this.populationDAO, 200);
+			PopulationService p = new PopulationService(pop, populationDAO, 200);
 			LOG.debug("GameInstance PopulationService {} ",p != null ? p.getClass().getName() : "null");
-			sante = new SanteDAO().getByBackup(this.backup);
-			SanteService s = new SanteService(sante, this.santeDAO);
-			budget = new BudgetDAO().getByBackup(this.backup);
-			BudgetService b = new BudgetService(budget, this.budgetDAO);
+			sante = santeDAO.getByBackup(this.backup);
+			SanteService s = new SanteService(sante, santeDAO);
+			budget = budgetDAO.getByBackup(this.backup);
+			BudgetService b = new BudgetService(budget, budgetDAO);
 			LOG.debug("GameInstance pop {} sante {} budget {} ",p != null ? p.getClass().getName() : "null", s != null ? s.getClass().getName() : "null", b != null ? b.getClass().getName() : "null");
 			p.quotidien(this.backup);
 			s.journeeMedicale(p, b, this.backup);
-
 			LOG.debug("une population a bien ete cree");
+			
+			// test sauvegarde
+			p.saveEntity();
+			LOG.debug("une population a bien ete sauvegarder");
+			b.saveEntity();
+			s.saveEntity();
+			LOG.debug("une population a bien ete sauvegarder");
 		} catch (ServiceException | DAOException e) {
 			// TODO Auto-generated catch block
 			throw new ServiceException(e.getMessage());

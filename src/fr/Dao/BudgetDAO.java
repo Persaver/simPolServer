@@ -1,5 +1,6 @@
 package fr.Dao;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,6 +62,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 				result.last();
 				budget = new Budget();
 				budget.setId(result.getInt("id"));
+				budget.setAgeTravail(result.getInt("ageTravail"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
 				budget.setChargeSalariale(result.getInt("chargeSalariale"));
 				budget.setChargeCadre(result.getInt("chargeCadre"));
@@ -84,7 +86,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 	@Override
 	public Budget save(Budget budget) throws DAOException {
 		try {
-			String sql = "INSERT INTO Budget ("
+			String sql = "INSERT INTO budget ("
 					+"ageTravail,"
 					+"ageRetraite,"
 					+"chargeSalariale, "
@@ -98,12 +100,11 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 					+"budget)"
 					+"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = this.connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, budget.getId());
-			statement.setInt(2, budget.getAgeTravail());
-			statement.setInt(3, budget.getAgeRetraite());
-			statement.setInt(4, budget.getChargeSalariale());
-			statement.setInt(5, budget.getChargeCadre());
-			statement.setInt(6, budget.getSalaireStandard());
+			statement.setInt(1, budget.getAgeTravail());
+			statement.setInt(2, budget.getAgeRetraite());
+			statement.setInt(3, budget.getChargeSalariale());
+			statement.setInt(4, budget.getChargeCadre());
+			statement.setInt(5, budget.getSalaireStandard());
 			statement.setInt(6, budget.getSalaireCadre());
 			statement.setInt(7, budget.getNbSalaries());
 			statement.setInt(8, budget.getNbCadres());
@@ -146,6 +147,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			while(result.next()){
 				Budget budget = new Budget();
 				budget.setId(result.getInt("id"));
+				budget.setAgeTravail(result.getInt("ageTravail"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
 				budget.setChargeSalariale(result.getInt("chargeSalariale"));
 				budget.setChargeCadre(result.getInt("chargeCadre"));
@@ -177,6 +179,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 			while(result.next()){
 				Budget budget = new Budget();
 				budget.setId(result.getInt("id"));
+				budget.setAgeTravail(result.getInt("ageTravail"));
 				budget.setAgeRetraite(result.getInt("ageRetraite"));
 				budget.setChargeSalariale(result.getInt("chargeSalariale"));
 				budget.setChargeCadre(result.getInt("chargeCadre"));

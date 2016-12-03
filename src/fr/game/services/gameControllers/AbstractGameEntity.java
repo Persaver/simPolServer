@@ -51,11 +51,14 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 
 	@Override
 	public void saveEntity() throws ServiceException{
-		AbstractGameEntity.LOG.debug(" Sauvergarde {} entity {} ",this.getClass().getName(),this.getEntity().getClass());
+		AbstractGameEntity.LOG.debug(" Sauvergarde {} entity {} entityDAO {}"
+								,this.getClass().getName()
+								,this.getEntity().getClass()
+								,this.entityDao != null ? this.entityDao.getClass().getName(): "null");
 		try {
 			this.entityDao.save(this.entity);
 		} catch (DAOException e) {
-			throw new ServiceException();
+			throw new ServiceException(e.getMessage());
 		}
 	}
 

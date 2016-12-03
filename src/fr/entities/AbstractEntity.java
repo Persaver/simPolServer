@@ -22,7 +22,6 @@ public abstract class AbstractEntity<T> implements Serializable, IJsonEntity, IE
 
 	{
 		LOG.debug(" Creation entity {} ",this.getClass().getName());
-
 	}
 	public AbstractEntity(){
 		

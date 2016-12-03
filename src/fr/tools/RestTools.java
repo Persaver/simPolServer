@@ -45,7 +45,7 @@ public class RestTools {
 		buffer.append(gson.toJson(obj));
 
 		buffer.append("}");
-		LOG.debug(" RestTools getreturn  obj {} error {} ",obj.getClass().getName() , error);
+		LOG.debug(" RestTools getreturn  obj {} error {} ",obj != null ? obj.getClass().getName() : "pas d'object" , error);
 		return buffer.toString();
 	}
 }
