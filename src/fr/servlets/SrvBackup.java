@@ -47,7 +47,10 @@ public class SrvBackup extends HttpServlet {
 
 			RestTools.getId(request);
 			if(request.getAttribute("id") != null){
-				if(session.getAttribute("user") != null){
+				if(session.getAttribute("backup") != null){
+					backup = (Backup) session.getAttribute("backup");
+				}
+				else if(session.getAttribute("user") != null){
 					
 					try {
 						user = (User) session.getAttribute("user");

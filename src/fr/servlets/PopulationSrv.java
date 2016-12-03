@@ -3,6 +3,10 @@ package fr.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +26,11 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class PopulationSrv
  */
-@WebServlet(urlPatterns={"/population","/population/*"})
+@WebServlet(urlPatterns={"/populations","/populations/*"})
 public class PopulationSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LogManager.getLogger();
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -47,20 +53,30 @@ public class PopulationSrv extends HttpServlet {
 		RestTools.getId(request);
 		PrintWriter out = response.getWriter();
 		PopulationDAO populationDao = new PopulationDAO();
-		try {
-			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
-				population = populationDao.getByBackup(backup);
-				out.append(RestTools.getReturn( population, population == null));
-			}
-			else{
-				populations = populationDao.getAllByBackup(backup);
-				out.append(RestTools.getReturn( populations, populations == null));
-			}
-		} catch (DAOException | BackupException e) {
-			// TODO Auto-generated catch block
-			out.append(RestTools.getReturn(e.getMessage(), true));
-		}
+//		try {
+//			backup= LoginTools.checkBackup(request);
+//			if(request.getQueryString() != null){
+//				population = populationDao.getByBackup(backup);
+//				out.append(RestTools.getReturn( population, population == null));
+//			}
+//			else{
+//				populations = populationDao.getAllByBackup(backup);
+//				out.append(RestTools.getReturn( populations, populations == null));
+//			}
+//		} catch (DAOException | BackupException e) {
+//			// TODO Auto-generated catch block
+//			out.append(RestTools.getReturn(e.getMessage(), true));
+//		}
+		
+		int[][] tab = {{1,2,3,4,5,7},{1,2,3,4,5,7}};
+		LOG.debug("PolutaionSrv tab {} type {}",tab,tab.getClass().getName());
+		String tabGson = new Gson().toJson(tab);	
+		LOG.debug("PolutaionSrv tabGson {} type {}",tabGson,tabGson.getClass().getName());
+		int[][] tabFromGson = new Gson().fromJson(tabGson, int[][].class);
+		LOG.debug("PolutaionSrv tabFromGson {} type {}",tabFromGson, tabFromGson.getClass().getName());
+
+
+		
 		// si user == null return {error:{msg} }
 		out.close();
 	}

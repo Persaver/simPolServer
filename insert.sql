@@ -68,5 +68,5 @@ INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `cr
 (1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1);
 
 INSERT INTO `population` (`id`, `fertilite`, `attractivite`,`popTab`,`nbj`,`backup`) VALUES
-(1, 1, 1, '1000',1, 1);
+(1, 1, 1, '[[6,9,9,68,67]]',1, 1);
 
