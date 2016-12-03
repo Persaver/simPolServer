@@ -18,18 +18,18 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 	private Map<String,Integer> specificite;
 	private Construction construction;
 	private Backup backup;
+	private Integer niveau;
 
 
 	public BackupConstruction() {
 	}
 
 	public BackupConstruction(Integer id) {
-		this(id, null, null, null, null, null, null, null, null, null, null, null);
-		//specificite.get("educ");
+		this(id, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	public BackupConstruction(Integer id, Integer x, Integer y, Integer nbSalarie, Integer nbCadre, Integer risque, Integer budget,
-			Integer attractivite, Integer postePourvu, Map<String,Integer> specificite, Construction construction, Backup backup) {
+			Integer attractivite, Integer postePourvu, Map<String,Integer> specificite, Construction construction, Backup backup, Integer niveau) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -42,6 +42,7 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 		this.specificite = specificite;
 		this.construction = construction;
 		this.backup = backup;
+		this.niveau = niveau;
 	}
 
 	public Integer getX() {
@@ -131,6 +132,14 @@ public class BackupConstruction extends AbstractEntity<BackupConstruction> {
 
 	public void setBackup(Backup backup) {
 		this.backup = backup;
+	}
+
+	public Integer getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Integer niveau) {
+		this.niveau = niveau;
 	}
 
 	@Override

@@ -27,11 +27,9 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 	public void ameliore(){
 		this.getEntity().setNbCadre(this.getEntity().getNbCadre()*this.construction.getModCadre());
 		this.getEntity().setNbSalarie(this.getEntity().getNbSalarie()*this.construction.getModSalarie());
-		this.getEntity().setRisque(this.getEntity().getRisque()*this.construction.getModRisque());
-		this.getEntity().setAttractivite(this.getEntity().getAttractivite()*this.construction.getModAttractivite());
-//		this.getEntity().setNbCadre(this.entity.getNbCadre()*this.construction.getModCadre());
-//		this.getEntity().setNbSalarie(this.entity.getNbSalarie()*this.construction.getModSalarie());
-		//		this.getEntity().setNbSalarie(6);  //A quoi sert ce code? (Robin)
+		this.getEntity().setRisque(this.getEntity().getRisque()+this.construction.getModRisque());
+		this.getEntity().setAttractivite(this.getEntity().getAttractivite()+this.construction.getModAttractivite());
+		this.entity.setNiveau(this.entity.getNiveau()+1);
 	}
 	// fonction utilitaires
 	// Le potentiel sera utilise pour chaque batiment et evaluer son rendement.
@@ -123,14 +121,18 @@ public abstract class AbstractConstructionService extends AbstractGameEntity<Bac
 		}
 	}
 	public void ajouterCadre(BudgetService b){
-		if (this.entity.getNbCadre() < this.getEntity().getNbCadre()){
+			// la limite du nombre de Cadre varie en fonction du type de batiment et son niveau
+		int limitPost = this.getEntity().getNbCadre()+(this.getEntity().getNbCadre()*this.construction.getModCadre()*(this.entity.getNiveau()-1));
+		if (this.entity.getNbCadre() < limitPost){
 			this.entity.setNbCadre(this.entity.getNbCadre()+10);
 			this.entity.setBudget(this.entity.getBudget()+b.getSalaireCadre());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);
 		}
 	}
 	public void ajouterSalarie(BudgetService b){
-		if (this.entity.getNbSalarie() < this.getEntity().getNbSalarie()){
+			// la limite du nombre de Salarie varie en fonction du type de batiment et son niveau
+		int limitPost = this.getEntity().getNbSalarie()+(this.getEntity().getNbSalarie()*this.construction.getModSalarie()*(this.entity.getNiveau()-1));	
+		if (this.entity.getNbSalarie() < limitPost){
 			this.entity.setNbSalarie(this.entity.getNbSalarie()+10);
 			this.entity.setBudget(this.entity.getBudget()+b.getSalaireStandard());
 			this.entity.setPostePourvu(this.entity.getPostePourvu()+10);

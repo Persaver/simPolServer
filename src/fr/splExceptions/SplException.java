@@ -3,6 +3,8 @@ package fr.splExceptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import sun.rmi.runtime.Log;
+
 public class SplException extends Exception{
 	/**
 	 *
@@ -15,6 +17,6 @@ public class SplException extends Exception{
 	}
 	public SplException(String message){
 		super(message);
-		SplException.LOG.debug(message);
+		SplException.LOG.debug("class {} message {}",this.getClass().getName(),message);
 	}
 }

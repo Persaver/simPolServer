@@ -2,20 +2,30 @@ package fr.tools;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 public class RestTools {
+	
+	private static final Logger LOG = LogManager.getLogger();
 
+	
 	public static void getId(HttpServletRequest request){
 
 		String pathInfo = request.getRequestURL().toString();
-		System.out.println("path" + pathInfo);
+		Integer id =null;
+		//System.out.println("path" + pathInfo);
 		String[] pathParts = pathInfo.split("/");
 		if(pathParts.length	 > 5){
-			String id = pathParts[5]; // {value  a traiter}
+			 id = Integer.parseInt(pathParts[5]); // {value  a traiter}
 			request.setAttribute("id", id);
-			System.out.println("id"+id);
+			
+			//System.out.println("id"+id);
 		}
+		LOG.debug(" RestTools getId  path/ id = {} ",id);
+
 	}
 	// transforme en json
 	public static String getReturn(Object obj,Boolean error){
@@ -35,6 +45,7 @@ public class RestTools {
 		buffer.append(gson.toJson(obj));
 
 		buffer.append("}");
+		LOG.debug(" RestTools getreturn  obj {} error {} ",obj != null ? obj.getClass().getName() : "pas d'object" , error);
 		return buffer.toString();
 	}
 }

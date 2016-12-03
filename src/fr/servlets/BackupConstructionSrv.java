@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import fr.entities.Backup;
@@ -26,6 +29,8 @@ import fr.tools.RestTools;
  */
 @WebServlet(urlPatterns={"/backupconstructions","/backupconstructions/*"})
 public class BackupConstructionSrv extends HttpServlet {
+	private static final Logger LOG = LogManager.getLogger();
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -44,6 +49,7 @@ public class BackupConstructionSrv extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doGet ");
 		List<IEntity> bcs = null;
 		BackupConstruction bc = null;
 		Backup backup = null;
@@ -69,6 +75,7 @@ public class BackupConstructionSrv extends HttpServlet {
 					// TODO Auto-generated catch block
 					out.append(RestTools.getReturn(e.getMessage(), true));
 				}
+				BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doGet /id {} return {}",request.getAttribute("id"),bc != null ? bc.getId() : "null");
 
 				out.append(RestTools.getReturn(bc, bc == null));
 
@@ -80,6 +87,7 @@ public class BackupConstructionSrv extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doGet backup {} return size {}",backup.getId(),bcs != null ? bcs.size() : "null");
 				out.append(RestTools.getReturn(bcs, bcs == null));
 
 			}
@@ -92,9 +100,13 @@ public class BackupConstructionSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 *
+	 * Mettre a jour une construction
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doPost ");
+
 		BackupConstruction bc = null;
 		Backup backup = null;
 		// test si id	 ou all
@@ -112,7 +124,7 @@ public class BackupConstructionSrv extends HttpServlet {
 				if(request.getAttribute("backupConstruction") != null){
 					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
 				}
-				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
+				bc = (BackupConstruction) new EntitiesController().saveGameEntity(bc);
 
 			}
 		} catch (BackupException | ServiceException e) {
@@ -128,9 +140,13 @@ public class BackupConstructionSrv extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 *
+	 * creer une construction
 	 */
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doPut ");
+
 		BackupConstruction bc = null;
 		Backup backup = null;
 		// test si id	 ou all
@@ -146,6 +162,7 @@ public class BackupConstructionSrv extends HttpServlet {
 			}
 			else{
 				if(request.getAttribute("backupConstruction") != null){
+
 					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
 				}
 				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);

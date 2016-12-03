@@ -3,8 +3,12 @@ package fr.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
@@ -13,6 +17,7 @@ import fr.entities.Population;
 import fr.splExceptions.DAOException;
 
 public class PopulationDAO extends DAO<Population,Integer> {
+	private static final Logger LOG = LogManager.getLogger();
 
 	@Override
 	public Population get(Integer id) throws DAOException{
@@ -62,7 +67,11 @@ public class PopulationDAO extends DAO<Population,Integer> {
 				population.setFertilite(result.getInt("fertilite"));
 				population.setAttractivite(result.getInt("attractivite"));
 				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
+				//LOG.debug("Population getByBackup(Backup backup) popTab {}",result.getString("popTab"));
 				population.setPopTab(gson.fromJson(result.getString("popTab"), Integer[][].class));
+				Integer[] tab = population.getPopTab()[0];
+				LOG.debug("Population getByBackup(Backup backup) popTab {}" , tab);
+
 				population.setBackup(backup);
 				return population;
 			}
@@ -76,16 +85,18 @@ public class PopulationDAO extends DAO<Population,Integer> {
 	public Population save(Population element) throws DAOException {
 		Gson gson = null;
 		try {
-			String req = "INSERT INTO population (repartitionPop, fertilite, attractivite, backup) VALUES (?, ?, ?, ?)";
-			PreparedStatement statement = this.connect.prepareStatement(req);
+			String req = "INSERT INTO population (popTab, fertilite, attractivite, backup) "
+					+ "VALUES (?, ?, ?, ?)";
+			PreparedStatement statement = this.connect.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
 			gson = new Gson();
 			String pop = gson.toJson(element.getPopTab());
-			// fonction pour faire passer tab[][] en "repartitionPop"
+			// fonction pour faire passer tab[][] en "popTab"
 
 			statement.setString(1, pop);
 			statement.setInt(2, element.getFertilite());
 			statement.setInt(3, element.getAttractivite());
 			statement.setInt(4, element.getBackup().getId());
+			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
 				element.setId(generatedKeys.getInt(1));
@@ -126,7 +137,7 @@ public class PopulationDAO extends DAO<Population,Integer> {
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {
 				Population population = new Population();
-				// fonction pour transformer "repartitionPop" en tab[][]
+				// fonction pour transformer "popTab" en tab[][]
 				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
 				population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));
 				population.setFertilite(results.getInt("fertilite"));

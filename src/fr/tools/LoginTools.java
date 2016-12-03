@@ -3,6 +3,9 @@ package fr.tools;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.Dao.BackupDAO;
 import fr.Dao.UserDAO;
 import fr.entities.Backup;
@@ -14,6 +17,7 @@ import fr.splExceptions.LoginException;
 import fr.splExceptions.ServiceException;
 
 public final class LoginTools {
+	private static final Logger LOG = LogManager.getLogger();
 
 	// verifie le login
 	public static final User checkLogin(HttpServletRequest HttpReq) throws LoginException{
@@ -30,12 +34,12 @@ public final class LoginTools {
 				try {
 					user = new UserDAO().checklogin(login, token);
 				} catch (DAOException e) {
-					// TODO Auto-generated catch block
+					LoginTools.LOG.debug(" checkLogin by parameter  error ",e.getMessage());
 					throw new LoginException(e.getMessage());
 				}
 				session.setAttribute("user", user);
 				HttpReq.setAttribute("user", user);
-				System.out.println(user);
+				LoginTools.LOG.debug(" checkLogin by parameter  user = {} ",user != null ? user.getId() : null);
 
 			}
 
@@ -49,8 +53,11 @@ public final class LoginTools {
 			}catch(Exception e){
 				throw new LoginException(e.getMessage());
 			}
+			LoginTools.LOG.debug(" checkLogin by session  user = {} ",user != null ? user.getId() : null);
+
 		}
-		System.out.println(user);
+		LoginTools.LOG.debug(" checkLogin by session  user = {} ",user != null ? user.getId() : null);
+		//System.out.println(user);
 
 		return user;
 	}
@@ -58,11 +65,14 @@ public final class LoginTools {
 	public static final Backup checkBackup(HttpServletRequest HttpReq) throws BackupException{
 		HttpSession session = HttpReq.getSession(true);
 		Backup backup = null;
+		LoginTools.LOG.debug(" checkBackup ",backup != null ? backup.getId() : null);
+
 
 		User user;
 		// on verifie le user
 		try {
 			user = LoginTools.checkLogin(HttpReq);
+
 		} catch (LoginException e) {
 			throw new BackupException(e.getMessage());
 		}
@@ -72,16 +82,22 @@ public final class LoginTools {
 			if(session.getAttribute("backup") != null){
 				try{
 					backup = (Backup) session.getAttribute("backup");
+					LoginTools.LOG.debug(" checkBackup by session  backup = {} ",backup != null ? backup.getId() : null);
+
 				}catch(Exception e){
 					throw new BackupException(e.getMessage());
 				}
 			}
 			else if(HttpReq.getParameter("backup") != null ){
 				Integer idbackup = Integer.parseInt(HttpReq.getParameter("backup"));
+				LoginTools.LOG.debug(" checkBackup by params  idBackup = {} ",idbackup != null ? idbackup : "null");
+
 				if(idbackup != null){
 					try {
-						BackupService backupService = new BackupService(backup, new BackupDAO());
+						BackupService backupService = new BackupService();
 						backup = backupService.getBackupByUserIdBackup(user, idbackup);
+						LoginTools.LOG.debug(" checkBackup by params  backup = {} ",backup != null ? backup.getId() : null);
+
 					} catch (ServiceException e) {
 						throw new BackupException(e.getMessage());
 					}

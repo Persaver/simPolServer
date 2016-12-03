@@ -6,8 +6,6 @@ import java.util.Map;
 import fr.Dao.BackupConstructionDAO;
 import fr.Dao.BackupDAO;
 import fr.Dao.UserDAO;
-import fr.entities.Backup;
-import fr.entities.BackupConstruction;
 import fr.entities.User;
 import fr.interfaces.IGameInstance;
 import fr.splExceptions.GameInstanceException;
@@ -68,20 +66,20 @@ public class GameInstanceControlor {
 	
 	// creation d'une instance si deja un ela remplace
 	
-	public static IGameInstance createGameInstance(User user,Integer idBackup){
-		IGameInstance gameInstance = null;
-		// on test si il existe deja une partie
-
-		if(GameInstanceControlor.hasGameInstance(user)){
-			// log
-		}
-		else{
-			gameInstance = new GameInstance(user,GameInstanceControlor.getBackupDAO(),GameInstanceControlor.getBackupConstructionDAO(),idBackup);
-			GameInstanceControlor.addGameInstance(user, gameInstance);
-		}
-		
-		return gameInstance;
-	}
+//	public static IGameInstance createGameInstance(User user,Integer idBackup){
+//		IGameInstance gameInstance = null;
+//		// on test si il existe deja une partie
+//
+//		if(GameInstanceControlor.hasGameInstance(user)){
+//			// log
+//		}
+//		else{
+//			gameInstance = new GameInstance(user,GameInstanceControlor.getBackupDAO(),GameInstanceControlor.getBackupConstructionDAO(),idBackup);
+//			GameInstanceControlor.addGameInstance(user, gameInstance);
+//		}
+//		
+//		return gameInstance;
+//	}
 
 	public static Integer getCountGameInstance() {
 		return countGameInstance;

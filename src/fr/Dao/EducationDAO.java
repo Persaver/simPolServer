@@ -34,6 +34,11 @@ public class EducationDAO extends DAO<Education,Integer>{
 				education.setNbj(result.getInt("nbj"));
 				backup = new Backup(result.getInt("id"));
 				education.setBackup(backup);
+				education.setRatioSecurite(result.getInt("ratioSecurite"));
+				education.setRatioEntretien(result.getInt("ratioEntretien"));
+				education.setRatioSante(result.getInt("ratioSante"));
+				education.setRatioRecherche(result.getInt("ratioRecherche"));
+				education.setRatioTourisme(result.getInt("ratioTourisme"));
 				return education;
 			}
 		} catch (SQLException e) {
@@ -62,6 +67,11 @@ public class EducationDAO extends DAO<Education,Integer>{
 				education.setEdTourisme(result.getInt("edTourisme"));
 				education.setNbj(result.getInt("nbj"));
 				education.setBackup(backup);
+				education.setRatioSecurite(result.getInt("ratioSecurite"));
+				education.setRatioEntretien(result.getInt("ratioEntretien"));
+				education.setRatioSante(result.getInt("ratioSante"));
+				education.setRatioRecherche(result.getInt("ratioRecherche"));
+				education.setRatioTourisme(result.getInt("ratioTourisme"));
 				return education;
 			}
 		} catch (SQLException e) {
@@ -74,7 +84,7 @@ public class EducationDAO extends DAO<Education,Integer>{
 	@Override
 	public Education save(Education element) throws DAOException {
 		try {
-			String req = "INSERT INTO sante (edTotale, edSecurite, edEntretien, edSante, edRecherche, edTourisme, nbj, backup) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+			String req = "INSERT INTO sante (edTotale, edSecurite, edEntretien, edSante, edRecherche, edTourisme, nbj, backup, ratioSecurite, ratioEntretien, ratioSante, ratioRecherche, ratioTourisme) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?; ?; ?; ?)";
 			PreparedStatement statement = this.connect.prepareStatement(req);
 			statement.setInt(1, element.getEdTotale());
 			statement.setInt(2, element.getEdSecurite());
@@ -84,6 +94,11 @@ public class EducationDAO extends DAO<Education,Integer>{
 			statement.setInt(6, element.getEdTourisme());
 			statement.setInt(7, element.getNbj());
 			statement.setInt(8, element.getBackup().getId());
+			statement.setInt(9,  element.getRatioSecurite());
+			statement.setInt(10,  element.getRatioEntretien());
+			statement.setInt(11,  element.getRatioSante());
+			statement.setInt(12,  element.getRatioRecherche());
+			statement.setInt(13,  element.getRatioTourisme());
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.first()) {
 				element.setId(generatedKeys.getInt(1));
@@ -130,6 +145,11 @@ public class EducationDAO extends DAO<Education,Integer>{
 				education.setEdTourisme(result.getInt("edTourisme"));
 				education.setNbj(result.getInt("nbj"));
 				education.setBackup(backup);
+				education.setRatioSecurite(result.getInt("ratioSecurite"));
+				education.setRatioEntretien(result.getInt("ratioEntretien"));
+				education.setRatioSante(result.getInt("ratioSante"));
+				education.setRatioRecherche(result.getInt("ratioRecherche"));
+				education.setRatioTourisme(result.getInt("ratioTourisme"));
 				educations.add(education);
 			}
 			return educations;

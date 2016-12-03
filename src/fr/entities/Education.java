@@ -13,6 +13,11 @@ public class Education extends AbstractEntity<Education>{
 	private Integer edTourisme;		// L'education distribuee aux batiment touristiques
 	private Integer nbj;
 	private Backup backup;
+	private Integer ratioSecurite;
+	private Integer ratioEntretien;
+	private Integer ratioSante;
+	private Integer ratioRecherche;
+	private Integer ratioTourisme;
 
 	public Education (){
 	}
@@ -83,6 +88,46 @@ public class Education extends AbstractEntity<Education>{
 
 	public void setBackup(Backup backup) {
 		this.backup = backup;
+	}
+
+	public Integer getRatioSecurite() {
+		return ratioSecurite;
+	}
+
+	public void setRatioSecurite(Integer ratioSecurite) {
+		this.ratioSecurite = ratioSecurite;
+	}
+
+	public Integer getRatioEntretien() {
+		return ratioEntretien;
+	}
+
+	public void setRatioEntretien(Integer ratioEntretien) {
+		this.ratioEntretien = ratioEntretien;
+	}
+
+	public Integer getRatioSante() {
+		return ratioSante;
+	}
+
+	public void setRatioSante(Integer ratioSante) {
+		this.ratioSante = ratioSante;
+	}
+
+	public Integer getRatioRecherche() {
+		return ratioRecherche;
+	}
+
+	public void setRatioRecherche(Integer ratioRecherche) {
+		this.ratioRecherche = ratioRecherche;
+	}
+
+	public Integer getRatioTourisme() {
+		return ratioTourisme;
+	}
+
+	public void setRatioTourisme(Integer ratioTourisme) {
+		this.ratioTourisme = ratioTourisme;
 	}
 
 	@Override

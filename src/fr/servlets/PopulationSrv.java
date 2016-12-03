@@ -3,6 +3,10 @@ package fr.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +26,11 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class PopulationSrv
  */
-@WebServlet(urlPatterns={"/population","/population/*"})
+@WebServlet(urlPatterns={"/populations","/populations/*"})
 public class PopulationSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LogManager.getLogger();
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -61,6 +67,7 @@ public class PopulationSrv extends HttpServlet {
 			// TODO Auto-generated catch block
 			out.append(RestTools.getReturn(e.getMessage(), true));
 		}
+		
 		// si user == null return {error:{msg} }
 		out.close();
 	}

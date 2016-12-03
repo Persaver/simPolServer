@@ -71,7 +71,7 @@ public class SanteDAO extends DAO<Sante,Integer> {
 	@Override
 	public Sante save(Sante element) throws DAOException {
 		try {
-			String req = "INSERT INTO sante (hygiene, nbMalalades, nbAccidents, soins, echecs, nbj, backup) VALUES (?, ?, ?, ?, ?, ?)";
+			String req = "INSERT INTO sante (hygiene, nbMalalades, nbAccidents, soins, echecs, nbj, backup) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = this.connect.prepareStatement(req);
 			statement.setInt(1, element.getHygiene());
 			statement.setInt(2, element.getNbMalades());

@@ -1,5 +1,8 @@
 package fr.game.services.gameControllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.Dao.DAO;
 import fr.interfaces.IEntity;
 import fr.interfaces.IGameEntity;
@@ -13,17 +16,19 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 	protected T entity = null;
 	protected D entityDao = null;
 	protected boolean isModify = false;
-	
+
+	private static final Logger LOG = LogManager.getLogger();
 
 	public AbstractGameEntity(T entity,D entityDao){
 		this.entity = entity;
 		this.entityDao = entityDao;
+		AbstractGameEntity.LOG.debug(" Creation {} entity {} ",this.getClass().getName(), this.getEntity() != null ? this.getEntity().getClass().getName() : "null");
 	}
 
 	@Override
 	public void setEntity(IEntity entity) throws ServiceException{
 		try {
-			this.entity =  entityDao.save((T)entity);
+			this.entity =  this.entityDao.save((T)entity);
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -46,10 +51,14 @@ public abstract class AbstractGameEntity< T extends IEntity ,D extends DAO<T,Int
 
 	@Override
 	public void saveEntity() throws ServiceException{
+		AbstractGameEntity.LOG.debug(" Sauvergarde {} entity {} entityDAO {}"
+								,this.getClass().getName()
+								,this.getEntity().getClass()
+								,this.entityDao != null ? this.entityDao.getClass().getName(): "null");
 		try {
 			this.entityDao.save(this.entity);
 		} catch (DAOException e) {
-			throw new ServiceException();
+			throw new ServiceException(e.getMessage());
 		}
 	}
 
