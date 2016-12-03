@@ -1,5 +1,6 @@
 package fr.entities;
 
+
 public class User extends AbstractEntity<User> {
 	/**
 	 *
@@ -34,7 +35,8 @@ public class User extends AbstractEntity<User> {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -47,5 +49,4 @@ public class User extends AbstractEntity<User> {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
