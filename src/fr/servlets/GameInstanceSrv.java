@@ -24,7 +24,7 @@ import fr.tools.RestTools;
 /**
  * Servlet implementation class GameInstance
  */
-@WebServlet(urlPatterns={"/gameInstances","/gameInstances/*"})
+@WebServlet(urlPatterns={"/gameinstances","/gameinstances/*"})
 public class GameInstanceSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LogManager.getLogger();

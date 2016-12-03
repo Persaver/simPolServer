@@ -68,7 +68,8 @@ public class PopulationDAO extends DAO<Population,Integer> {
 				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
 				//LOG.debug("Population getByBackup(Backup backup) popTab {}",result.getString("popTab"));
 				population.setPopTab(gson.fromJson(result.getString("popTab"), Integer[][].class));
-				LOG.debug("Population getByBackup(Backup backup) popTab {}" , population.getPopTab()[0]);
+				Integer[] tab = population.getPopTab()[0];
+				LOG.debug("Population getByBackup(Backup backup) popTab {}" , tab);
 
 				population.setBackup(backup);
 				return population;

@@ -16,7 +16,6 @@ import fr.splExceptions.ServiceException;
 
 public class PopulationService extends AbstractGameEntity<Population, PopulationDAO> {	
 	private static final Logger LOG = LogManager.getLogger();
-	private Population entity;
 
 	public PopulationService(Population entity, PopulationDAO entityDao) {
 		this(entity, entityDao, null);
@@ -120,7 +119,9 @@ public class PopulationService extends AbstractGameEntity<Population, Population
 			int random = (int)(Math.random() * (agemax-agemin)*12); // permet de mettre aleatoirement la population dans la tranche d'age choisie.
 			col = random/12;
 			lig = random%12;
-			this.entity.setPopTab(col, lig, this.entity.getPopTab(lig, col)+1);
+			//LOG.debug("ajoutPopulation setPopTab col {} lig {} ",col,lig);
+			// j'ai inverser sinon outofBounds vois si c'espas mieux de modifier dans ta function
+			this.entity.setPopTab(col, lig, this.entity.getPopTab(col, lig)+1);
 		}
 	}
 	public void retraitPopulation (int a, int agemin, int agemax){

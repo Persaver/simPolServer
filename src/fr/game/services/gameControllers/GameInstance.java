@@ -97,8 +97,10 @@ public class GameInstance implements IGameInstance{
 		LOG.debug("GameInstance Backup id : {}", this.backup != null ? this.backup.getId() : "null");
 		try {
 			pop = new PopulationDAO().getByBackup(this.backup);
+			LOG.debug("GameInstance pop {} class {}",pop != null ? pop.getPopTab() : "null",pop != null ? pop.getClass().getName() : "null");
+
 			PopulationService p = new PopulationService(pop, this.populationDAO, 200);
-			LOG.debug("GameInstance pop {} ",p != null ? p.getClass().getName() : "null");
+			LOG.debug("GameInstance PopulationService {} ",p != null ? p.getClass().getName() : "null");
 			sante = new SanteDAO().getByBackup(this.backup);
 			SanteService s = new SanteService(sante, this.santeDAO);
 			budget = new BudgetDAO().getByBackup(this.backup);

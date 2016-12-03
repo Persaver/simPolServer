@@ -56,7 +56,7 @@ CREATE TABLE backup_construction(
   nbCadre INT(5),
   risque INT(5),
   budget INT(5),
-  attractive INT(5),
+  attractivite INT(5),
   postePourvu INT(5), /*** string representant les spe en format json */
   specificite TEXT,
   niveau INT(2)
