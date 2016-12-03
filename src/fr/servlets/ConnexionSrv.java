@@ -56,7 +56,7 @@ public class ConnexionSrv extends HttpServlet {
 			out.append("\"error\":"+e.getMessage());
 		}
 		
-		gameInstance = new GameInstance(user, new BackupDAO(),new BackupConstructionDAO(), backup.getId());
+		gameInstance = new GameInstance(user,backup);
 		
 		try {
 			out.append(new Gson().toJson(gameInstance.getEntities()));

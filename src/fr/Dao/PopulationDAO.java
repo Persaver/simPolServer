@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import fr.entities.Backup;
@@ -13,6 +16,7 @@ import fr.entities.Population;
 import fr.splExceptions.DAOException;
 
 public class PopulationDAO extends DAO<Population,Integer> {
+	private static final Logger LOG = LogManager.getLogger();
 
 	@Override
 	public Population get(Integer id) throws DAOException{
@@ -62,7 +66,10 @@ public class PopulationDAO extends DAO<Population,Integer> {
 				population.setFertilite(result.getInt("fertilite"));
 				population.setAttractivite(result.getInt("attractivite"));
 				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
+				//LOG.debug("Population getByBackup(Backup backup) popTab {}",result.getString("popTab"));
 				population.setPopTab(gson.fromJson(result.getString("popTab"), Integer[][].class));
+				LOG.debug("Population getByBackup(Backup backup) popTab {}" , population.getPopTab()[0]);
+
 				population.setBackup(backup);
 				return population;
 			}
