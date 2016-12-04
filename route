@@ -1,0 +1,19 @@
+login par defaut
+
+/backupconstructions?login=user1&token=0000&backup=1
+
+
+lance passage à la prochaine journée
+
+/gameinstances
+
+
+backup
+
+/backups
+
+sante
+
+/santes
+
+.... a continuer
