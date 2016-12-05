@@ -139,7 +139,7 @@ VALUES (1, 1, 0, 0, 0, 5, 1, 1),
 
 INSERT INTO `construction`(`id`, `designation`, `w`, `h`, `price`, `baseSalarie`, `baseCadre`, `baseRisque`, `baseAttractivite`, `modSalarie`, `modCadre`, `modRisque`, `modAttractivite`, `specificite`, `categorie`)
 VALUES
-(1,'maison',1,1,1000.0,0,0,0,0,0,0,0,0,'{"habitat":1}',3),
+(1,'House',1,1,1000.0,0,0,0,0,0,0,0,0,'{"habitat":1}',3),
 (2,'Museum',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourisme":1}',1),
 (3,'Restaurant',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourimse":1}',4),
 (4,'bureau',1,1,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
