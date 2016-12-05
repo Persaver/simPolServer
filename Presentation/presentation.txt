@@ -40,6 +40,8 @@ Zoom/Dezzoom
 ------------------------------------------------------
 
 7) Décription de l'artchitecture
+//POUR SAVERIO
+
 
 8) Difficultés rencontrées 
 - CDC : difficultés pour se mettre d'accord
