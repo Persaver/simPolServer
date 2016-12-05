@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.Dao.CategorieDAO;
+import fr.entities.Backup;
 import fr.entities.Categorie;
+import fr.splExceptions.BackupException;
 import fr.splExceptions.DAOException;
+import fr.tools.LoginTools;
 import fr.tools.RestTools;
 
 /**
@@ -38,13 +41,16 @@ public class CategorieSrv extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		List<Categorie> categories = null;
+		Backup backup = null;
 		response.setContentType("application/json;charset=UTF-8");
+		RestTools.getId(request);
 		PrintWriter out = response.getWriter();
 		CategorieDAO categorieDao = new CategorieDAO();
 		try {
+			backup= LoginTools.checkBackup(request);
 			categories = categorieDao.getAll();
 			out.append(RestTools.getReturn( categories, categories == null));
-		} catch (DAOException e) {
+		} catch (DAOException | BackupException e) {
 			// TODO Auto-generated catch block
 			out.append(RestTools.getReturn(e.getMessage(), true));
 		}
