@@ -1,0 +1,68 @@
+Vignettes
+1) Presentation du groupe
+-	Geoffrey
+-	Robin
+-	Ludovic
+- 	Saverio (chef de projet)
+
+2) Presentation du projet
+-	Création d'un jeu de stratégie/simulation
+- 	Le joueur incarne un politicien
+-	Il gère sa ville, fait des choix qui impacteront son ascension politique
+
+3) Choix techniques
+- Crafty (Framework) (descriptifs rapide de l'outil)
+- Javascript (orienté objet ?)
+- Angular
+- MySql 
+- Infos servers
+
+4)	Repartition des roles
+- Saverio: chef de projet & développement crafty
+- Geoffrey: html/css et dev' Javascript
+- Ludovic: Bdd & serveurs
+- Robin : développement
+
+5) Déroulement du développement
+- Mise en place du CDC
+- Prise en main de crafty
+- Dev' 
+- Mise en place serveur & BDD
+
+
+6) Résultat obtenu
+- Présentation du front
+Montrer les différentes fonctionnalités
+Génération d'une map aléatoire
+Deposer glisser des batiment, drag n'drop
+Infos sur les batiments au clic
+Zoom/Dezzoom
+------------------------------------------------------
+
+7) Décription de l'artchitecture
+
+8) Difficultés rencontrées 
+- CDC : difficultés pour se mettre d'accord
+- Git: pb de maniement
+- Crafty: manque de ressources
+- Délais: courts
+
+
+9) Solutions mises en place
+- CDC: price de décision
+- Git:entraide
+- Crafty: usage de la doc
+- Delais: etre réactif
+
+
+10) Retour d'expérience
+- Travail de groupe avec des profils différents (chacun amène au groupe de part son expérience antérieure)
+- Apport de GitHub (un outil qui est indispensable au travail en équipe)
+- Peu de support sur Crafty ( notre projet peut constituer un véritable apport à la communauté)
+- Délais (attention à ne pas confondre travail en rapidité et précipitation)
+
+
+11) Conclusion 
+- Une expérience très enrichissante même si le jeu n'est pas totalemnt abouti au bout des 2 mois
+- Faire un feedback aprè L'XP obtenue chez Cap (revenir sur le projet avec de nnouveaux outils et nouvelles méthodes)
+
