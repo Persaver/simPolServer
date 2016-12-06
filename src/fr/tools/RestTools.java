@@ -10,10 +10,6 @@ import com.google.gson.Gson;
 public class RestTools {
 	
 	private static final Logger LOG = LogManager.getLogger();
-<<<<<<< HEAD
-=======
-
->>>>>>> e62f26160274efccf0b5733a57021d90ccace3b6
 	public static void getId(HttpServletRequest request){
 		String pathInfo = request.getRequestURL().toString();
 		Integer id =null;

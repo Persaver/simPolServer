@@ -140,26 +140,13 @@ VALUES
 
 INSERT INTO `construction`(`id`, `designation`, `w`, `h`, `price`, `baseSalarie`, `baseCadre`, `baseRisque`, `baseAttractivite`, `modSalarie`, `modCadre`, `modRisque`, `modAttractivite`, `specificite`, `categorie`)
 VALUES
-(1,'House',1,1,1000.0,0,0,0,0,0,0,0,0,'{"habitat":1}',3),
-(2,'Museum',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourisme":1}',1),
-(3,'Restaurant',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourimse":1}',4),
-(4,'bureau',1,1,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
-(5,'Police_Dpt',1,1,1000.0,120,20,4,1,0.5,0.5,2,1,'{"influence":1}',2),
-(6,'Hospital',1,1,1000.0,70,10,3,2,0.7,0.8,1,2,'{"soins":1}	',5),
-(7,'Warehouse',1,1,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
-(8,'Church',1,1,1000.0,0,0,0,0,0,0,0,0,'{"religion":1}',4),
-(9,'Night_club',1,1,1000.0,40,10,2,5,0.7,0.7,1,3,'{"tourimse":1}',4),
-(10,'Temple',1,1,1000.0,0,0,0,0,0,0,0,0,'{"religion":1}',4),
-(11,'Temple_Tower',1,1,1000.0,0,0,0,0,0,0,0,0,'{"religion":1}',4),
-(12,'Farm',1,1,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
-(13,'Rescue_Tower',1,1,1000.0,0,0,0,0,0,0,0,0,'{"soin":1}',2),
-(14,'Circus',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourisme":1}',4),
-(15,'Television',1,1,1000.0,0,0,0,0,0,0,0,0,'{"culture":1}',4),
-(16,'Entertainment_Hall',1,1,1000.0,0,0,0,0,0,0,0,0,'{"tourimse":1}',4),
-(17,'Military_Place',1,1,1000.0,80,20,0,1,0.3,0.1,0,1,'{"entretien":1}',2),
-(18,'Military_Tower',1,1,1000.0,0,0,0,0,0,0,0,0,'{"influence":1}',2),
-(19,'Factory',1,1,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
-(20,'University',1,1,1000.0,40,10,3,1,0.5,0.2,2,1,'{"education":1}',1)
+(1,'House',2,2,1000.0,0,0,0,0,0,0,0,0,'{"habitat":1}',3),
+(2,'Museum',3,3,1000.0,0,0,0,0,0,0,0,0,'{"tourisme":1}',1),
+(3,'Restaurant',3,3,1000.0,0,0,0,0,0,0,0,0,'{"tourimse":1}',4),
+(4,'Bureau',3,3,1000.0,0,0,0,0,0,0,0,0,'{"efficacite":1}',3),
+(5,'Police_Dpt',3,3,1000.0,120,20,4,1,0.5,0.5,2,1,'{"influence":1}',2),
+(6,'Hospital',3,3,1000.0,70,10,3,2,0.7,0.8,1,2,'{"soins":1}	',5),
+(20,'University',3,3,1000.0,40,10,3,1,0.5,0.2,2,1,'{"education":1}',1)
 ;
 
 INSERT INTO `education` (`id`,`edTotale`,`edSecurite`,`edEntretien`,`edSante`,`edRecherche`,`edTourisme`,`nbj`,`backup`, `ratioSecurite`, `ratioEntretien`, `ratioSante`, `ratioRecherche`, `ratioTourisme`)
@@ -223,7 +210,7 @@ VALUES (1, 40, 8, 8, 8, 8, 8, 1, 1, 100, 100, 100, 100, 100),
 (58, 80, 16, 16, 18 ,16 ,14, 58, 3, 100, 100, 115, 85, 100)
 ;
 
-/*INSERT INTO `backup_construction` (`id`, `backup`,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractivite`, `postePourvu`, `specificite`,`niveau`) VALUES
+INSERT INTO `backup_construction` (`id`, `backup`,`construction`, `x`, `y`, `nbSalarie`, `nbCadre`, `risque`, `budget`, `attractivite`, `postePourvu`, `specificite`,`niveau`) VALUES
 (1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, '{habitat : 4}', 1),
 (2, 1, 1, 1, 6, 0, 0, 0, 0, 0, 0, '{habitat : 4}', 1),
 (3, 1, 1, 1, 12, 0, 0, 0, 0, 0, 0, '{habitat : 4}', 1),
@@ -238,8 +225,8 @@ VALUES (1, 40, 8, 8, 8, 8, 8, 1, 1, 100, 100, 100, 100, 100),
 (12, 1, 5, 48, 62, 60, 20, 2, 480, 1, 8, '{influence : 9}', 1),
 (13, 1, 20, 24, 20, 40, 10, 2, 320, 1, 5, '{education : 40}', 1),
 (14, 1, 20, 20, 68, 40, 10, 2, 320, 1, 5, '{education : 40}', 1),
-(15, 2, 6, 14, 14, 70, 10, 440, 1, 8, '{soins : 4}', 1);
-*/
+(15, 2, 6, 14, 14, 70, 10, 440, 1, 8,2, '{soins : 4}', 1);
+
 INSERT INTO `criminalite` (`id`, `indicMineur`, `crimeMineur`, `indicMoyen`, `crimeMoyen`, `indicGrave`, `crimeGrave`, `indicTerrorisme`, `crimeTerroriste`, `nbj`, `backup`) VALUES
 (1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1),
 (2, 3, 4, 2, 3, 0, 0, 0, 0, 2, 1),

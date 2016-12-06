@@ -15,11 +15,15 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
+import fr.Dao.BackupConstructionDAO;
+import fr.Dao.ConstructionDAO;
 import fr.entities.Backup;
 import fr.entities.BackupConstruction;
+import fr.entities.Construction;
 import fr.game.services.gameControllers.EntitiesController;
 import fr.interfaces.IEntity;
 import fr.splExceptions.BackupException;
+import fr.splExceptions.DAOException;
 import fr.splExceptions.ServiceException;
 import fr.tools.LoginTools;
 import fr.tools.RestTools;
@@ -109,6 +113,8 @@ public class BackupConstructionSrv extends HttpServlet {
 
 		BackupConstruction bc = null;
 		Backup backup = null;
+		Construction construction  = null;
+
 		// test si id	 ou all
 		RestTools.getId(request);
 		response.setContentType("application/json;charset=UTF-8");
@@ -121,13 +127,23 @@ public class BackupConstructionSrv extends HttpServlet {
 				out.append(RestTools.getReturn(new BackupException("Pas de pas correspondant"), true));
 			}
 			else{
-				if(request.getAttribute("backupConstruction") != null){
-					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+				if(request.getAttribute("construction") != null){
+					
+					construction = new ConstructionDAO().get((Integer)request.getAttribute("construction"));
+					
+					bc.setAttractivite(construction.getBaseAttractivite());
+					bc.setNbCadre(construction.getBaseCadre());
+					bc.setNbSalarie(construction.getModSalarie());
+					bc.setPostePourvu(bc.getNbSalarie()+bc.getNbCadre());
+					bc.setRisque(construction.getBaseRisque());
 				}
-				bc = (BackupConstruction) new EntitiesController().saveGameEntity(bc);
+					
+					//bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+				
+				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
 
 			}
-		} catch (BackupException | ServiceException e) {
+		} catch (BackupException | ServiceException | DAOException e) {
 			// TODO Auto-generated catch block
 			RestTools.getReturn(e.getMessage(), true);
 		}
@@ -146,8 +162,8 @@ public class BackupConstructionSrv extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BackupConstructionSrv.LOG.debug(" BackupConstructionSrv doPut ");
-
 		BackupConstruction bc = null;
+		Construction construction  = null;
 		Backup backup = null;
 		// test si id	 ou all
 		RestTools.getId(request);
@@ -161,14 +177,36 @@ public class BackupConstructionSrv extends HttpServlet {
 				out.append(RestTools.getReturn(new BackupException("Pas de pas correspondant"), true));
 			}
 			else{
-				if(request.getAttribute("backupConstruction") != null){
+				if(request.getParameter("construction") != null){	
+					BackupConstructionSrv.LOG.debug(" BackupConstructionSrv constructionID {} ",(Integer)Integer.parseInt(request.getParameter("construction")));
+					bc = new BackupConstruction();
+					construction = new ConstructionDAO().get((Integer)Integer.parseInt(request.getParameter("construction")));	
+					bc.setX(Integer.parseInt(request.getParameter("x")));
+					bc.setY(Integer.parseInt(request.getParameter("y")));
 
-					bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+					bc.setAttractivite(construction.getBaseAttractivite());
+					bc.setNbCadre(construction.getBaseCadre());
+					bc.setNbSalarie(construction.getModSalarie());
+					bc.setPostePourvu(bc.getNbSalarie()+bc.getNbCadre());
+					bc.setRisque(construction.getBaseRisque());
+					bc.setBudget(100);
+					bc.setNiveau(1);
+					bc.setConstruction(construction);
+					bc.setBackup(backup);
+				}else{
+					BackupConstructionSrv.LOG.debug(" BackupConstructionSrv pas construction {} ",construction != null ? construction : "null");
+
 				}
-				bc = (BackupConstruction) new EntitiesController().addGameEntity(bc);
+				BackupConstructionSrv.LOG.debug(" BackupConstructionSrv construction {} ",construction != null ? construction : "null");
+				BackupConstructionSrv.LOG.debug(" BackupConstructionSrv bc {} ",bc != null?bc : "null");
+
+					
+					//bc = new Gson().fromJson( (String) request.getAttribute("backupConstruction"), BackupConstruction.class);
+				
+				bc = new BackupConstructionDAO().save(bc);
 
 			}
-		} catch (BackupException | ServiceException e) {
+		} catch (BackupException | DAOException e) {
 			// TODO Auto-generated catch block
 			RestTools.getReturn(e.getMessage(), true);
 		}
