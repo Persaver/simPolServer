@@ -10,6 +10,10 @@ import com.google.gson.Gson;
 public class RestTools {
 	
 	private static final Logger LOG = LogManager.getLogger();
+<<<<<<< HEAD
+=======
+
+>>>>>>> e62f26160274efccf0b5733a57021d90ccace3b6
 	public static void getId(HttpServletRequest request){
 		String pathInfo = request.getRequestURL().toString();
 		Integer id =null;
@@ -17,8 +21,7 @@ public class RestTools {
 		String[] pathParts = pathInfo.split("/");
 		if(pathParts.length	 > 5){
 			 id = Integer.parseInt(pathParts[5]); // {value  a traiter}
-			request.setAttribute("id", id);
-			
+			request.setAttribute("id", id);	
 			//System.out.println("id"+id);
 		}
 		LOG.debug(" RestTools getId  path/ id = {} ",id);
@@ -38,9 +41,7 @@ public class RestTools {
 		else{
 			buffer.append("\"succes\":");
 		}
-
 		buffer.append(gson.toJson(obj));
-
 		buffer.append("}");
 		LOG.debug(" RestTools getreturn  obj {} error {} ",obj != null ? obj.getClass().getName() : "pas d'object" , error);
 		return buffer.toString();
