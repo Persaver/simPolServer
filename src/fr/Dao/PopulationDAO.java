@@ -137,6 +137,7 @@ public class PopulationDAO extends DAO<Population,Integer> {
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {
 				Population population = new Population();
+				population.setId(results.getInt("id"));
 				// fonction pour transformer "popTab" en tab[][]
 				// on recupere la pop que l'on met  dans un Integer[][] et on passe au setter
 				population.setPopTab(gson.fromJson(results.getString("popTab"), Integer[][].class));

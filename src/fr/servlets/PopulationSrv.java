@@ -55,7 +55,7 @@ public class PopulationSrv extends HttpServlet {
 		PopulationDAO populationDao = new PopulationDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
+			if(request.getParameter("all").equals("1")){
 				population = populationDao.getByBackup(backup);
 				out.append(RestTools.getReturn( population, population == null));
 			}

@@ -49,7 +49,7 @@ public class BudgetSrv extends HttpServlet {
 		BudgetDAO budgetDao = new BudgetDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
+			if(request.getParameter("all").equals("1")){
 				budget = budgetDao.getByBackup(backup);
 				out.append(RestTools.getReturn( budget, budget == null));
 			}
