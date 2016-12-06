@@ -49,7 +49,7 @@ public class CiminaliteSrv extends HttpServlet {
 		CriminaliteDAO criminaliteDao = new CriminaliteDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
+			if(request.getParameter("all").equals("1")){
 				criminalite = criminaliteDao.getByBackup(backup);
 				out.append(RestTools.getReturn( criminalite, criminalite == null));
 			}

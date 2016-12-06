@@ -58,6 +58,7 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 			results = statement.executeQuery();
 			if(results != null){
 				results.last();
+				criminalite.setId(results.getInt("id"));
 				criminalite.setIndicMineur(results.getInt("indicMineur"));
 				criminalite.setCrimeMineur(results.getInt("crimeMineur"));
 				criminalite.setIndicMoyen(results.getInt("indicMoyen"));
@@ -126,6 +127,7 @@ public class CriminaliteDAO extends DAO<Criminalite,Integer> {
 			ResultSet results = statement.executeQuery();
 			while ( results.next() ) {
 				Criminalite criminalite = new Criminalite();
+				criminalite.setId(results.getInt("id"));
 				criminalite.setIndicMineur(results.getInt("indicMineur"));
 				criminalite.setCrimeMineur(results.getInt("crimeMineur"));
 				criminalite.setIndicMoyen(results.getInt("indicMoyen"));

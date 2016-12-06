@@ -52,7 +52,7 @@ public class BudgetDAO extends DAO<Budget,Integer>{
 
 	public Budget getByBackup(Backup backup) throws DAOException {
 		ResultSet result;
-		Budget budget = new Budget();
+		Budget budget = null;
 		try {
 			PreparedStatement prepare = this.connect.prepareStatement("Select * From budget where backup = ?");
 			prepare.setInt(1, backup.getId());

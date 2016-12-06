@@ -49,7 +49,7 @@ public class SanteSrv extends HttpServlet {
 		SanteDAO santeDao = new SanteDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
+			if(request.getParameter("all").equals("1")){
 				sante = santeDao.getByBackup(backup);
 				out.append(RestTools.getReturn( sante, sante == null));
 			}

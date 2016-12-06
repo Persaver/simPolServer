@@ -49,7 +49,7 @@ public class EducationSrv extends HttpServlet {
 		EducationDAO educationDao = new EducationDAO();
 		try {
 			backup= LoginTools.checkBackup(request);
-			if(request.getQueryString() != null){
+			if(request.getParameter("all").equals("1")){
 				education = educationDao.getByBackup(backup);
 				out.append(RestTools.getReturn( education, education == null));
 			}
